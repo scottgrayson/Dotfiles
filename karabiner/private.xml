@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<root>
+	<item>
+		<name>F19 to Hyper</name>
+		<appendix>(F19 to Hyper (ctrl+shift+cmd+opt) + F19 Only, send escape)</appendix>
+		<identifier>private.hyper_escape</identifier>
+		<autogen>
+			__KeyOverlaidModifier__
+			KeyCode::F19,
+			KeyCode::COMMAND_L, ModifierFlag::OPTION_L | ModifierFlag::SHIFT_L | ModifierFlag::CONTROL_L,
+			KeyCode::ESCAPE
+		</autogen>
+	</item>
+
+    <item>
+        <name>Hyper + hjkl = Arrows</name>
+        <appendix>(Requires Hyper or (ctrl+shift+cmd+opt))</appendix>
+		<identifier>private.hyper_arrows</identifier>
+		<autogen>
+			__KeyToKey__
+            KeyCode::H,	ModifierFlag::COMMAND_L | ModifierFlag::OPTION_L | ModifierFlag::SHIFT_L | ModifierFlag::CONTROL_L,
+            KeyCode::CURSOR_LEFT
+		</autogen>
+        <autogen>
+            __KeyToKey__
+            KeyCode::J,	ModifierFlag::COMMAND_L | ModifierFlag::OPTION_L | ModifierFlag::SHIFT_L | ModifierFlag::CONTROL_L,
+            KeyCode::CURSOR_DOWN
+        </autogen>
+        <autogen>
+            __KeyToKey__
+            KeyCode::K,	ModifierFlag::COMMAND_L | ModifierFlag::OPTION_L | ModifierFlag::SHIFT_L | ModifierFlag::CONTROL_L,
+            KeyCode::CURSOR_UP
+        </autogen>
+        <autogen>
+            __KeyToKey__
+            KeyCode::L,	ModifierFlag::COMMAND_L | ModifierFlag::OPTION_L | ModifierFlag::SHIFT_L | ModifierFlag::CONTROL_L,
+            KeyCode::CURSOR_RIGHT
+        </autogen>
+    </item>
+
+    <item>
+        <name>Hyper + 0/4 = Home/End</name>
+        <appendix>(Like Vim 0/$ Requires Hyper or (ctrl+shift+cmd+opt))</appendix>
+        <identifier>private.hyper_pageupdown</identifier>
+        <autogen>
+            __KeyToKey__
+            KeyCode::U,	ModifierFlag::COMMAND_L | ModifierFlag::OPTION_L | ModifierFlag::SHIFT_L | ModifierFlag::CONTROL_L,
+            KeyCode::HOME
+        </autogen>
+        <autogen>
+            __KeyToKey__
+            KeyCode::M,	ModifierFlag::COMMAND_L | ModifierFlag::OPTION_L | ModifierFlag::SHIFT_L | ModifierFlag::CONTROL_L,
+            KeyCode::END
+        </autogen>
+    </item>
+
+    <item>
+        <name>Hyper + y/n = Page Up/Down</name>
+        <appendix>(Requires Hyper or (ctrl+shift+cmd+opt))</appendix>
+		<identifier>private.hyper_home_end</identifier>
+		<autogen>
+			__KeyToKey__
+            KeyCode::Y,	ModifierFlag::COMMAND_L | ModifierFlag::OPTION_L | ModifierFlag::SHIFT_L | ModifierFlag::CONTROL_L,
+            KeyCode::PAGEUP
+		</autogen>
+        <autogen>
+            __KeyToKey__
+            KeyCode::N,	ModifierFlag::COMMAND_L | ModifierFlag::OPTION_L | ModifierFlag::SHIFT_L | ModifierFlag::CONTROL_L,
+            KeyCode::PAGEDOWN
+        </autogen>
+	</item>
+</root>
