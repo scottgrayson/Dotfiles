@@ -1,1 +1,105 @@
-.kwm/kwmrc
+# ---------- Settings {{{
+
+# Set default values for screen padding
+kwmc config padding 30 10 10 10
+# Set default values for container gaps
+kwmc config gap 10 10
+
+# Default tiling mode for Kwm (bsp | monocle | float | off)
+kwmc config tiling bsp
+
+# Let Kwm listen for hotkeys
+kwmc config hotkeys on
+
+# Prefix is not applied globally (breaks hyper key binds)
+kwmc config prefix-global off
+
+# Time in seconds, before prefix must be re-activated
+kwmc config prefix-timeout 1
+
+# Automatically float windows that fail to resize
+kwmc config float-non-resizable on
+
+# Automatically resize the window to its container
+kwmc config lock-to-container on
+
+# Set focus-follows-mouse-mode to autoraise
+kwmc config focus-follows-mouse autoraise
+
+# Focus-follows-mouse is temporarily disabled when
+# a floating window has focus
+kwmc config standby-on-float on
+
+# The mouse will automatically move to the center
+# of the focused window
+kwmc config mouse-follows-focus on
+
+# Allow window focus to wrap-around
+kwmc config cycle-focus screen
+
+# Set default container split-ratio
+kwmc config split-ratio 0.5
+
+# New splits become the left leaf-node
+kwmc config spawn left
+
+# Enable border for focused window
+kwmc config focused-border on
+kwmc config focused-border size 2
+kwmc config focused-border color FFBDD322
+kwmc config focused-border radius 6
+
+# Enable border for marked window
+kwmc config marked-border on
+kwmc config marked-border size 2
+kwmc config marked-border color FFCC5577
+kwmc config marked-border radius 6
+
+# Change border when prefix-key is active
+kwmc config prefix-border on
+kwmc config prefix-border size 2
+kwmc config prefix-border color FF458588
+kwmc config prefix-border radius 6
+# }}}
+
+# ---------- Key Mappings {{{
+
+# Set prefix and hyper for Kwms hotkeys
+define hyper cmd+ctrl+alt+shift
+kwmc config prefix-key hyper-space
+
+# Hyper + {number} : Give Focus To Screen
+kwmc bind hyper-1 display -f 1    # display 1 = thunderbolt port
+kwmc bind hyper-2 display -f 0    # display 0 = laptop
+kwmc bind hyper-3 display -f 2    # display 2 = hdmi port
+
+# Prefix + {number} Move Focused Window To Screen
+kwmc bind prefix-1 window -m display 1
+kwmc bind prefix-2 window -m display 0
+kwmc bind prefix-3 window -m display 2
+
+# Hyper + wasd : Give Focus To Window
+kwmc bind hyper-a window -f west
+kwmc bind hyper-d window -f east
+kwmc bind hyper-s window -f south
+kwmc bind hyper-w window -f north
+
+# Prefix + a : Set Space Tiling Mode To BSP (a for all)
+kwmc bind prefix-a space -t bsp
+
+# Prefix + s : Set Space Tiling Mode To Monocle (s for select) (fullscreen all windows)
+kwmc bind prefix-s space -t monocle
+
+# Set Temporary Window Container
+kwmc bind hyper-f window -z fullscreen # Fullscreen one window
+kwmc bind prefix-d window -z parent
+
+# Rotate Window-Tree By 90* (Clockwise)
+kwmc bind hyper-r tree rotate 90
+
+# Modify Container
+kwmc bind prefix-s window -c split-mode toggle
+kwmc bind prefix-h window -c reduce 0.05
+kwmc bind prefix-l window -c expand 0.05
+
+# vim:foldmethod=marker:foldlevel=0
