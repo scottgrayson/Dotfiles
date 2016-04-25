@@ -90,7 +90,7 @@ set foldnestmax=10
 " }}}
 
 " Mappings {{{
-set timeout timeoutlen=200 ttimeoutlen=100
+set timeout timeoutlen=1000 ttimeoutlen=0
 let mapleader=","
 " }}}
 
