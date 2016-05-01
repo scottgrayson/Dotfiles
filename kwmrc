@@ -5,11 +5,6 @@ kwmc config padding 30 10 10 10
 # Set default values for container gaps
 kwmc config gap 10 10
 
-# Override default settings for screen 0 (macbook)
-# kwmc config display 0 mode bsp
-kwmc config display 0 padding 0 0 0 0
-kwmc config display 0 gap 0 0
-
 # Default tiling mode for Kwm (bsp | monocle | float | off)
 kwmc config tiling bsp
 
@@ -69,7 +64,16 @@ kwmc config prefix-border radius 6
 # The following allows Kwm to tile borderless iTerm2
 kwmc config add-role AXDialog iTerm2
 # }}}
+# Laptop (screen 0) overrides {{{
 
+kwmc config display 0 mode monocle
+kwmc config display 0 padding 0 0 0 0
+kwmc config display 0 gap 0 0
+kwmc config display 0 focused-border off
+kwmc config display 0 marked-border off
+
+
+# }}}
 # ---------- Key Mappings {{{
 
 # Set prefix and hyper for Kwms hotkeys
