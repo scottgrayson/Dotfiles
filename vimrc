@@ -2,9 +2,27 @@
 " Managed with vim.plug (maybe use dein in the future)
 call plug#begin('~/.vim/plugged')
 " ---- Begin Plugin List
+" Fuzzy Finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+" Syntax
+Plug 'posva/vim-vue'
 Plug 'altercation/vim-colors-solarized'
+Plug 'sheerun/vim-polyglot'
+" Editing
+Plug 'tpope/vim-surround'
+" Snippets
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+" Github
+Plug 'airblade/vim-gitgutter'
+" Autocomplete
+function! DoRemote(arg)
+  UpdateRemotePlugins
+endfunction
+Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+" Github
+Plug 'tpope/vim-fugitive'
 " ---- End Plugin List
 call plug#end()            " required
 " }}}
@@ -58,12 +76,26 @@ set tags=./tags,tags;
 " Completion {{{
 set wildmenu
 set wildmode=list:longest,full
+" deoplete config
+let g:deoplete#enable_at_startup = 1
+" UltiSnips config
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" }}}
+" {{{ Filtype Settings (Blade, Vue, etc)
+" associate *.blade.php and Vue with html filetype
+au BufRead,BufNewFile *.blade.php set filetype=html
+au BufRead,BufNewFile *.vue set filetype=html
 " }}}
 " Search and Replace {{{
 set ignorecase
 set smartcase                   " ignore case if search pattern is all lowercase,
 " enter to clear search highlights
 nnoremap <CR> :noh<CR>
+" FZF ignore things in gitignore
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 " }}}
 " Folding {{{
 set foldenable
@@ -73,7 +105,8 @@ set foldnestmax=10
 " Mappings {{{
 set timeoutlen=1000 ttimeoutlen=0
 let mapleader=","
-nnoremap ,w :w<CR>
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :wq<CR>
 " Remap H and L (top, bottom of screen to left and right end of line)
 nnoremap H ^
 nnoremap L $
@@ -81,12 +114,12 @@ vnoremap H ^
 vnoremap L g_
 " Ag
 map <leader>s :Ag 
-" CtrlP
+" FZF
 map <leader>f :Files<cr>
 map <leader>b :Buffers<cr>
 map <leader>t :Tags<cr>
 " PHP Beautify
-nnoremap <silent><leader>pb :call PhpCsFixerFixFile()<CR>
+" nnoremap <silent><leader>pb :call PhpCsFixerFixFile()<CR>
 " Window nav
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -100,4 +133,4 @@ if exists("&undodir")
     set undodir=~/.vim/undo
 endif
 " }}}
-" vim:foldmethod=marker:foldlevel=0
+" vim:foldmethod=marker:foldlevel=1

@@ -1,9 +1,9 @@
 # ---------- Settings {{{
 
 # Set default values for screen padding
-kwmc config padding 30 10 10 10
+kwmc config padding 2 2 2 2
 # Set default values for container gaps
-kwmc config gap 10 10
+kwmc config gap 0 0
 
 # Default tiling mode for Kwm (bsp | monocle | float | off)
 kwmc config tiling bsp
@@ -21,7 +21,7 @@ kwmc config prefix-timeout 1
 kwmc config float-non-resizable on
 
 # Automatically resize the window to its container
-kwmc config lock-to-container on
+#kwmc config lock-to-container on
 
 # Set focus-follows-mouse-mode to autoraise
 kwmc config focus-follows-mouse autoraise
@@ -67,11 +67,8 @@ kwmc config add-role AXDialog iTerm2
 # Laptop (screen 0) overrides {{{
 
 kwmc config display 0 mode monocle
-kwmc config display 0 padding 0 0 0 0
+kwmc config display 0 padding 2 2 2 2
 kwmc config display 0 gap 0 0
-kwmc config display 0 focused-border off
-kwmc config display 0 marked-border off
-
 
 # }}}
 # ---------- Key Mappings {{{
@@ -101,6 +98,9 @@ kwmc bind prefix-a space -t bsp
 
 # Prefix + s : Set Space Tiling Mode To Monocle (s for select) (fullscreen all windows)
 kwmc bind prefix-s space -t monocle
+
+# Prefix + f : Float current window
+kwmc bind prefix-f window -t focus
 
 # Set Temporary Window Container
 kwmc bind hyper-f window -z fullscreen # Fullscreen one window
