@@ -59,16 +59,18 @@ set splitbelow
 set splitright
 " }}}
 " Formatting {{{
-set softtabstop=4               " when hitting <BS>, pretend like a tab is removed, even if spaces
 set expandtab                   " expand tabs by default (overloadable per file type later)
+set softtabstop=4               " when hitting <BS>, pretend like a tab is removed, even if spaces
+set shiftwidth=4                " number of spaces to use for autoindenting
+set softtabstop=4               " when hitting <BS>, pretend like a tab is removed, even if spaces
 set shiftwidth=4                " number of spaces to use for autoindenting
 set shiftround                  " use multiple of shiftwidth when indenting with '<' and '>'
 set backspace=indent,eol,start  " allow backspacing over everything in insert mode
 set autoindent                  " always set autoindenting on
 set copyindent                  " copy the previous indentation on autoindenting
-set tabstop=4                   " a tab is four spaces
 set smarttab
 let g:php_cs_fixer_level = "psr2"              " which level ?
+autocmd BufWritePre * :%s/\s\+$//e " strip trailing whitespace on save
 " }}}
 " Tags {{{
 set tags=./tags,tags;
@@ -80,13 +82,12 @@ set wildmode=list:longest,full
 let g:deoplete#enable_at_startup = 1
 " UltiSnips config
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsExpandTrigger="<s-tab>"
+let g:UltiSnipsJumpForwardTrigger="<s-tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<s-Del>"
 " }}}
 " {{{ Filtype Settings (Blade, Vue, etc)
 " associate *.blade.php and Vue with html filetype
-au BufRead,BufNewFile *.blade.php set filetype=html
 au BufRead,BufNewFile *.vue set filetype=html
 " }}}
 " Search and Replace {{{
@@ -106,14 +107,19 @@ set foldnestmax=10
 set timeoutlen=1000 ttimeoutlen=0
 let mapleader=","
 nnoremap <leader>w :w<CR>
+nnoremap <leader>Q :q!<CR>
 nnoremap <leader>q :wq<CR>
+" Search and replace
+nnoremap <leader>r :%s/
+" buffer prev
+nnoremap <leader>p :b#<cr>
 " Remap H and L (top, bottom of screen to left and right end of line)
 nnoremap H ^
 nnoremap L $
 vnoremap H ^
 vnoremap L g_
 " Ag
-map <leader>s :Ag 
+map <leader>s :Ag
 " FZF
 map <leader>f :Files<cr>
 map <leader>b :Buffers<cr>
