@@ -1,117 +1,112 @@
-# ---------- Settings {{{
+// ---------- Settings {{{
 
-# Set default values for screen padding
+// Set default values for screen padding
 kwmc config padding 2 2 2 2
-# Set default values for container gaps
+// Set default values for container gaps
 kwmc config gap 0 0
 
-# Default tiling mode for Kwm (bsp | monocle | float | off)
+// Default tiling mode for Kwm (bsp | monocle | float | off)
 kwmc config tiling bsp
 
-# Let Kwm listen for hotkeys
+// Let Kwm listen for hotkeys
 kwmc config hotkeys on
 
-# Prefix is not applied globally (breaks hyper key binds)
-kwmc config prefix-global off
-
-# Time in seconds, before prefix must be re-activated
-kwmc config prefix-timeout 1
-
-# Automatically float windows that fail to resize
+// Automatically float windows that fail to resize
 kwmc config float-non-resizable on
 
-# Automatically resize the window to its container
-#kwmc config lock-to-container on
+// Automatically resize the window to its container
+//kwmc config lock-to-container on
 
-# Set focus-follows-mouse-mode to autoraise
-kwmc config focus-follows-mouse autoraise
-
-# Focus-follows-mouse is temporarily disabled when
-# a floating window has focus
-kwmc config standby-on-float on
-
-# The mouse will automatically move to the center
-# of the focused window
+// Set focus-follows-mouse-mode to autoraise
+kwmc config focus-follows-mouse on
 kwmc config mouse-follows-focus on
 
-# Allow window focus to wrap-around
+// Focus-follows-mouse is temporarily disabled when
+// a floating window has focus
+kwmc config standby-on-float on
+
+// The mouse will automatically move to the center
+// of the focused window
+kwmc config mouse-follows-focus on
+
+// Allow window focus to wrap-around
 kwmc config cycle-focus screen
 
-# Set default container split-ratio
+// Set default container split-ratio
 kwmc config split-ratio 0.5
 
-# New splits become the left leaf-node
+// New splits become the left leaf-node
 kwmc config spawn left
 
-# Enable border for focused window
-kwmc config focused-border on
-kwmc config focused-border size 2
-kwmc config focused-border color FFBDD322
-kwmc config focused-border radius 6
+// Enable border for focused window
+kwmc config border focused on
+kwmc config border focused size 2
+kwmc config border focused color FFBDD322
+kwmc config border focused radius 6
 
-# Enable border for marked window
-kwmc config marked-border on
-kwmc config marked-border size 2
-kwmc config marked-border color FFCC5577
-kwmc config marked-border radius 6
+// Enable border for marked window
+kwmc config border marked  on
+kwmc config border marked size 2
+kwmc config border marked color FFCC5577
+kwmc config border marked radius 6
 
-# Change border when prefix-key is active
-kwmc config prefix-border on
-kwmc config prefix-border size 2
-kwmc config prefix-border color FF458588
-kwmc config prefix-border radius 6
+// Create prefix mode
+kwmc mode prefix prefix on
+kwmc mode prefix timeout 1
+kwmc mode prefix restore default
+kwmc mode prefix color FF458588
 
-# The following allows Kwm to tile borderless iTerm2
+// The following allows Kwm to tile borderless iTerm2
 kwmc config add-role AXDialog iTerm2
-# }}}
-# Laptop (screen 0) overrides {{{
+// }}}
+// Laptop (screen 0) overrides {{{
 
 kwmc config display 0 mode monocle
 kwmc config display 0 padding 2 2 2 2
 kwmc config display 0 gap 0 0
 
-# }}}
-# ---------- Key Mappings {{{
+// }}}
+// ---------- Key Mappings {{{
 
-# Set prefix and hyper for Kwms hotkeys
+// Set prefix and hyper for Kwms hotkeys
 define hyper cmd+ctrl+alt+shift
-kwmc config prefix-key hyper-space
+kwmc bindsym hyper-space mode activate prefix
 
-# Hyper + {number} : Give Focus To Screen
-kwmc bind hyper-1 display -f 1    # display 1 = thunderbolt port
-kwmc bind hyper-2 display -f 0    # display 0 = laptop
-kwmc bind hyper-3 display -f 2    # display 2 = hdmi port
+// Hyper + {number} : Give Focus To Screen
+kwmc bindsym hyper-1 display -f 1    // display 1 = thunderbolt port
+kwmc bindsym hyper-2 display -f 0    // display 0 = laptop
+kwmc bindsym hyper-3 display -f 2    // display 2 = hdmi port
 
-# Prefix + {number} Move Focused Window To Screen
-kwmc bind prefix-1 window -m display 1
-kwmc bind prefix-2 window -m display 0
-kwmc bind prefix-3 window -m display 2
+// Prefix + {number} Move Focused Window To Screen
+kwmc bindsym prefix-1 window -m display 1
+kwmc bindsym prefix-2 window -m display 0
+kwmc bindsym prefix-3 window -m display 2
 
-# Hyper + wasd : Give Focus To Window
-kwmc bind hyper-a window -f west
-kwmc bind hyper-d window -f east
-kwmc bind hyper-s window -f south
-kwmc bind hyper-w window -f north
+// Hyper + wasd : Give Focus To Window
+kwmc bindsym hyper-a window -f west
+kwmc bindsym hyper-d window -f east
+kwmc bindsym hyper-s window -f south
+kwmc bindsym hyper-w window -f north
 
-# Prefix + a : Set Space Tiling Mode To BSP (a for all)
-kwmc bind prefix-a space -t bsp
+// Prefix + a : Set Space Tiling Mode To BSP (a for all)
+kwmc bindsym prefix-a space -t bsp
 
-# Prefix + s : Set Space Tiling Mode To Monocle (s for select) (fullscreen all windows)
-kwmc bind prefix-s space -t monocle
+// Prefix + s : Set Space Tiling Mode To Monocle (s for select) (fullscreen all windows)
+kwmc bindsym prefix-s space -t monocle
 
-# Prefix + f : Float current window
-kwmc bind prefix-f window -t focus
+// Prefix + f : Float current window
+kwmc bindsym prefix-f window -t focus
 
-# Set Temporary Window Container
-kwmc bind hyper-f window -z fullscreen # Fullscreen one window
-kwmc bind prefix-d window -z parent
+// Set Temporary Window Container
+kwmc bindsym hyper-f window -z fullscreen // Fullscreen one window
+kwmc bindsym prefix-d window -z parent
 
-# Rotate Window-Tree By 90* (Clockwise)
-kwmc bind hyper-r tree rotate 90
+// Rotate Window-Tree By 90* (Clockwise)
+kwmc bindsym hyper-r tree rotate 90
 
-# Modify Container
-kwmc bind prefix-s window -c split-mode toggle
-kwmc bind prefix-h window -c reduce 0.05
-kwmc bind prefix-l window -c expand 0.05
+// Modify Container
+kwmc bindsym prefix-s window -c split-mode toggle
+kwmc bindsym prefix-h window -c reduce 0.05
+kwmc bindsym prefix-l window -c expand 0.05
 
-# vim:foldmethod=marker:foldlevel=0
+// vim:foldmethod=marker:foldlevel=0

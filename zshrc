@@ -112,7 +112,7 @@ alias vim="nvim"
 alias vi="nvim"
 alias cl="clear"
 
-alias gs="git status"
+alias git="hub"
 
 alias v="vagrant"
 alias homestead="cd ~/Code/Homestead && vagrant up && vagrant ssh"

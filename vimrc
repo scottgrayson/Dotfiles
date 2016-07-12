@@ -6,9 +6,9 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " Syntax
-Plug 'posva/vim-vue'
 Plug 'altercation/vim-colors-solarized'
 Plug 'sheerun/vim-polyglot'
+Plug 'posva/vim-vue'
 " Editing
 Plug 'tpope/vim-surround'
 " Snippets
@@ -18,7 +18,7 @@ Plug 'honza/vim-snippets'
 Plug 'airblade/vim-gitgutter'
 " Autocomplete
 function! DoRemote(arg)
-  UpdateRemotePlugins
+    UpdateRemotePlugins
 endfunction
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 " Github
@@ -70,7 +70,8 @@ set autoindent                  " always set autoindenting on
 set copyindent                  " copy the previous indentation on autoindenting
 set smarttab
 let g:php_cs_fixer_level = "psr2"              " which level ?
-autocmd BufWritePre * :%s/\s\+$//e " strip trailing whitespace on save
+
+set clipboard=unnamed
 " }}}
 " Tags {{{
 set tags=./tags,tags;
@@ -88,7 +89,7 @@ let g:UltiSnipsJumpForwardTrigger="<s-tab>"
 " }}}
 " {{{ Filtype Settings (Blade, Vue, etc)
 " associate *.blade.php and Vue with html filetype
-au BufRead,BufNewFile *.vue set filetype=html
+" au BufRead,BufNewFile *.vue set filetype=html
 " }}}
 " Search and Replace {{{
 set ignorecase
@@ -106,6 +107,9 @@ set foldnestmax=10
 " Mappings {{{
 set timeoutlen=1000 ttimeoutlen=0
 let mapleader=","
+" strip trailing whitespace, retab and reindent
+nnoremap <leader><tab> :%s/\s\+$//e<cr>gg=<S-G><cr>
+
 nnoremap <leader>w :w<CR>
 nnoremap <leader>Q :q!<CR>
 nnoremap <leader>q :wq<CR>
@@ -119,7 +123,7 @@ nnoremap L $
 vnoremap H ^
 vnoremap L g_
 " Ag
-map <leader>s :Ag
+map <leader>s :Ag 
 " FZF
 map <leader>f :Files<cr>
 map <leader>b :Buffers<cr>
