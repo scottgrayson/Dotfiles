@@ -1,0 +1,18 @@
+{
+    "profiles": [
+        {
+            "name": "POKER",
+            "selected": true,
+            "simple_modifications": {
+                "caps_lock": "escape"
+            }
+        },
+        {
+            "name": "MBP",
+            "selected": false,
+            "simple_modifications": {
+                "caps_lock": "escape"
+            }
+        }
+    ]
+}
