@@ -68,6 +68,7 @@ history-substring-search
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export PATH="$PATH:~/.composer/vendor/bin"
+export PATH="$PATH:/Users/Scott/Code/spark-installer"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
