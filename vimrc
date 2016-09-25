@@ -23,6 +23,16 @@ endfunction
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 " Github
 Plug 'tpope/vim-fugitive'
+"markdown
+function! BuildComposer(info)
+  if a:info.status != 'unchanged' || a:info.force
+    !cargo build --release
+    UpdateRemotePlugins
+  endif
+endfunction
+
+Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
+"
 " ---- End Plugin List
 call plug#end()            " required
 " }}}

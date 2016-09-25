@@ -117,5 +117,6 @@ alias git="hub"
 
 alias v="vagrant"
 alias homestead="cd ~/Code/Homestead && vagrant up && vagrant ssh"
+alias chrome="open -a 'Google Chrome'"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
