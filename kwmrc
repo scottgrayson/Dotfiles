@@ -1,9 +1,9 @@
 // ---------- Settings {{{
 
 // Set default values for screen padding
-kwmc config padding 2 2 2 2
+kwmc config padding 30 15 15 15
 // Set default values for container gaps
-kwmc config gap 0 0
+kwmc config gap 10 10
 
 // Default tiling mode for Kwm (bsp | monocle | float | off)
 kwmc config tiling bsp
@@ -104,10 +104,17 @@ kwmc bindsym prefix-d window -z parent
 // Rotate Window-Tree By 90* (Clockwise)
 kwmc bindsym hyper-r tree rotate 90
 
+// Reinsert container
+kwmc bindsym prefix+shift-h window -m west
+kwmc bindsym prefix+shift-j window -m south
+kwmc bindsym prefix+shift-k window -m north
+kwmc bindsym prefix+shift-l window -m east
+
 // Modify Container
-kwmc bindsym prefix-s window -c split-mode toggle
-kwmc bindsym prefix-h window -c reduce 0.05
-kwmc bindsym prefix-l window -c expand 0.05
+kwmc bindsym prefix-h window -c expand 0.05 west
+kwmc bindsym prefix-j window -c expand 0.05 south
+kwmc bindsym prefix-k window -c expand 0.05 north
+kwmc bindsym prefix-l window -c expand 0.05 east
 
 // }}}
 //  --------------- hjkl settings {{{
