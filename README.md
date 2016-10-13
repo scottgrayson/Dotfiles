@@ -1,2 +1,7 @@
 # Dotfiles
-vim/neovim, kwm window manager, and osx defaults
+| category | program |
+| --- | --- |
+| editor | vim/neovim |
+| window management | kwm |
+| key-combos (hjkl arrows) | khd |
+| key-remap | karabinder-elements |

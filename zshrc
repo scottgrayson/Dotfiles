@@ -66,7 +66,7 @@ history-substring-search
 
 # User configuration
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin"
 export PATH="$PATH:~/.composer/vendor/bin"
 export PATH="$PATH:/Users/Scott/Code/spark-installer"
 # export MANPATH="/usr/local/man:$MANPATH"

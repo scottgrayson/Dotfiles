@@ -114,20 +114,6 @@ kwmc bindsym prefix-k window -c expand 0.05 north
 kwmc bindsym prefix-l window -c expand 0.05 east
 
 // }}}
-//  --------------- hjkl settings {{{
-
-kwmc bindsym ctrl-h exec osascript ~/.applescripts/left-arrow.scpt
-kwmc bindsym ctrl-j exec osascript ~/.applescripts/down-arrow.scpt
-kwmc bindsym ctrl-k exec osascript ~/.applescripts/up-arrow.scpt
-kwmc bindsym ctrl-l exec osascript ~/.applescripts/right-arrow.scpt
-
-kwmc bindsym hyper-h exec osascript ~/.applescripts/home-key.scpt
-kwmc bindsym hyper-j exec osascript ~/.applescripts/page-down.scpt
-kwmc bindsym hyper-k exec osascript ~/.applescripts/page-up.scpt
-kwmc bindsym hyper-l exec osascript ~/.applescripts/end-key.scpt
-
-// }}}
-
 
 // vim:foldmethod=marker:foldlevel=1
 

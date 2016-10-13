@@ -1,0 +1,11 @@
+# remap left-alt h/j/k/l -> page up/down + home/end
+lalt - h : khd -p "- 0x73"
+lalt - j : khd -p "- 0x79"
+lalt - k : khd -p "- 0x74"
+lalt - l : khd -p "- 0x77"
+
+# remap left-control h/j/k/l -> arrow keys
+lctrl - h : khd -p "- left"
+lctrl - j : khd -p "- down"
+lctrl - k : khd -p "- up"
+lctrl - l : khd -p "- right"
