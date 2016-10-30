@@ -53,7 +53,6 @@ plugins=(
 git
 composer
 brew
-web-search
 vagrant
 npm
 laravel
@@ -72,11 +71,11 @@ export PATH="$PATH:/Users/Scott/Code/spark-installer"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
+source ~/.iterm2_shell_integration.`basename $SHELL`
 
 # bind UP and DOWN arrow keys
-zmodload zsh/terminfo
-bindkey "$terminfo[kcuu1]" history-substring-search-up
-bindkey "$terminfo[kcud1]" history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
 
 # bind UP and DOWN arrow keys (compatibility fallback
 # for Ubuntu 12.04, Fedora 21, and MacOSX 10.9 users)
@@ -87,36 +86,23 @@ bindkey '^[[B' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
 # Preferred editor for local and remote sessions
- if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='vim'
- else
-   export EDITOR='nvim'
- fi
+if [[ -n $SSH_CONNECTION ]]; then
+    export EDITOR='vim'
+else
+    export EDITOR='nvim'
+fi
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
+# aliases
 alias vim="nvim"
 alias vi="nvim"
 alias cl="clear"
-
 alias git="hub"
-
+alias pu="phpunit"
 alias v="vagrant"
 alias homestead="cd ~/Code/Homestead && vagrant up && vagrant ssh"
 alias chrome="open -a 'Google Chrome'"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

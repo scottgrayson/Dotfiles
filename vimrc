@@ -31,7 +31,7 @@ function! BuildComposer(info)
   endif
 endfunction
 
-Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
+" Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 "
 " ---- End Plugin List
 call plug#end()            " required
