@@ -68,7 +68,9 @@ history-substring-search
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin"
 export PATH="$PATH:~/.composer/vendor/bin"
 export PATH="$PATH:/Users/Scott/Code/spark-installer"
-# export MANPATH="/usr/local/man:$MANPATH"
+export ANDROID_HOME=~/Library/Android/sdk
+export PATH=${PATH}:${ANDROID_HOME}/tools
+export PATH=${PATH}:${ANDROID_HOME}/platform-tools
 
 source $ZSH/oh-my-zsh.sh
 source ~/.iterm2_shell_integration.`basename $SHELL`
@@ -100,8 +102,11 @@ alias cl="clear"
 alias git="hub"
 alias pu="phpunit"
 alias v="vagrant"
-alias homestead="cd ~/Code/Homestead && vagrant up && vagrant ssh"
+alias sql="mysql.server start"
 alias chrome="open -a 'Google Chrome'"
+alias rni="react-native run-ios"
+alias rn="react-native"
+alias kb="vim ~/.karabiner.d/configuration/karabiner.json"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

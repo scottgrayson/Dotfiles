@@ -13,6 +13,10 @@ kwmc config hotkeys on
 
 // Automatically float windows that fail to resize
 kwmc config float-non-resizable on
+// Always float the following
+kwmc rule name="qemu-system-x86_64" properties={float="true"}
+kwmc rule owner="qemu-system-x86_64" properties={float="true"}
+// kwmc rule owner="Android Studio"  properties={float=""}
 
 // Automatically resize the window to its container
 //kwmc config lock-to-container on

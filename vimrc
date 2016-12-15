@@ -9,6 +9,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'sheerun/vim-polyglot'
 Plug 'posva/vim-vue'
+Plug 'scrooloose/syntastic'
 " Editing
 Plug 'tpope/vim-surround'
 " Snippets
@@ -17,22 +18,10 @@ Plug 'honza/vim-snippets'
 " Github
 Plug 'airblade/vim-gitgutter'
 " Autocomplete
-function! DoRemote(arg)
-    UpdateRemotePlugins
-endfunction
-Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'ervandew/supertab'
 " Github
 Plug 'tpope/vim-fugitive'
-"markdown
-function! BuildComposer(info)
-  if a:info.status != 'unchanged' || a:info.force
-    !cargo build --release
-    UpdateRemotePlugins
-  endif
-endfunction
-
-" Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
-"
 " ---- End Plugin List
 call plug#end()            " required
 " }}}
@@ -72,14 +61,11 @@ set splitright
 set expandtab                   " expand tabs by default (overloadable per file type later)
 set softtabstop=4               " when hitting <BS>, pretend like a tab is removed, even if spaces
 set shiftwidth=4                " number of spaces to use for autoindenting
-set softtabstop=4               " when hitting <BS>, pretend like a tab is removed, even if spaces
-set shiftwidth=4                " number of spaces to use for autoindenting
 set shiftround                  " use multiple of shiftwidth when indenting with '<' and '>'
 set backspace=indent,eol,start  " allow backspacing over everything in insert mode
 set autoindent                  " always set autoindenting on
 set copyindent                  " copy the previous indentation on autoindenting
 set smarttab
-let g:php_cs_fixer_level = "psr2"              " which level ?
 
 set clipboard=unnamed
 " }}}
@@ -89,8 +75,12 @@ set tags=./tags,tags;
 " Completion {{{
 set wildmenu
 set wildmode=list:longest,full
+set completeopt=longest,menuone
 " deoplete config
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
+" let g:deoplete#omni_input_patterns = {}
+" let g:deoplete#omni_input_patterns.php =
+"         \ '\w\+\|[^. \t]->\w*\|\w\+::\w*'
 " UltiSnips config
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 let g:UltiSnipsExpandTrigger="<s-tab>"
@@ -118,7 +108,7 @@ set foldnestmax=10
 set timeoutlen=1000 ttimeoutlen=0
 let mapleader=","
 " strip trailing whitespace, retab and reindent
-nnoremap <leader><tab> :%s/\s\+$//e<cr>gg=<S-G><cr>
+nnoremap <leader>= :%s/\s\+$//e<cr>gg=<S-G><cr>
 
 nnoremap <leader>w :w<CR>
 nnoremap <leader>Q :q!<CR>
@@ -138,13 +128,19 @@ map <leader>s :Ag
 map <leader>f :Files<cr>
 map <leader>b :Buffers<cr>
 map <leader>t :Tags<cr>
-" PHP Beautify
-" nnoremap <silent><leader>pb :call PhpCsFixerFixFile()<CR>
+
+map <leader>[ :lnext<cr>
+map <leader>] :lnext<cr>
 " Window nav
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" " }}}
+" Commands {{{
+:command! -complete=file -nargs=1 Rpdf :r !pdftotext -nopgbrk <q-args> -
+:command! -complete=file -nargs=1 Rpdf :r !pdftotext -nopgbrk <q-args> - |fmt -csw78
 " }}}
 " Backup Directories {{{
 set backupdir=~/.vim/backups

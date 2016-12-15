@@ -23,7 +23,7 @@
         "left_option" : "left_command"
       },
       "name" : "Poker",
-      "selected" : true
+      "selected" : false
     },
     {
       "name" : "MBP",
