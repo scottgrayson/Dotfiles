@@ -9,7 +9,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'sheerun/vim-polyglot'
 Plug 'posva/vim-vue'
-Plug 'scrooloose/syntastic'
+" Linting
+Plug 'neomake/neomake'
 " Editing
 Plug 'tpope/vim-surround'
 " Snippets
@@ -18,7 +19,6 @@ Plug 'honza/vim-snippets'
 " Github
 Plug 'airblade/vim-gitgutter'
 " Autocomplete
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'ervandew/supertab'
 " Github
 Plug 'tpope/vim-fugitive'
@@ -59,8 +59,10 @@ set splitright
 " }}}
 " Formatting {{{
 set expandtab                   " expand tabs by default (overloadable per file type later)
-set softtabstop=4               " when hitting <BS>, pretend like a tab is removed, even if spaces
-set shiftwidth=4                " number of spaces to use for autoindenting
+set softtabstop=2               " when hitting <BS>, pretend like a tab is removed, even if spaces
+set shiftwidth=2                " number of spaces to use for autoindenting
+autocmd FileType php setlocal shiftwidth=4 softtabstop=4
+autocmd FileType blade setlocal shiftwidth=2 softtabstop=2
 set shiftround                  " use multiple of shiftwidth when indenting with '<' and '>'
 set backspace=indent,eol,start  " allow backspacing over everything in insert mode
 set autoindent                  " always set autoindenting on
@@ -104,11 +106,34 @@ set foldenable
 set foldlevelstart=10
 set foldnestmax=10
 " }}}
+" Syntax {{{
+
+function! VueIndent()
+    1
+    if search('import')
+      +1,$>
+      $<
+    endif
+endfunction
+
+function! Indent()
+  normal! gg=G
+  normal! :%s/\s\+$//e<CR>
+  if &filetype == 'vue'
+    call VueIndent()
+  endif
+endfunction
+
+" }}}
+" Linter {{{
+" let neomake_verbose=3
+autocmd! BufWritePre * Neomake
+" }}}
 " Mappings {{{
 set timeoutlen=1000 ttimeoutlen=0
 let mapleader=","
 " strip trailing whitespace, retab and reindent
-nnoremap <leader>= :%s/\s\+$//e<cr>gg=<S-G><cr>
+nnoremap <leader>= :call Indent()<CR>
 
 nnoremap <leader>w :w<CR>
 nnoremap <leader>Q :q!<CR>
@@ -146,7 +171,7 @@ nnoremap <C-l> <C-w>l
 set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
 if exists("&undodir")
-    set undodir=~/.vim/undo
+  set undodir=~/.vim/undo
 endif
 " }}}
 " vim:foldmethod=marker:foldlevel=1

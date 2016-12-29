@@ -53,7 +53,6 @@ plugins=(
 git
 composer
 brew
-vagrant
 npm
 laravel
 colorize
@@ -98,14 +97,15 @@ fi
 # aliases
 alias vim="nvim"
 alias vi="nvim"
+alias v="nvim"
 alias cl="clear"
 alias git="hub"
 alias pu="phpunit"
-alias v="vagrant"
 alias sql="mysql.server start"
 alias chrome="open -a 'Google Chrome'"
-alias rni="react-native run-ios"
-alias rn="react-native"
+alias sz="source ~/.zshrc"
+alias zrc="vim ~/.zshrc"
+alias vrc="vim ~/.vimrc"
 alias kb="vim ~/.karabiner.d/configuration/karabiner.json"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
