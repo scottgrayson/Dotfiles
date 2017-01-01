@@ -102,6 +102,8 @@ alias cl="clear"
 alias git="hub"
 alias pu="phpunit"
 alias sql="mysql.server start"
+# put in iterm. sends ctrlc tl enter: 0x03 0x74 0x6c 0xd
+alias tl="valet log"
 alias chrome="open -a 'Google Chrome'"
 alias sz="source ~/.zshrc"
 alias zrc="vim ~/.zshrc"
