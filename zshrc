@@ -107,6 +107,8 @@ alias sz="source ~/.zshrc"
 alias zrc="vim ~/.zshrc"
 alias vrc="vim ~/.vimrc"
 alias kb="vim ~/.karabiner.d/configuration/karabiner.json"
+alias lint="npm run lint"
+alias dev="npm run dev"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

@@ -37,7 +37,6 @@ set title
 syntax enable
 colorscheme solarized
 set background=dark
-set t_Co=256
 " }}}
 " UI settings {{{
 set list

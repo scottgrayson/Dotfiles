@@ -44,7 +44,7 @@ kwmc config split-ratio 0.5
 kwmc config spawn right
 
 // Enable border for focused window
-kwmc config border focused on
+kwmc config border focused off
 kwmc config border focused size 2
 kwmc config border focused color ff2aa198
 kwmc config border focused radius 6
@@ -62,8 +62,8 @@ kwmc config add-role AXDialog iTerm2
 // Laptop (screen 0) overrides {{{
 
 kwmc config display 0 mode monocle
-kwmc config display 0 padding 2 2 2 2
-kwmc config display 0 gap 0 0
+kwmc config display 0 padding 26 8 4 4
+kwmc config display 0 gap 4 4
 
 // }}}
 
