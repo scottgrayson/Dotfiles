@@ -62,8 +62,8 @@ kwmc config add-role AXDialog iTerm2
 // Laptop (screen 0) overrides {{{
 
 kwmc config display 0 mode monocle
-kwmc config display 0 padding 26 8 4 4
-kwmc config display 0 gap 4 4
+kwmc config display 0 padding 0 0 0 0
+kwmc config display 0 gap 0 0
 
 // }}}
 
