@@ -20,6 +20,8 @@ Plug 'honza/vim-snippets'
 Plug 'airblade/vim-gitgutter'
 " Autocomplete
 Plug 'ervandew/supertab'
+" PHP Use statements
+Plug 'arnaud-lb/vim-php-namespace'
 " Github
 Plug 'tpope/vim-fugitive'
 " ---- End Plugin List
@@ -98,7 +100,7 @@ set smartcase                   " ignore case if search pattern is all lowercase
 " enter to clear search highlights
 nnoremap <CR> :noh<CR>
 " FZF ignore things in gitignore
-let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+" let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 " }}}
 " Folding {{{
 set foldenable
@@ -108,31 +110,32 @@ set foldnestmax=10
 " Syntax {{{
 
 function! VueIndent()
-    1
-    if search('import')
-      +1,$>
-      $<
-    endif
+  normal! gg=G/impoj>/scriptn<<,w
 endfunction
 
 function! Indent()
-  normal! gg=G
-  normal! :%s/\s\+$//e<CR>
   if &filetype == 'vue'
     call VueIndent()
+  else
+    normal! gg=G
   endif
+  normal! :%s/\s\+$//e<CR>
 endfunction
 
 " }}}
 " Linter {{{
 " let neomake_verbose=3
-autocmd! BufWritePre * Neomake
+autocmd InsertLeave,TextChanged * silent! update | Neomake
 " }}}
 " Mappings {{{
 set timeoutlen=1000 ttimeoutlen=0
 let mapleader=","
 " strip trailing whitespace, retab and reindent
 nnoremap <leader>= :call Indent()<CR>
+
+"edit vimrc
+nnoremap <leader>C :e ~/.vimrc<cr>
+nnoremap <leader>% :so ~/.vimrc<cr>
 
 nnoremap <leader>w :w<CR>
 nnoremap <leader>Q :q!<CR>
@@ -149,22 +152,20 @@ vnoremap L g_
 " Ag
 map <leader>s :Ag 
 " FZF
-map <leader>f :Files<cr>
+map <leader>c :Commits<cr>
+map <leader>f :GFiles<cr>
+map <leader>F :Files<cr>
 map <leader>b :Buffers<cr>
-map <leader>t :Tags<cr>
+map <leader>T :Tags<cr>
 
-map <leader>[ :lnext<cr>
-map <leader>] :lnext<cr>
-" Window nav
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+" skip through linter errors
+map <leader>ln :lnext<cr>
+map <leader>lp :lprev<cr>
+map <leader>l :ll<cr>
 
-" " }}}
-" Commands {{{
-:command! -complete=file -nargs=1 Rpdf :r !pdftotext -nopgbrk <q-args> -
-:command! -complete=file -nargs=1 Rpdf :r !pdftotext -nopgbrk <q-args> - |fmt -csw78
+"sort selected lines by length
+vmap <Leader>S ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr>
+
 " }}}
 " Backup Directories {{{
 set backupdir=~/.vim/backups
