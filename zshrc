@@ -100,17 +100,21 @@ alias vi="nvim"
 alias v="nvim"
 alias cl="clear"
 alias git="hub"
+alias gpr="hub pull-request"
 alias pu="phpunit"
 alias sql="mysql.server start"
-# put in iterm. sends ctrlc tl enter: 0x03 0x74 0x6c 0xd
-alias tl="valet log"
+alias sqlu="mysql -u root"
 alias chrome="open -a 'Google Chrome'"
 alias sz="source ~/.zshrc"
 alias zrc="vim ~/.zshrc"
 alias vrc="vim ~/.vimrc"
-alias kb="vim ~/.karabiner.d/configuration/karabiner.json"
+alias kb="vim ~/.config/karabiner/karabiner.json"
 alias lint="npm run lint"
 alias dev="npm run dev"
+#
+# put in iterm. sends ctrlc tl enter: 0x03 0x74 0x6c 0xd
+# alias tl="valet log"
+alias tl="tail -fn 0 storage/logs/laravel.log"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

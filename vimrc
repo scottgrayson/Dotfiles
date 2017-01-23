@@ -100,7 +100,7 @@ set smartcase                   " ignore case if search pattern is all lowercase
 " enter to clear search highlights
 nnoremap <CR> :noh<CR>
 " FZF ignore things in gitignore
-" let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 " }}}
 " Folding {{{
 set foldenable
@@ -133,6 +133,14 @@ let mapleader=","
 " strip trailing whitespace, retab and reindent
 nnoremap <leader>= :call Indent()<CR>
 
+"insert use
+function! IPhpInsertUse()
+    call PhpInsertUse()
+    call feedkeys('a',  'n')
+endfunction
+autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
+autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>Use()<CR>
+
 "edit vimrc
 nnoremap <leader>C :e ~/.vimrc<cr>
 nnoremap <leader>% :so ~/.vimrc<cr>
@@ -145,16 +153,16 @@ nnoremap <leader>r :%s/
 " buffer prev
 nnoremap <leader>p :b#<cr>
 " Remap H and L (top, bottom of screen to left and right end of line)
-nnoremap H ^
-nnoremap L $
-vnoremap H ^
-vnoremap L g_
+" nnoremap H ^
+" nnoremap L $
+" vnoremap H ^
+" vnoremap L g_
 " Ag
 map <leader>s :Ag 
 " FZF
 map <leader>c :Commits<cr>
-map <leader>f :GFiles<cr>
-map <leader>F :Files<cr>
+" map <leader>f :GFiles<cr>
+map <leader>f :Files<cr>
 map <leader>b :Buffers<cr>
 map <leader>T :Tags<cr>
 
