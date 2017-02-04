@@ -47,7 +47,7 @@ kwmc config spawn right
 # Enable border for focused window
 kwmc config border focused on
 kwmc config border focused size 2
-kwmc config border focused color 0xFFBDD322
+kwmc config border focused color 0xFFD5C4A1
 kwmc config border focused radius 6
 
 // The following allows Kwm to tile borderless iTerm2

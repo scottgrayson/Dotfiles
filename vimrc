@@ -6,7 +6,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " Syntax
-Plug 'altercation/vim-colors-solarized'
+Plug 'arcticicestudio/nord-vim'
+Plug 'flazz/vim-colorschemes'
 Plug 'sheerun/vim-polyglot'
 Plug 'posva/vim-vue'
 " Linting
@@ -163,7 +164,7 @@ nnoremap <leader>p :b#<cr>
 " Ag
 map <leader>s :Ag 
 " FZF
-map <leader>c :Commits<cr>
+map <leader>g :Commits<cr>
 " map <leader>f :GFiles<cr>
 map <leader>f :Files<cr>
 map <leader>b :Buffers<cr>
@@ -173,6 +174,10 @@ map <leader>T :Tags<cr>
 map <leader>ln :lnext<cr>
 map <leader>lp :lprev<cr>
 map <leader>l :ll<cr>
+
+" Colorschemes
+map <leader>c :Colors<cr>
+map <Leader>bg :let &background = ( &background == "dark"? "light" : "dark" )<CR>
 
 "sort selected lines by length
 vmap <Leader>S ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr>
