@@ -41,6 +41,7 @@ set hidden
 syntax enable
 colorscheme solarized
 set background=dark
+highlight Comment cterm=italic
 " }}}
 " UI settings {{{
 set list
@@ -110,6 +111,11 @@ set foldlevelstart=10
 set foldnestmax=10
 " }}}
 " Syntax {{{
+
+function! SyntaxItem()
+  return synIDattr(synID(line("."),col("."),1),"name")
+endfunction
+set statusline+=%{SyntaxItem()}
 
 function! VueIndent()
   normal! gg=VG/importjV/scriptk>,w
