@@ -1,8 +1,36 @@
+# vi-mode for non-terminal applications
+
 # remap left-control h/j/k/l -> arrow keys
-lctrl - h : khd -p "- left"
-lctrl - j : khd -p "- down"
-lctrl - k : khd -p "- up"
-lctrl - l : khd -p "- right"
+lctrl - h             :   khd -p "- left"
+lctrl - j             :   khd -p "- down"
+lctrl - k             :   khd -p "- up"
+lctrl - l             :   khd -p "- right"
+
+shift + lctrl - h       :   khd -p "shift - left"
+shift + lctrl - j       :   khd -p "shift - down"
+shift + lctrl - k       :   khd -p "shift - up"
+shift + lctrl - l       :   khd -p "shift - right"
+
+# remap left-control 0 / 4   -> start / end of line
+lctrl - 0         :   khd -p "cmd - left"
+lctrl - 4         :   khd -p "cmd - right"
+
+# remap left-control g / G   -> start / end of text
+lctrl - g         :   khd -p "cmd - up"
+lctrl + shift - g :   khd -p "cmd - down"
+
+shift + lctrl - 0 :   khd -p "shift + cmd - left"
+shift + lctrl - 4 :   khd -p "shift + cmd - right"
+
+# remap left-control b / e   -> start / end of word
+lctrl - b         :   khd -p "alt - left"
+lctrl - e         :   khd -p "alt - right"
+
+shift + lctrl - b :   khd -p "shift + alt - left"
+shift + lctrl - e :   khd -p "shift + alt - right"
+
+# remap left-control x       -> forward delete
+lctrl - x         :   khd -p "- delete"
 
 # Enable kwm compatibility mode
 khd kwm on
@@ -59,9 +87,9 @@ alt - j            :    kwmc window -f south
 alt - k            :    kwmc window -f north
 # One Handed
 alt - w            :    kwmc window -f north
-alt - a            :    kwmc window -f east
-alt - s            :    kwmc window -f west
-alt - d            :    kwmc window -f south
+alt - a            :    kwmc window -f west
+alt - s            :    kwmc window -f south
+alt - d            :    kwmc window -f east
 
 # Give Focus To Screen
 alt - 1            :    kwmc display -f 0
