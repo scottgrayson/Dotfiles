@@ -1,11 +1,91 @@
-# remap left-alt h/j/k/l -> page up/down + home/end
-lalt - h : khd -p "- 0x73"
-lalt - j : khd -p "- 0x79"
-lalt - k : khd -p "- 0x74"
-lalt - l : khd -p "- 0x77"
-
 # remap left-control h/j/k/l -> arrow keys
 lctrl - h : khd -p "- left"
 lctrl - j : khd -p "- down"
 lctrl - k : khd -p "- up"
 lctrl - l : khd -p "- right"
+
+# Enable kwm compatibility mode
+khd kwm on
+
+# set color of default mode
+khd mode default color 0xFFD5C4A1
+
+# Enable the prefix mode
+khd mode prefix prefix on
+khd mode prefix timeout 1
+khd mode prefix restore default
+khd mode prefix color 0xFF458588
+
+# Activate prefix mode
+alt - space                 :    khd -e "mode activate prefix"
+
+# Quit Kwm
+prefix + cmd - q     :    kwmc quit
+
+# Set Space Tiling Mode To BSP
+prefix - a           :    kwmc space -t bsp
+
+# Set Space Tiling Mode To Monocle
+prefix - s           :    kwmc space -t monocle
+
+# Set Space Tiling Mode To Floating
+prefix - d           :    kwmc space -t float
+
+# Rotate Window-Tree By 90degrees (Clockwise)
+prefix - r           :    kwmc tree rotate 90
+
+# Modify Container
+# prefix - s               :    kwmc window -c split-mode toggle
+
+prefix - h               :    kwmc window -c expand 0.05 west
+prefix - j               :    kwmc window -c expand 0.05 south
+prefix - k               :    kwmc window -c expand 0.05 north
+prefix - l               :    kwmc window -c expand 0.05 east
+
+prefix + shift - h       :    kwmc window -c reduce 0.05 west
+prefix + shift - j       :    kwmc window -c reduce 0.05 south
+prefix + shift - k       :    kwmc window -c reduce 0.05 north
+prefix + shift - l       :    kwmc window -c reduce 0.05 east
+
+# Set Temporary Window Container
+prefix - f               :    kwmc window -z fullscreen
+prefix - p               :    kwmc window -z parent
+prefix - w               :    kwmc window -t focused
+
+# Give Focus To Window
+alt - h            :    kwmc window -f west
+alt - l            :    kwmc window -f east
+alt - j            :    kwmc window -f south
+alt - k            :    kwmc window -f north
+# One Handed
+alt - w            :    kwmc window -f north
+alt - a            :    kwmc window -f east
+alt - s            :    kwmc window -f west
+alt - d            :    kwmc window -f south
+
+# Give Focus To Screen
+alt - 1            :    kwmc display -f 0
+alt - 2            :    kwmc display -f 2
+alt - 3            :    kwmc display -f 1
+
+# Swap Focused Window
+prefix + alt - h           :    kwmc window -s west
+prefix + alt - j           :    kwmc window -s south
+prefix + alt - k           :    kwmc window -s north
+prefix + alt - l           :    kwmc window -s east
+prefix + alt - m           :    kwmc window -s mark
+
+# shift window
+prefix + alt - p           :    kwmc window -s prev
+prefix + alt - n           :    kwmc window -s next
+
+# Detach Focused Window And Reinsert In Direction
+prefix + ctrl - k         :    kwmc window -m north
+prefix + ctrl - l         :    kwmc window -m east
+prefix + ctrl - j         :    kwmc window -m south
+prefix + ctrl - h         :    kwmc window -m west
+
+# Move Focused Window To Screen
+prefix - 1           :    kwmc window -m display 0
+prefix - 2           :    kwmc window -m display 2
+prefix - 3           :    kwmc window -m display 1

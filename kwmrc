@@ -1,4 +1,4 @@
-// ---------- Settings {{{
+// ---------- Settings
 
 // Set default values for screen padding
 kwmc config padding 40 30 30 30
@@ -13,10 +13,6 @@ kwmc config hotkeys on
 
 // Automatically float windows that fail to resize
 kwmc config float-non-resizable on
-// Always float the following
-kwmc rule name="qemu-system-x86_64" properties={float="true"}
-kwmc rule owner="qemu-system-x86_64" properties={float="true"}
-// kwmc rule owner="Android Studio"  properties={float=""}
 
 // Automatically resize the window to its container
 //kwmc config lock-to-container on
@@ -33,6 +29,11 @@ kwmc config standby-on-float on
 // of the focused window
 kwmc config mouse-follows-focus on
 
+kwmc config mouse-drag on
+
+# The modifier keys to be held down to initiate mouse-drag
+kwmc config mouse-drag mod shift+ctrl
+
 // Allow window focus to wrap-around
 kwmc config cycle-focus screen
 
@@ -43,81 +44,25 @@ kwmc config split-ratio 0.5
 // New splits become the left leaf-node
 kwmc config spawn right
 
-// Enable border for focused window
-kwmc config border focused off
+# Enable border for focused window
+kwmc config border focused on
 kwmc config border focused size 2
-kwmc config border focused color ff2aa198
+kwmc config border focused color 0xFFBDD322
 kwmc config border focused radius 6
 
-// Create prefix mode
-kwmc mode prefix prefix on
-kwmc mode prefix timeout 1
-kwmc mode prefix restore default
-kwmc mode prefix color ffd33682
+# Enable border for marked window
+kwmc config border marked on
+kwmc config border marked size 2
+kwmc config border marked color 0xFFCC5577
+kwmc config border marked radius 6
 
 // The following allows Kwm to tile borderless iTerm2
 kwmc config add-role AXDialog iTerm2
-// }}}
+//
 
-// Laptop (screen 0) overrides {{{
+// Laptop (screen 0) overrides
 
-kwmc config display 0 mode monocle
 kwmc config display 0 padding 0 0 0 0
 kwmc config display 0 gap 0 0
 
-// }}}
-
-// ---------- Key Mappings {{{
-
-// Set prefix and hyper for Kwms hotkeys
-define hyper lalt
-kwmc bindsym hyper-space mode activate prefix
-
-// Hyper + {number} : Give Focus To Screen
-kwmc bindsym hyper-1 display -f 0    // display 1 = thunderbolt port
-kwmc bindsym hyper-2 display -f 2    // display 0 = laptop
-kwmc bindsym hyper-3 display -f 1    // display 2 = hdmi port
-
-// Prefix + {number} Move Focused Window To Screen
-kwmc bindsym prefix-1 window -m display 0
-kwmc bindsym prefix-2 window -m display 2
-kwmc bindsym prefix-3 window -m display 1
-
-// Hyper + wasd : Give Focus To Window
-kwmc bindsym hyper-a window -f west
-kwmc bindsym hyper-d window -f east
-kwmc bindsym hyper-s window -f south
-kwmc bindsym hyper-w window -f north
-
-// Prefix + a : Set Space Tiling Mode To BSP (a for all)
-kwmc bindsym prefix-a space -t bsp
-
-// Prefix + s : Set Space Tiling Mode To Monocle (s for select) (fullscreen all windows)
-kwmc bindsym prefix-s space -t monocle
-
-// Prefix + f : Float current window
-kwmc bindsym prefix-f window -t focus
-
-// Set Temporary Window Container
-kwmc bindsym hyper-f window -z fullscreen // Fullscreen one window
-kwmc bindsym prefix-d window -z parent
-
-// Rotate Window-Tree By 90* (Clockwise)
-kwmc bindsym hyper-r tree rotate 90
-
-// Reinsert container
-kwmc bindsym prefix+shift-h window -m west
-kwmc bindsym prefix+shift-j window -m south
-kwmc bindsym prefix+shift-k window -m north
-kwmc bindsym prefix+shift-l window -m east
-
-// Modify Container
-kwmc bindsym prefix-h window -c expand 0.05 west
-kwmc bindsym prefix-j window -c expand 0.05 south
-kwmc bindsym prefix-k window -c expand 0.05 north
-kwmc bindsym prefix-l window -c expand 0.05 east
-
-// }}}
-
-// vim:foldmethod=marker:foldlevel=1
-
+//
