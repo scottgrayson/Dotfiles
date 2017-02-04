@@ -2,32 +2,43 @@
 " Managed with vim.plug (maybe use dein in the future)
 call plug#begin('~/.vim/plugged')
 " ---- Begin Plugin List
+
 " Fuzzy Finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+
 " Syntax
 Plug 'arcticicestudio/nord-vim'
 Plug 'flazz/vim-colorschemes'
 Plug 'sheerun/vim-polyglot'
 Plug 'posva/vim-vue'
+
 " Linting
 Plug 'neomake/neomake'
+
 " Editing
 Plug 'tpope/vim-surround'
+
 " Snippets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+
 " Github
 Plug 'airblade/vim-gitgutter'
+
 " Autocomplete
 Plug 'ervandew/supertab'
+
 " PHP Use statements
 Plug 'arnaud-lb/vim-php-namespace'
+
 " Github
 Plug 'tpope/vim-fugitive'
+
 " ---- End Plugin List
 call plug#end()            " required
 " }}}
+
 " Misc {{{
 set nocompatible
 set visualbell                  " don't beep
@@ -37,12 +48,14 @@ set modelines=1
 set title
 set hidden
 " }}}
+
 " Colors {{{
 syntax enable
 colorscheme solarized
 set background=dark
 highlight Comment cterm=italic
 " }}}
+
 " UI settings {{{
 set list
 set cursorline
@@ -54,13 +67,16 @@ set showmode
 set wrap
 set scrolloff=3
 " }}}
+
 " Fonts {{{
 set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
 " }}}
+
 " Windows {{{
 set splitbelow
 set splitright
 " }}}
+
 " Formatting {{{
 set expandtab                   " expand tabs by default (overloadable per file type later)
 set softtabstop=2               " when hitting <BS>, pretend like a tab is removed, even if spaces
@@ -75,9 +91,11 @@ set smarttab
 
 set clipboard=unnamed
 " }}}
+
 " Tags {{{
 set tags=./tags,tags;
 " }}}
+
 " Completion {{{
 set wildmenu
 set wildmode=list:longest,full
@@ -91,12 +109,14 @@ set completeopt=longest,menuone
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 let g:UltiSnipsExpandTrigger="<s-tab>"
 let g:UltiSnipsJumpForwardTrigger="<s-tab>"
-" let g:UltiSnipsJumpBackwardTrigger="<s-Del>"
+let g:UltiSnipsJumpBackwardTrigger="<alt-tab>"
 " }}}
+
 " {{{ Filtype Settings (Blade, Vue, etc)
 " associate *.blade.php and Vue with html filetype
 " au BufRead,BufNewFile *.vue set filetype=html
 " }}}
+
 " Search and Replace {{{
 set ignorecase
 set smartcase                   " ignore case if search pattern is all lowercase,
@@ -105,17 +125,19 @@ nnoremap <CR> :noh<CR>
 " FZF ignore things in gitignore
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 " }}}
+
 " Folding {{{
 set foldenable
 set foldlevelstart=10
 set foldnestmax=10
 " }}}
+
 " Syntax {{{
 
-function! SyntaxItem()
-  return synIDattr(synID(line("."),col("."),1),"name")
-endfunction
-set statusline+=%{SyntaxItem()}
+" function! SyntaxItem()
+"   return synIDattr(synID(line("."),col("."),1),"name")
+" endfunction
+" set statusline+=%{SyntaxItem()}
 
 function! VueIndent()
   normal! gg=VG/importjV/scriptk>,w
@@ -132,11 +154,13 @@ function! Indent()
 endfunction
 
 " }}}
+
 " Linter {{{
 " let neomake_verbose=3
 " autocmd InsertLeave,TextChanged * silent! update | Neomake
 autocmd! BufWritePost * Neomake
 " }}}
+
 " Mappings {{{
 set timeoutlen=1000 ttimeoutlen=0
 let mapleader=","
@@ -189,6 +213,7 @@ map <Leader>bg :let &background = ( &background == "dark"? "light" : "dark" )<CR
 vmap <Leader>S ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr>
 
 " }}}
+
 " Backup Directories {{{
 set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
@@ -196,4 +221,5 @@ if exists("&undodir")
   set undodir=~/.vim/undo
 endif
 " }}}
+
 " vim:foldmethod=marker:foldlevel=1
