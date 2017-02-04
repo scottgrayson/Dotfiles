@@ -62,18 +62,16 @@ prefix - d           :    kwmc space -t float
 # Rotate Window-Tree By 90degrees (Clockwise)
 prefix - r           :    kwmc tree rotate 90
 
-# Modify Container
-# prefix - s               :    kwmc window -c split-mode toggle
+# Resize Container
+prefix + alt - h               :    kwmc window -c expand 0.05 west
+prefix + alt - j               :    kwmc window -c expand 0.05 south
+prefix + alt - k               :    kwmc window -c expand 0.05 north
+prefix + alt - l               :    kwmc window -c expand 0.05 east
 
-prefix - h               :    kwmc window -c expand 0.05 west
-prefix - j               :    kwmc window -c expand 0.05 south
-prefix - k               :    kwmc window -c expand 0.05 north
-prefix - l               :    kwmc window -c expand 0.05 east
-
-prefix + shift - h       :    kwmc window -c reduce 0.05 west
-prefix + shift - j       :    kwmc window -c reduce 0.05 south
-prefix + shift - k       :    kwmc window -c reduce 0.05 north
-prefix + shift - l       :    kwmc window -c reduce 0.05 east
+prefix + ctrl - h       :    kwmc window -c reduce 0.05 west
+prefix + ctrl - j       :    kwmc window -c reduce 0.05 south
+prefix + ctrl - k       :    kwmc window -c reduce 0.05 north
+prefix + ctrl - l       :    kwmc window -c reduce 0.05 east
 
 # Set Temporary Window Container
 prefix - f               :    kwmc window -z fullscreen
@@ -97,21 +95,16 @@ alt - 2            :    kwmc display -f 2
 alt - 3            :    kwmc display -f 1
 
 # Swap Focused Window
-prefix + alt - h           :    kwmc window -s west
-prefix + alt - j           :    kwmc window -s south
-prefix + alt - k           :    kwmc window -s north
-prefix + alt - l           :    kwmc window -s east
-prefix + alt - m           :    kwmc window -s mark
-
-# shift window
-prefix + alt - p           :    kwmc window -s prev
-prefix + alt - n           :    kwmc window -s next
+prefix - h           :    kwmc window -s west
+prefix - j           :    kwmc window -s south
+prefix - k           :    kwmc window -s north
+prefix - l           :    kwmc window -s east
 
 # Detach Focused Window And Reinsert In Direction
-prefix + ctrl - k         :    kwmc window -m north
-prefix + ctrl - l         :    kwmc window -m east
-prefix + ctrl - j         :    kwmc window -m south
-prefix + ctrl - h         :    kwmc window -m west
+prefix + shift - k         :    kwmc window -m north
+prefix + shift - l         :    kwmc window -m east
+prefix + shift - j         :    kwmc window -m south
+prefix + shift - h         :    kwmc window -m west
 
 # Move Focused Window To Screen
 prefix - 1           :    kwmc window -m display 0
