@@ -34,6 +34,7 @@ set noerrorbells                " don't beep
 set autowrite                   " Save on buffer switch
 set modelines=1
 set title
+set hidden
 " }}}
 " Colors {{{
 syntax enable
@@ -110,11 +111,12 @@ set foldnestmax=10
 " Syntax {{{
 
 function! VueIndent()
-  normal! gg=G/impoj>/scriptn<<,w
+  normal! gg=VG/importjV/scriptk>,w
+  " normal! gg=G/impoj>/scriptn<<,w
 endfunction
 
 function! Indent()
-  if &filetype == 'vue'
+  if &filetype == 'vue.html.javascript.css'
     call VueIndent()
   else
     normal! gg=G
@@ -125,7 +127,8 @@ endfunction
 " }}}
 " Linter {{{
 " let neomake_verbose=3
-autocmd InsertLeave,TextChanged * silent! update | Neomake
+" autocmd InsertLeave,TextChanged * silent! update | Neomake
+autocmd! BufWritePost * Neomake
 " }}}
 " Mappings {{{
 set timeoutlen=1000 ttimeoutlen=0
