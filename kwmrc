@@ -1,32 +1,32 @@
-// ---------- Settings
+# ---------- Settings
 
-// Set default values for screen padding
+# Set default values for screen padding
 kwmc config padding 40 30 30 30
-// Set default values for container gaps
+# Set default values for container gaps
 kwmc config gap 20 20
 
-// Default tiling mode for Kwm (bsp | monocle | float | off)
+# Default tiling mode for Kwm (bsp | monocle | float | off)
 kwmc config tiling bsp
 
-// Let Kwm listen for hotkeys
+# Let Kwm listen for hotkeys
 kwmc config hotkeys on
 
-// Automatically float windows that fail to resize
+# Automatically float windows that fail to resize
 kwmc config float-non-resizable on
 
-// Automatically resize the window to its container
-//kwmc config lock-to-container on
+# Automatically resize the window to its container
+#kwmc config lock-to-container on
 
-// Set focus-follows-mouse-mode to autoraise
+# Set focus-follows-mouse-mode to autoraise
 kwmc config focus-follows-mouse on
 kwmc config mouse-follows-focus on
 
-// Focus-follows-mouse is temporarily disabled when
-// a floating window has focus
+# Focus-follows-mouse is temporarily disabled when
+# a floating window has focus
 kwmc config standby-on-float on
 
-// The mouse will automatically move to the center
-// of the focused window
+# The mouse will automatically move to the center
+# of the focused window
 kwmc config mouse-follows-focus on
 
 kwmc config mouse-drag on
@@ -34,29 +34,35 @@ kwmc config mouse-drag on
 # The modifier keys to be held down to initiate mouse-drag
 kwmc config mouse-drag mod shift+ctrl
 
-// Allow window focus to wrap-around
+# Allow window focus to wrap-around
 kwmc config cycle-focus screen
 
-// Set default container split-ratio
+# Set default container split-ratio
 kwmc config optimal-ratio 1
 kwmc config split-ratio 0.5
 
-// New splits become the left leaf-node
+# New splits become the left leaf-node
 kwmc config spawn right
 
 # Enable border for focused window
 kwmc config border focused on
 kwmc config border focused size 2
-kwmc config border focused color 0xFFD5C4A1
+kwmc config border focused color 0xFFeee8d5
 kwmc config border focused radius 6
 
-// The following allows Kwm to tile borderless iTerm2
-kwmc config add-role AXDialog iTerm2
-//
+# Enable border for marked window
+kwmc config border marked on
+kwmc config border marked size 2
+kwmc config border marked color 0xFFeee8d5
+kwmc config border marked radius 6
 
-// Laptop (screen 0) overrides
+# The following allows Kwm to tile borderless iTerm2
+kwmc config add-role AXDialog iTerm2
+#
+
+# Laptop (screen 0) overrides
 
 kwmc config display 0 padding 0 0 0 0
 kwmc config display 0 gap 0 0
 
-//
+#
