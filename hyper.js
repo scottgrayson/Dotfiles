@@ -12,25 +12,16 @@ module.exports = {
     // `BEAM` for |, `UNDERLINE` for _, `BLOCK` for █
     cursorShape: 'BLOCK',
 
-    // color of the text
-    foregroundColor: '#fff',
-
-    // terminal background color
-    backgroundColor: '#000',
-
-    // border color (window, tabs)
-    borderColor: '#333',
-
     // custom css to embed in the main window
     css: `
-      x-screen x-row { font-variant-ligatures: contextual; }
+      x-screen x-row { font-variant-ligatures: contextual; background-color: #002b36 }
     `,
 
     // custom css to embed in the terminal window
     termCSS: '',
 
     // custom padding (css format, i.e.: `top right bottom left`)
-    padding: '0px 0px',
+    padding: '0px 0 15px 0px',
 
     // set to false for no bell
     bell: 'SOUND',
@@ -43,18 +34,50 @@ module.exports = {
 
   plugins: [
     // Themes
+    // 'hyperpunk',
     // 'hyperterm-monokai',
     // 'hyperterm-atom-dark',
     // 'hyperterm-gruvbox-dark',
     // 'hyperblue',
-    "hyper-nord",
+    // 'hyper-nord',
     // 'hyper-solarized-dark',
 
     // Plugins
+    'hyperlinks',
+    'hyperline',
     'hyperterm-dibdabs'
   ],
 
   localPlugins: [
-    // 'hyper-solarized-dark'
-  ]
+    'hyper-solarized-dark'
+  ],
+
+  hyperline: {
+    background: 'transparent',
+    color: 'black',
+    plugins: [
+      {
+        name: 'memory',
+        options: {
+          color: 'white'
+        }
+      },
+      {
+        name: 'cpu',
+        options: {
+          colors: {
+            high: 'lightRed',
+            moderate: 'lightYellow',
+            low: 'lightGreen'
+          }
+        }
+      },
+      {
+        name: 'network',
+        options: {
+          color: 'lightCyan'
+        }
+      }
+    ]
+  }
 }

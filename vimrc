@@ -8,9 +8,11 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " Syntax
-Plug 'arcticicestudio/nord-vim'
-Plug 'flazz/vim-colorschemes'
+Plug 'mhartington/oceanic-next'
+Plug 'altercation/vim-colors-solarized'
+" Plug 'flazz/vim-colorschemes'
 Plug 'sheerun/vim-polyglot'
+Plug 'othree/yajs.vim'
 Plug 'posva/vim-vue'
 
 " Linting
@@ -50,10 +52,24 @@ set hidden
 " }}}
 
 " Colors {{{
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+if (has("termguicolors"))
+ set termguicolors
+endif
+colorscheme OceanicNext
 syntax enable
-colorscheme solarized
-set background=dark
-highlight Comment cterm=italic
+
+" colorscheme solarized
+" set background=dark
+
+hi htmlArg gui=italic
+hi Comment gui=italic
+hi Type    gui=italic
+hi StorageClass    gui=italic
+hi Conditional    gui=italic
+hi Statement    gui=italic
+hi Keyword    gui=italic
+hi Delimiter    gui=italic
 " }}}
 
 " UI settings {{{

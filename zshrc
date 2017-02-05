@@ -5,7 +5,7 @@ export ZSH=/Users/Scott/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="avit"
+ZSH_THEME="avit-custom"
 # ZSH_THEME="avit-custom"
 
 # Uncomment the following line to use case-sensitive completion.
