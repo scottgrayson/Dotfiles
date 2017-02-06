@@ -13,7 +13,6 @@ Plug 'alessandroyorba/sidonia'
 Plug 'mhartington/oceanic-next'
 Plug 'morhetz/gruvbox'
 Plug 'arcticicestudio/nord-vim'
-Plug 'gilgigilgil/anderson.vim'
 
 " Syntax
 Plug 'sheerun/vim-polyglot'
@@ -60,8 +59,12 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 if (has("termguicolors"))
   set termguicolors
 endif
+" colorscheme OceanicNext
 colorscheme gruvbox
 set background=dark
+" }}}
+"
+" Syntax {{
 syntax enable
 
 hi htmlArg gui=italic
