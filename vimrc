@@ -8,11 +8,9 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " Colorscheme
-Plug 't1mxg0d/vim-lucario'
-Plug 'alessandroyorba/sidonia'
 Plug 'mhartington/oceanic-next'
+Plug 'frankier/neovim-colors-solarized-truecolor-only'
 Plug 'morhetz/gruvbox'
-Plug 'arcticicestudio/nord-vim'
 
 " Syntax
 Plug 'sheerun/vim-polyglot'
@@ -59,21 +57,26 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 if (has("termguicolors"))
   set termguicolors
 endif
-" colorscheme OceanicNext
-colorscheme gruvbox
 set background=dark
+"colorscheme OceanicNext
+colorscheme solarized
+" colorscheme gruvbox
+let g:gruvbox_contrast_dark='soft'
 " }}}
 "
 " Syntax {{
 syntax enable
 
-hi htmlArg gui=italic
 hi Comment gui=italic
+" hi htmlArg gui=italic
+" hi htmlTag gui=italic
 " hi Type    gui=italic
-hi StorageClass    gui=italic
-hi Conditional    gui=italic
+" hi Include    gui=italic
+" hi StorageClass    gui=italic
+" hi Special    gui=italic
 " hi Statement    gui=italic
 " hi Keyword    gui=italic
+" hi phpStaticClasses    gui=italic
 " }}}
 
 " UI settings {{{
@@ -154,10 +157,10 @@ set foldnestmax=10
 
 " Syntax {{{
 
-" function! SyntaxItem()
-"   return synIDattr(synID(line("."),col("."),1),"name")
-" endfunction
-" set statusline+=%{SyntaxItem()}
+"function! SyntaxItem()
+  "return synIDattr(synID(line("."),col("."),1),"name")
+"endfunction
+"set statusline+=%{SyntaxItem()}
 
 function! VueIndent()
   normal! gg=VG/importjV/scriptk>,w
