@@ -36,13 +36,13 @@ lctrl - x         :   khd -p "- delete"
 khd kwm on
 
 # set color of default mode
-khd mode default color 0xFF2aa198
+khd mode default color 0xFFebdbb2
 
 # Enable the prefix mode
 khd mode prefix prefix on
 khd mode prefix timeout 1
 khd mode prefix restore default
-khd mode prefix color 0xFFeee8d5
+khd mode prefix color 0xFFfb4934
 
 # Activate prefix mode
 alt - space                 :    khd -e "mode activate prefix"

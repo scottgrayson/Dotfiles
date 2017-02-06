@@ -40,7 +40,7 @@ module.exports = {
     // 'hyperterm-gruvbox-dark',
     // 'hyperblue',
     // 'hyper-nord',
-    // 'hyper-solarized-dark',
+    //'hyper-solarized-dark',
 
     // Plugins
     'hyperlinks',

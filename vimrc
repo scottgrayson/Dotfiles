@@ -7,12 +7,16 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-" Syntax
+" Colorscheme
+Plug 't1mxg0d/vim-lucario'
+Plug 'alessandroyorba/sidonia'
 Plug 'mhartington/oceanic-next'
-Plug 'altercation/vim-colors-solarized'
-" Plug 'flazz/vim-colorschemes'
+Plug 'morhetz/gruvbox'
+Plug 'arcticicestudio/nord-vim'
+Plug 'gilgigilgil/anderson.vim'
+
+" Syntax
 Plug 'sheerun/vim-polyglot'
-Plug 'othree/yajs.vim'
 Plug 'posva/vim-vue'
 
 " Linting
@@ -54,22 +58,19 @@ set hidden
 " Colors {{{
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 if (has("termguicolors"))
- set termguicolors
+  set termguicolors
 endif
-colorscheme OceanicNext
+colorscheme gruvbox
+set background=dark
 syntax enable
-
-" colorscheme solarized
-" set background=dark
 
 hi htmlArg gui=italic
 hi Comment gui=italic
-hi Type    gui=italic
+" hi Type    gui=italic
 hi StorageClass    gui=italic
 hi Conditional    gui=italic
-hi Statement    gui=italic
-hi Keyword    gui=italic
-hi Delimiter    gui=italic
+" hi Statement    gui=italic
+" hi Keyword    gui=italic
 " }}}
 
 " UI settings {{{

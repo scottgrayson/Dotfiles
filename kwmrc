@@ -51,22 +51,16 @@ kwmc config spawn right
 # Enable border for focused window
 kwmc config border focused on
 kwmc config border focused size 2
-kwmc config border focused color 0xFF2aa198
+kwmc config border focused color 0xFFebdbb2
 kwmc config border focused radius 5
 
 # Enable border for marked window
 kwmc config border marked on
 kwmc config border marked size 2
-kwmc config border marked color 0xFFeee8d5
+kwmc config border marked color 0xFFebdbb2
 kwmc config border marked radius 5
-
-# The following allows Kwm to tile borderless iTerm2
-kwmc config add-role AXDialog iTerm2
-#
 
 # Laptop (screen 0) overrides
 
 kwmc config display 0 padding 0 0 0 0
 kwmc config display 0 gap 0 0
-
-#
