@@ -6,11 +6,13 @@ call plug#begin('~/.vim/plugged')
 " Fuzzy Finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/vim-peekaboo'
 
 " Colorscheme
 Plug 'mhartington/oceanic-next'
 Plug 'frankier/neovim-colors-solarized-truecolor-only'
 Plug 'morhetz/gruvbox'
+Plug 'junegunn/seoul256.vim'
 
 " Syntax
 Plug 'sheerun/vim-polyglot'
@@ -59,8 +61,10 @@ if (has("termguicolors"))
 endif
 set background=dark
 "colorscheme OceanicNext
-colorscheme solarized
-" colorscheme gruvbox
+"colorscheme solarized
+"colorscheme seoul256
+let g:seoul256_background = 235
+colorscheme gruvbox
 let g:gruvbox_contrast_dark='soft'
 " }}}
 "
@@ -68,7 +72,7 @@ let g:gruvbox_contrast_dark='soft'
 syntax enable
 
 hi Comment gui=italic
-" hi htmlArg gui=italic
+hi htmlArg gui=italic
 " hi htmlTag gui=italic
 " hi Type    gui=italic
 " hi Include    gui=italic
@@ -204,7 +208,7 @@ nnoremap <leader>% :so ~/.vimrc<cr>
 
 nnoremap <leader>w :w<CR>
 nnoremap <leader>Q :q!<CR>
-nnoremap <leader>q :wq<CR>
+nnoremap <leader>q :q<CR>
 " Search and replace
 nnoremap <leader>r :%s/
 " buffer prev

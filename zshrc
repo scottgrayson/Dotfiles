@@ -102,25 +102,36 @@ fi
 alias vim="nvim"
 alias vi="nvim"
 alias v="nvim"
+alias rmsw="rm ~/.vim/swaps/*"
+
 alias cl="clear"
+
 alias git="hub"
 alias gpr="hub pull-request"
 alias go="hub browse"
+
 alias pu="phpunit"
+alias pud="phpunit --group default"
 alias puf="phpunit --stop-on-failure"
+
 alias sql="mysql.server start"
 alias sqlu="mysql -u root"
+
 alias chrome="open -a 'Google Chrome'"
+
 alias sz="source ~/.zshrc"
 alias zrc="vim ~/.zshrc"
 alias vrc="vim ~/.vimrc"
 alias hrc="vim ~/.hyper.js"
 alias kb="vim ~/.config/karabiner/karabiner.json"
+
 alias lint="npm run lint"
 alias dev="npm run dev"
 alias hot="npm run hot"
+
 alias rms="php artisan migrate:refresh --seed"
 alias pa="php artisan"
+alias cdo="composer dump-autoload"
 #
 # put in iterm. sends ctrlc tl enter: 0x03 0x74 0x6c 0xd
 # alias tl="valet log"
