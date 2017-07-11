@@ -14,9 +14,13 @@ Plug 'frankier/neovim-colors-solarized-truecolor-only'
 Plug 'morhetz/gruvbox'
 Plug 'junegunn/seoul256.vim'
 
-" Syntax
-Plug 'sheerun/vim-polyglot'
+" Language
+Plug 'vim-scripts/nginx.vim'
+Plug 'wavded/vim-stylus'
 Plug 'posva/vim-vue'
+Plug 'othree/html5.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'stanangeloff/php.vim'
 
 " Linting
 Plug 'w0rp/ale'
@@ -24,7 +28,7 @@ Plug 'w0rp/ale'
 " Editing
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-commentary'
+Plug 'scrooloose/nerdcommenter'
 Plug 'AndrewRadev/splitjoin.vim'
 
 " Snippets
@@ -58,7 +62,7 @@ set title
 set hidden
 
 if has("nvim")
-    set inccommand=nosplit
+  set inccommand=nosplit
 endif
 " }}}
 
@@ -82,6 +86,28 @@ syntax enable
 hi Comment gui=italic
 
 autocmd FileType vue syntax sync fromstart
+
+au BufRead,BufNewFile */nginx/**/*.conf if &ft == '' | setfiletype nginx | endif
+
+let g:ft = ''
+function! NERDCommenter_before()
+  if &ft == 'vue'
+    let g:ft = 'vue'
+    let stack = synstack(line('.'), col('.'))
+    if len(stack) > 0
+      let syn = synIDattr((stack)[0], 'name')
+      if len(syn) > 0
+        exe 'setf ' . substitute(tolower(syn), '^vue_', '', '')
+      endif
+    endif
+  endif
+endfunction
+function! NERDCommenter_after()
+  if g:ft == 'vue'
+    setf vue
+    let g:ft = ''
+  endif
+endfunction
 " }}}
 
 " UI settings {{{
@@ -150,7 +176,7 @@ let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
 " Syntax {{{
 function! VueIndent()
-  normal! gg=VG/importjV/scriptk>,w
+  set
 endfunction
 
 function! Indent()
