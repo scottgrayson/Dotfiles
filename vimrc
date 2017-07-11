@@ -31,16 +31,16 @@ Plug 'tpope/vim-repeat'
 Plug 'scrooloose/nerdcommenter'
 Plug 'AndrewRadev/splitjoin.vim'
 
-" Snippets
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-
 " Github
 Plug 'airblade/vim-gitgutter'
 
 " Autocomplete
-Plug 'ervandew/supertab'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'wokalski/autocomplete-flow'
+" For func argument completion
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'honza/vim-snippets'
 
 " Github
 Plug 'tpope/vim-fugitive'
@@ -154,12 +154,6 @@ set tags=./tags,tags;
 set wildmenu
 set wildmode=list:longest,full
 set completeopt=longest,menuone
-
-" UltiSnips config
-inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-let g:UltiSnipsExpandTrigger="<s-tab>"
-let g:UltiSnipsJumpForwardTrigger="<s-tab>"
-let g:UltiSnipsJumpBackwardTrigger="<alt-tab>"
 " }}}
 
 " Search and Replace {{{
@@ -170,6 +164,23 @@ nnoremap <CR> :noh<CR>
 
 " Plugins {{{
 let g:deoplete#enable_at_startup = 1
+" tab to cyle completions
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+
+let g:neosnippet#enable_completed_snippet = 1
+
+" Enable snipMate compatibility feature. and vim snippets
+" let g:neosnippet#enable_snipmate_compatibility = 1
+" let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+
+" s-tab to expand snippet or jump to next field
+imap <s-tab>     <Plug>(neosnippet_expand_or_jump)
+smap <s-tab>     <Plug>(neosnippet_expand_or_jump)
+xmap <s-tab>     <Plug>(neosnippet_expand_target)
+
+" For conceal markers.
+set conceallevel=2 concealcursor=niv
+
 " FZF ignore things in gitignore
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 " }}}
@@ -180,11 +191,7 @@ function! VueIndent()
 endfunction
 
 function! Indent()
-  if &filetype == 'vue'
-    call VueIndent()
-  else
-    normal! gg=G
-  endif
+  normal! gg=G
   normal! :%s/\s\+$//e<CR>
 endfunction
 " }}}
