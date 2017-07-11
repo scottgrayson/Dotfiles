@@ -107,8 +107,10 @@ alias rmsw="rm ~/.vim/swaps/*"
 alias cl="clear"
 
 alias git="hub"
+
 alias gpr="hub pull-request"
 alias go="hub browse"
+alias gbroom="git branch --merged | egrep -v '(^\*|master|dev)' | xargs git branch -d"
 
 alias pu="phpunit"
 alias pud="phpunit --group default"
@@ -132,6 +134,11 @@ alias hot="npm run hot"
 alias rms="php artisan migrate:refresh --seed"
 alias pa="php artisan"
 alias cdo="composer dump-autoload"
+
+alias qc="quasar build && cd cordova && cordova run ios"
+
+alias dc="docker-compose"
+alias dcz="docker-compose down && docker-compose up -d && subzero_devtools"
 #
 # put in iterm. sends ctrlc tl enter: 0x03 0x74 0x6c 0xd
 # alias tl="valet log"

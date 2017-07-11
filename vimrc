@@ -19,10 +19,13 @@ Plug 'sheerun/vim-polyglot'
 Plug 'posva/vim-vue'
 
 " Linting
-Plug 'neomake/neomake'
+Plug 'w0rp/ale'
 
 " Editing
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-commentary'
+Plug 'AndrewRadev/splitjoin.vim'
 
 " Snippets
 Plug 'SirVer/ultisnips'
@@ -33,12 +36,13 @@ Plug 'airblade/vim-gitgutter'
 
 " Autocomplete
 Plug 'ervandew/supertab'
-
-" PHP Use statements
-Plug 'arnaud-lb/vim-php-namespace'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " Github
 Plug 'tpope/vim-fugitive'
+
+" open terminal at current file loc
+Plug 'justinmk/vim-gtfo'
 
 " ---- End Plugin List
 call plug#end()            " required
@@ -52,6 +56,10 @@ set autowrite                   " Save on buffer switch
 set modelines=1
 set title
 set hidden
+
+if has("nvim")
+    set inccommand=nosplit
+endif
 " }}}
 
 " Colors {{{
@@ -72,15 +80,8 @@ let g:gruvbox_contrast_dark='soft'
 syntax enable
 
 hi Comment gui=italic
-hi htmlArg gui=italic
-" hi htmlTag gui=italic
-" hi Type    gui=italic
-" hi Include    gui=italic
-" hi StorageClass    gui=italic
-" hi Special    gui=italic
-" hi Statement    gui=italic
-" hi Keyword    gui=italic
-" hi phpStaticClasses    gui=italic
+
+autocmd FileType vue syntax sync fromstart
 " }}}
 
 " UI settings {{{
@@ -127,11 +128,7 @@ set tags=./tags,tags;
 set wildmenu
 set wildmode=list:longest,full
 set completeopt=longest,menuone
-" deoplete config
-" let g:deoplete#enable_at_startup = 1
-" let g:deoplete#omni_input_patterns = {}
-" let g:deoplete#omni_input_patterns.php =
-"         \ '\w\+\|[^. \t]->\w*\|\w\+::\w*'
+
 " UltiSnips config
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 let g:UltiSnipsExpandTrigger="<s-tab>"
@@ -139,68 +136,39 @@ let g:UltiSnipsJumpForwardTrigger="<s-tab>"
 let g:UltiSnipsJumpBackwardTrigger="<alt-tab>"
 " }}}
 
-" {{{ Filtype Settings (Blade, Vue, etc)
-" associate *.blade.php and Vue with html filetype
-" au BufRead,BufNewFile *.vue set filetype=html
-" }}}
-
 " Search and Replace {{{
 set ignorecase
 set smartcase                   " ignore case if search pattern is all lowercase,
-" enter to clear search highlights
 nnoremap <CR> :noh<CR>
+" }}}
+
+" Plugins {{{
+let g:deoplete#enable_at_startup = 1
 " FZF ignore things in gitignore
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 " }}}
 
-" Folding {{{
-set foldenable
-set foldlevelstart=10
-set foldnestmax=10
-" }}}
-
 " Syntax {{{
-
-"function! SyntaxItem()
-  "return synIDattr(synID(line("."),col("."),1),"name")
-"endfunction
-"set statusline+=%{SyntaxItem()}
-
 function! VueIndent()
   normal! gg=VG/importjV/scriptk>,w
-  " normal! gg=G/impoj>/scriptn<<,w
 endfunction
 
 function! Indent()
-  if &filetype == 'vue.html.javascript.css'
+  if &filetype == 'vue'
     call VueIndent()
   else
     normal! gg=G
   endif
   normal! :%s/\s\+$//e<CR>
 endfunction
-
-" }}}
-
-" Linter {{{
-" let neomake_verbose=3
-" autocmd InsertLeave,TextChanged * silent! update | Neomake
-autocmd! BufWritePost * Neomake
 " }}}
 
 " Mappings {{{
 set timeoutlen=1000 ttimeoutlen=0
 let mapleader=","
+"
 " strip trailing whitespace, retab and reindent
 nnoremap <leader>= :call Indent()<CR>
-
-"insert use
-function! IPhpInsertUse()
-    call PhpInsertUse()
-    call feedkeys('a',  'n')
-endfunction
-autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
-autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>Use()<CR>
 
 "edit vimrc
 nnoremap <leader>C :e ~/.vimrc<cr>
@@ -213,11 +181,6 @@ nnoremap <leader>q :q<CR>
 nnoremap <leader>r :%s/
 " buffer prev
 nnoremap <leader>p :b#<cr>
-" Remap H and L (top, bottom of screen to left and right end of line)
-" nnoremap H ^
-" nnoremap L $
-" vnoremap H ^
-" vnoremap L g_
 " Ag
 map <leader>s :Ag 
 " FZF
@@ -235,10 +198,6 @@ map <leader>l :ll<cr>
 " Colorschemes
 map <leader>c :Colors<cr>
 map <Leader>bg :let &background = ( &background == "dark"? "light" : "dark" )<CR>
-
-"sort selected lines by length
-vmap <Leader>S ! awk '{ print length(), $0 \| "sort -n \| cut -d\\  -f2-" }'<cr>
-
 " }}}
 
 " Backup Directories {{{
@@ -248,5 +207,3 @@ if exists("&undodir")
   set undodir=~/.vim/undo
 endif
 " }}}
-
-" vim:foldmethod=marker:foldlevel=1
