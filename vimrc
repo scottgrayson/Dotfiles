@@ -15,6 +15,7 @@ Plug 'morhetz/gruvbox'
 Plug 'junegunn/seoul256.vim'
 
 " Language
+Plug 'jwalton512/vim-blade'
 Plug 'vim-scripts/nginx.vim'
 Plug 'wavded/vim-stylus'
 Plug 'posva/vim-vue'
@@ -32,12 +33,12 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'AndrewRadev/splitjoin.vim'
 
 " Github
+Plug 'tpope/vim-rhubarb'
 Plug 'airblade/vim-gitgutter'
 
 " Autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'wokalski/autocomplete-flow'
-" For func argument completion
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'honza/vim-snippets'
@@ -53,6 +54,7 @@ call plug#end()            " required
 " }}}
 
 " Misc {{{
+inoremap jk <Esc>
 set nocompatible
 set visualbell                  " don't beep
 set noerrorbells                " don't beep
@@ -191,7 +193,7 @@ function! VueIndent()
 endfunction
 
 function! Indent()
-  normal! gg=G
+  normal! mzgg=G`z
   normal! :%s/\s\+$//e<CR>
 endfunction
 " }}}
@@ -240,3 +242,10 @@ if exists("&undodir")
   set undodir=~/.vim/undo
 endif
 " }}}
+"
+" Embedded Terminal {{{
+
+nnoremap <leader>t :sp term://zsh<cr>i
+":tnoremap <c-\> <C-\><C-n>
+" }}}
+

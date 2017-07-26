@@ -109,7 +109,7 @@ alias cl="clear"
 alias git="hub"
 
 alias gpr="hub pull-request"
-alias go="hub browse"
+alias gbr="hub browse"
 alias gbroom="git branch --merged | egrep -v '(^\*|master|dev)' | xargs git branch -d"
 
 alias pu="phpunit"
