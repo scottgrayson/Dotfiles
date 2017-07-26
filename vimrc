@@ -244,8 +244,9 @@ endif
 " }}}
 "
 " Embedded Terminal {{{
-
+" shortcut for split
 nnoremap <leader>t :sp term://zsh<cr>i
-":tnoremap <c-\> <C-\><C-n>
+" escape to normal mode
+:tnoremap <c-[> <C-\><C-n>
 " }}}
 

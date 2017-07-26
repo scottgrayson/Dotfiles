@@ -90,6 +90,7 @@ bindkey '^[[B' history-substring-search-down
 # bind k and j for VI mode
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
+bindkey jk vi-cmd-mode
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then

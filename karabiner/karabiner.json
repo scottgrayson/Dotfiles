@@ -14,6 +14,33 @@
                     {
                         "manipulators": [
                             {
+                                "description": "Change tab to alt when used as modifier, tab when used alone",
+                                "from": {
+                                    "key_code": "tab",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_alt"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "tab",
+                                        "modifiers": {
+                                            "optional": [
+                                                "any"
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
                                 "description": "Change caps_lock to control when used as modifier, backspace when used alone",
                                 "from": {
                                     "key_code": "caps_lock",
@@ -63,39 +90,6 @@
                                                 "any"
                                             ]
                                         }
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com\\.apple\\.Terminal$",
-                                            "^com\\.googlecode\\.iterm2$",
-                                            "^org\\.vim\\.MacVim\\.plist$"
-                                        ],
-                                        "type": "frontmost_application_if"
-                                    }
-                                ],
-                                "description": "Change control+I to F6",
-                                "from": {
-                                    "key_code": "l",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "control"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "f6",
-                                        "modifiers": [
-                                            "fn"
-                                        ]
                                     }
                                 ],
                                 "type": "basic"
@@ -187,6 +181,33 @@
                     {
                         "manipulators": [
                             {
+                                "description": "Change tab to alt when used as modifier, tab when used alone",
+                                "from": {
+                                    "key_code": "tab",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_alt"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "tab",
+                                        "modifiers": {
+                                            "optional": [
+                                                "any"
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
                                 "description": "Change caps_lock to control when used as modifier, backspace when used alone",
                                 "from": {
                                     "key_code": "caps_lock",
@@ -236,39 +257,6 @@
                                                 "any"
                                             ]
                                         }
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "bundle_identifiers": [
-                                            "^com\\.apple\\.Terminal$",
-                                            "^com\\.googlecode\\.iterm2$",
-                                            "^org\\.vim\\.MacVim\\.plist$"
-                                        ],
-                                        "type": "frontmost_application_if"
-                                    }
-                                ],
-                                "description": "Change control+I to F6",
-                                "from": {
-                                    "key_code": "l",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "control"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "f6",
-                                        "modifiers": [
-                                            "fn"
-                                        ]
                                     }
                                 ],
                                 "type": "basic"
@@ -343,7 +331,7 @@
                 "f8": "play_or_pause",
                 "f9": "fastforward"
             },
-            "name": "Realforce",
+            "name": "Poker",
             "selected": false,
             "simple_modifications": {
                 "left_command": "left_option",
