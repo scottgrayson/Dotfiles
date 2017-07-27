@@ -79,8 +79,11 @@ source $ZSH/oh-my-zsh.sh
 source ~/.iterm2_shell_integration.`basename $SHELL`
 
 # bind UP and DOWN arrow keys
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
+bindkey -M vicmd 'K' history-substring-search-up
+bindkey -M vicmd 'J' history-substring-search-down
+
+bindkey '^K' history-substring-search-up
+bindkey '^J' history-substring-search-down
 
 # bind UP and DOWN arrow keys (compatibility fallback
 # for Ubuntu 12.04, Fedora 21, and MacOSX 10.9 users)
@@ -88,9 +91,9 @@ bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
 # bind k and j for VI mode
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
+bindkey kj vi-cmd-mode
 bindkey jk vi-cmd-mode
+bindkey '^l' vi-cmd-mode
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then

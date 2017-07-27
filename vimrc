@@ -54,7 +54,11 @@ call plug#end()            " required
 " }}}
 
 " Misc {{{
-inoremap jk <Esc>
+" escape alternatives
+inoremap jk <esc>
+inoremap kj <esc>
+inoremap <C-l> <esc>
+
 set nocompatible
 set visualbell                  " don't beep
 set noerrorbells                " don't beep
