@@ -11,6 +11,10 @@ cmd + lctrl - j ![HyperTerm,Terminal,iTerm2]      :   khd -p "shift - down"
 cmd + lctrl - k ![HyperTerm,Terminal,iTerm2]      :   khd -p "shift - up"
 cmd + lctrl - l ![HyperTerm,Terminal,iTerm2]      :   khd -p "shift - right"
 
+# remap left-control + cmd u / d   -> page up / down
+lctrl + cmd - u         ![HyperTerm,Terminal,iTerm2]      :   khd -p "0x73"
+lctrl + cmd - d         ![HyperTerm,Terminal,iTerm2]      :   khd -p "0x77"
+
 # remap left-control u / d   -> page up / down
 lctrl - u         ![HyperTerm,Terminal,iTerm2]      :   khd -p "0x74"
 lctrl - d         ![HyperTerm,Terminal,iTerm2]      :   khd -p "0x79"

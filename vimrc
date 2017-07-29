@@ -192,22 +192,21 @@ let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 " }}}
 
 " Syntax {{{
-function! VueIndent()
-  set
-endfunction
-
 function! Indent()
   normal! mzgg=G`z
-  normal! :%s/\s\+$//e<CR>
 endfunction
+
+"function! StripTrailingWhitespace()
+  "normal! :%s/\s\$//g<CR>
+"endfunction
 " }}}
 
 " Mappings {{{
 set timeoutlen=1000 ttimeoutlen=0
 let mapleader=","
-"
-" strip trailing whitespace, retab and reindent
+
 nnoremap <leader>= :call Indent()<CR>
+" nnoremap <leader>- :call StripTrailingWhitespace()<CR>
 
 "edit vimrc
 nnoremap <leader>C :e ~/.vimrc<cr>
