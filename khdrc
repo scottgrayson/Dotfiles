@@ -1,10 +1,10 @@
 # vi-mode for non-terminal applications
 
 # remap left-control h/j/k/l -> arrow keys
-lctrl - h         ![HyperTerm,Terminal,iTerm2]      :   khd -p "- left"
-lctrl - j         ![HyperTerm,Terminal,iTerm2]      :   khd -p "- down"
-lctrl - k         ![HyperTerm,Terminal,iTerm2]      :   khd -p "- up"
-lctrl - l         ![HyperTerm,Terminal,iTerm2]      :   khd -p "- right"
+lctrl - h         :   khd -p "- left"
+lctrl - j         :   khd -p "- down"
+lctrl - k         :   khd -p "- up"
+lctrl - l         :   khd -p "- right"
 
 cmd + lctrl - h ![HyperTerm,Terminal,iTerm2]      :   khd -p "shift - left"
 cmd + lctrl - j ![HyperTerm,Terminal,iTerm2]      :   khd -p "shift - down"

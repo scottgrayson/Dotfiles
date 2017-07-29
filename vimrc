@@ -57,7 +57,6 @@ call plug#end()            " required
 " escape alternatives
 inoremap jk <esc>
 inoremap kj <esc>
-inoremap <C-l> <esc>
 
 set nocompatible
 set visualbell                  " don't beep
