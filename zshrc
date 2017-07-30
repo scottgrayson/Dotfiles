@@ -5,8 +5,7 @@ export ZSH=/Users/Scott/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="avit-custom"
-# ZSH_THEME="avit-custom"
+ ZSH_THEME="avit"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -62,7 +61,7 @@ cp
 web-search
 colored-man-pages
 themes
-vi-mode
+# vi-mode
 history-substring-search
 )
 
@@ -96,14 +95,15 @@ bindkey jk vi-cmd-mode
 bindkey '^l' vi-cmd-mode
 
 # Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-    export EDITOR='vim'
-else
-    export EDITOR='nvim'
-fi
+# if [[ -n $SSH_CONNECTION ]]; then
+#     export EDITOR='vim'
+# else
+#     export EDITOR='nvim'
+# fi
+
+export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -c"
 
 # aliases
-alias em="emacs"
 alias vim="nvim"
 alias vi="nvim"
 alias v="nvim"
