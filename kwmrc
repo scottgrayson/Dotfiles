@@ -18,6 +18,9 @@ kwmc config float-non-resizable on
 #kwmc config lock-to-container on
 
 # Set focus-follows-mouse-mode to autoraise
+config add-role AXWindow Emacs
+kwmc rule owner="Emacs" properties={role="AXStandardWindow"}
+
 kwmc rule owner="iTerm2" properties={role="AXDialog"}
 kwmc config float-non-resizable on
 kwmc config standby-on-float on

@@ -103,6 +103,7 @@ else
 fi
 
 # aliases
+alias em="emacs"
 alias vim="nvim"
 alias vi="nvim"
 alias v="nvim"
