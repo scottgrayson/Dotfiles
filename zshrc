@@ -7,7 +7,7 @@ export ZSH=/Users/Scott/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 autoload -Uz promptinit
 promptinit
- ZSH_THEME="avit"
+ZSH_THEME="avit"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -77,7 +77,9 @@ export PATH=${PATH}:${ANDROID_HOME}/tools
 export PATH=${PATH}:${ANDROID_HOME}/platform-tools
 
 source $ZSH/oh-my-zsh.sh
-# source ~/.iterm2_shell_integration.`basename $SHELL`
+if [[ -n !${INSIDE_EMACS} ]]; then
+  # source ~/.iterm2_shell_integration.`basename $SHELL`
+fi
 
 # bind UP and DOWN arrow keys
 bindkey -M vicmd 'K' history-substring-search-up
@@ -104,9 +106,8 @@ bindkey '^l' vi-cmd-mode
 # fi
 
 if [[ -n ${INSIDE_EMACS} ]]; then
-    # This shell runs inside an Emacs *shell*/*term* buffer.
-    # prompt walters
-    # unsetopt avit
+  # This shell runs inside an Emacs *shell*/*term* buffer.
+  prompt off
 fi
 
 export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -c"
@@ -159,4 +160,6 @@ alias tl="tail -fn 0 storage/logs/laravel.log"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+if [[ -n !${INSIDE_EMACS} ]]; then
+  # test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+fi
