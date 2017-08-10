@@ -5,8 +5,6 @@ export ZSH=/Users/Scott/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-autoload -Uz promptinit
-promptinit
 ZSH_THEME="avit"
 
 # Uncomment the following line to use case-sensitive completion.
@@ -51,22 +49,6 @@ ZSH_THEME="avit"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-git
-composer
-brew
-npm
-laravel
-colorize
-command-not-found
-cp
-web-search
-colored-man-pages
-themes
-# vi-mode
-history-substring-search
-)
-
 # User configuration
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin"
@@ -76,10 +58,35 @@ export ANDROID_HOME=~/Library/Android/sdk
 export PATH=${PATH}:${ANDROID_HOME}/tools
 export PATH=${PATH}:${ANDROID_HOME}/platform-tools
 
-source $ZSH/oh-my-zsh.sh
-if [[ -n !${INSIDE_EMACS} ]]; then
-  # source ~/.iterm2_shell_integration.`basename $SHELL`
+if [[ -n ${INSIDE_EMACS} ]]; then
+  # This shell runs inside an Emacs *shell*/*term* buffer.
+  plugins=(
+  git
+  colored-man-pages
+  history-substring-search
+  )
+
+  export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -c"
+else
+  plugins=(
+  git
+  vi-mode
+  colored-man-pages
+  history-substring-search
+  )
+
+  source ~/.iterm2_shell_integration.`basename $SHELL`
+  #
+  # Preferred editor for local and remote sessions
+  if [[ -n $SSH_CONNECTION ]]; then
+    export EDITOR='vim'
+  else
+    export EDITOR='nvim'
+  fi
+
 fi
+
+source $ZSH/oh-my-zsh.sh
 
 # bind UP and DOWN arrow keys
 bindkey -M vicmd 'K' history-substring-search-up
@@ -93,24 +100,10 @@ bindkey '^J' history-substring-search-down
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
-# bind k and j for VI mode
-bindkey kj vi-cmd-mode
-bindkey jk vi-cmd-mode
-bindkey '^l' vi-cmd-mode
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#     export EDITOR='vim'
-# else
-#     export EDITOR='nvim'
-# fi
-
-if [[ -n ${INSIDE_EMACS} ]]; then
-  # This shell runs inside an Emacs *shell*/*term* buffer.
-  prompt off
-fi
-
-export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -c"
+#bind k and j for VI mode
+#bindkey kj vi-cmd-mode
+#bindkey jk vi-cmd-mode
+#bindkey '^l' vi-cmd-mode
 
 # aliases
 alias vim="nvim"

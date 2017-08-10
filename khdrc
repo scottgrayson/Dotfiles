@@ -6,10 +6,10 @@ lctrl - j ![Emacs]         :   khd -p "- down"
 lctrl - k ![Emacs]         :   khd -p "- up"
 lctrl - l ![Emacs]         :   khd -p "- right"
 
-cmd + lctrl - h ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "shift - left"
-cmd + lctrl - j ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "shift - down"
-cmd + lctrl - k ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "shift - up"
-cmd + lctrl - l ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "shift - right"
+cmd + lctrl - h :   khd -p "shift - left"
+cmd + lctrl - j :   khd -p "shift - down"
+cmd + lctrl - k :   khd -p "shift - up"
+cmd + lctrl - l :   khd -p "shift - right"
 
 # remap left-control + cmd u / d   -> home / end
 lctrl + cmd - u         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "0x73"
@@ -20,28 +20,28 @@ lctrl - u         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "0x74"
 lctrl - d         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "0x79"
 
 # remap left-control 0 / 4   -> start / end of line
-lctrl - 0         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd - left"
-lctrl - 4         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd - right"
+lctrl - 0         :   khd -p "cmd - left"
+lctrl - 4         :   khd -p "cmd - right"
+cmd + lctrl - 0 :   khd -p "shift + cmd - left"
+cmd + lctrl - 4 :   khd -p "shift + cmd - right"
 
 # remap left-control g / G   -> start / end of text
 lctrl - g         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd - up"
 lctrl + shift - g ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd - down"
 
-cmd + lctrl - 0 ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "shift + cmd - left"
-cmd + lctrl - 4 ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "shift + cmd - right"
 
 # remap left-control b / e   -> start / end of word
-lctrl - b         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "alt - left"
-lctrl - e         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "alt - right"
+lctrl - b         :   khd -p "alt - left"
+lctrl - e         :   khd -p "alt - right"
 
-cmd + lctrl - b ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "shift + alt - left"
-cmd + lctrl - e ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "shift + alt - right"
+cmd + lctrl - b :   khd -p "shift + alt - left"
+cmd + lctrl - e :   khd -p "shift + alt - right"
 
 # remap left-control x       -> forward delete
 lctrl - x         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "- delete"
 
 # remap left-control [       -> escape
-lctrl - 0x21         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "0x35"
+lctrl - 0x21         :   khd -p "0x35"
 
 # Enable kwm compatibility mode
 khd kwm on
