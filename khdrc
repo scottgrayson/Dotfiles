@@ -1,126 +1,113 @@
-# vi-mode for non-terminal applications
-
+### globals
 # remap left-control h/j/k/l -> arrow keys
-lctrl - h ![Emacs]         :   khd -p "- left"
-lctrl - j ![Emacs]         :   khd -p "- down"
-lctrl - k ![Emacs]         :   khd -p "- up"
-lctrl - l ![Emacs]         :   khd -p "- right"
-
-cmd + lctrl - h :   khd -p "shift - left"
-cmd + lctrl - j :   khd -p "shift - down"
-cmd + lctrl - k :   khd -p "shift - up"
-cmd + lctrl - l :   khd -p "shift - right"
+ctrl - h ![Emacs]         :   khd -p "- left"
+ctrl - j ![Emacs]         :   khd -p "- down"
+ctrl - k ![Emacs]         :   khd -p "- up"
+ctrl - l ![Emacs]         :   khd -p "- right"
+cmd + ctrl - h :   khd -p "shift - left"
+cmd + ctrl - j :   khd -p "shift - down"
+cmd + ctrl - k :   khd -p "shift - up"
+cmd + ctrl - l :   khd -p "shift - right"
 
 # remap left-control + cmd u / d   -> home / end
-lctrl + cmd - u         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "0x73"
-lctrl + cmd - d         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "0x77"
+ctrl + cmd - u         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "0x73"
+ctrl + cmd - d         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "0x77"
 
 # remap left-control u / d   -> page up / down
-lctrl - u         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "0x74"
-lctrl - d         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "0x79"
+ctrl - u         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "0x74"
+ctrl - d         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "0x79"
 
 # remap left-control 0 / 4   -> start / end of line
-lctrl - 0         :   khd -p "cmd - left"
-lctrl - 4         :   khd -p "cmd - right"
-cmd + lctrl - 0 :   khd -p "shift + cmd - left"
-cmd + lctrl - 4 :   khd -p "shift + cmd - right"
+ctrl - 0         :   khd -p "cmd - left"
+ctrl - 4         :   khd -p "cmd - right"
+cmd + ctrl - 0 :   khd -p "shift + cmd - left"
+cmd + ctrl - 4 :   khd -p "shift + cmd - right"
 
 # remap left-control g / G   -> start / end of text
-lctrl - g         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd - up"
-lctrl + shift - g ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd - down"
+ctrl - g         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd - up"
+ctrl + shift - g ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd - down"
 
 
 # remap left-control b / e   -> start / end of word
-lctrl - b         :   khd -p "alt - left"
-lctrl - e         :   khd -p "alt - right"
+ctrl - b         :   khd -p "alt - left"
+ctrl - e         :   khd -p "alt - right"
 
-cmd + lctrl - b :   khd -p "shift + alt - left"
-cmd + lctrl - e :   khd -p "shift + alt - right"
+cmd + ctrl - b :   khd -p "shift + alt - left"
+cmd + ctrl - e :   khd -p "shift + alt - right"
 
 # remap left-control x       -> forward delete
-lctrl - x         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "- delete"
+ctrl - x         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "- delete"
 
 # remap left-control [       -> escape
-lctrl - 0x21         :   khd -p "0x35"
-
-# Enable kwm compatibility mode
-khd kwm on
-
-# set color of default mode
-khd mode default color 0xFFebdbb2
+ctrl - 0x21         :   khd -p "0x35"
 
 # Enable the prefix mode
 khd mode prefix prefix on
 khd mode prefix timeout 1
 khd mode prefix restore default
-khd mode prefix color 0xFFfb4934
 
 # Activate prefix mode
-prefix + cmd - r            :    khd -e "reload"
+ctrl + alt - r            :    khd -e "reload"
 
 # Activate prefix mode
 alt - space                 :    khd -e "mode activate prefix"
 
-# Quit Kwm
-prefix + cmd - q     :    kwmc quit
+### ChunkWM
 
-# Set Space Tiling Mode To BSP
-prefix - a           :    kwmc space -t bsp
+# focus window
+alt - h : chunkc tiling::window --focus west
+alt - j : chunkc tiling::window --focus south
+alt - k : chunkc tiling::window --focus north
+alt - l : chunkc tiling::window --focus east
 
-# Set Space Tiling Mode To Monocle
-prefix - s           :    kwmc space -t monocle
+cmd - j : chunkc tiling::window --focus prev
+cmd - k : chunkc tiling::window --focus next
 
-# Set Space Tiling Mode To Floating
-prefix - d           :    kwmc space -t float
+# swap window
+ctrl + alt - h : chunkc tiling::window --swap west
+ctrl + alt - j : chunkc tiling::window --swap south
+ctrl + alt - k : chunkc tiling::window --swap north
+ctrl + alt - l : chunkc tiling::window --swap east
 
-# Rotate Window-Tree By 90degrees (Clockwise)
-prefix - r           :    kwmc tree rotate 90
+# move window
+shift + alt - h : chunkc tiling::window --warp west
+shift + alt - j : chunkc tiling::window --warp south
+shift + alt - k : chunkc tiling::window --warp north
+shift + alt - l : chunkc tiling::window --warp east
 
-# Resize Container
-prefix + alt - h               :    kwmc window -c expand 0.05 west
-prefix + alt - j               :    kwmc window -c expand 0.05 south
-prefix + alt - k               :    kwmc window -c expand 0.05 north
-prefix + alt - l               :    kwmc window -c expand 0.05 east
+# focus monitor
+shift + alt - tab  : chunkc tiling::monitor -f prev
+alt - tab  : chunkc tiling::monitor -f next
+alt - 1  : chunkc tiling::monitor -f 1
+alt - 2  : chunkc tiling::monitor -f 2
+alt - 3  : chunkc tiling::monitor -f 3
 
-prefix + ctrl - h       :    kwmc window -c reduce 0.05 west
-prefix + ctrl - j       :    kwmc window -c reduce 0.05 south
-prefix + ctrl - k       :    kwmc window -c reduce 0.05 north
-prefix + ctrl - l       :    kwmc window -c reduce 0.05 east
+# send window to monitor and follow focus
+ctrl + cmd - z  : chunkc tiling::window --send-to-monitor prev; chunkc tiling::monitor -f prev
+ctrl + cmd - c  : chunkc tiling::window --send-to-monitor next; chunkc tiling::monitor -f next
+ctrl + cmd - 1  : chunkc tiling::window --send-to-monitor 1; chunkc tiling::monitor -f 1
+ctrl + cmd - 2  : chunkc tiling::window --send-to-monitor 2; chunkc tiling::monitor -f 2
+ctrl + cmd - 3  : chunkc tiling::window --send-to-monitor 3; chunkc tiling::monitor -f 3
 
-# Set Temporary Window Container
-prefix - f               :    kwmc window -z fullscreen
-prefix - p               :    kwmc window -z parent
-prefix - w               :    kwmc window -t focused
+# rotate tree
+alt - r : chunkc tiling::desktop --rotate 90
 
-# Give Focus To Window
-alt - h            :    kwmc window -f west
-alt - l            :    kwmc window -f east
-alt - j            :    kwmc window -f south
-alt - k            :    kwmc window -f north
-# One Handed
-alt - w            :    kwmc window -f north
-alt - a            :    kwmc window -f west
-alt - s            :    kwmc window -f south
-alt - d            :    kwmc window -f east
+# mirror tree y-axis
+alt - y : chunkc tiling::desktop --mirror vertical
 
-# Give Focus To Screen
-alt - 1            :    kwmc display -f 0
-alt - 2            :    kwmc display -f 2
-alt - 3            :    kwmc display -f 1
+# mirror tree x-axis
+alt - x : chunkc tiling::desktop --mirror horizontal
 
-# Swap Focused Window
-prefix - h           :    kwmc window -s west
-prefix - j           :    kwmc window -s south
-prefix - k           :    kwmc window -s north
-prefix - l           :    kwmc window -s east
+# toggle desktop offset
+alt - o : chunkc tiling::desktop --toggle offset
 
-# Detach Focused Window And Reinsert In Direction
-prefix + shift - k         :    kwmc window -m north
-prefix + shift - l         :    kwmc window -m east
-prefix + shift - j         :    kwmc window -m south
-prefix + shift - h         :    kwmc window -m west
+# toggle window fullscreen
+alt - f : chunkc tiling::window --toggle fullscreen
 
-# Move Focused Window To Screen
-prefix - 1           :    kwmc window -m display 0
-prefix - 2           :    kwmc window -m display 2
-prefix - 3           :    kwmc window -m display 1
+# toggle window native fullscreen
+ctrl + alt - f : chunkc tiling::window --toggle native-fullscreen
+
+# change layout of desktop
+alt - a : chunkc tiling::desktop --layout bsp
+alt - s : chunkc tiling::desktop --layout monocle
+alt - d : chunkc tiling::desktop --layout float

@@ -240,13 +240,17 @@ endfunction
 set timeoutlen=1000 ttimeoutlen=0
 let mapleader=","
 
-nnoremap <leader>= :call Indent()<CR>
+nnoremap == :call Indent()<CR>
 " nnoremap <leader>- :call StripTrailingWhitespace()<CR>
 
 "edit vimrc
 nnoremap <leader>C :e ~/.vimrc<cr>
 nnoremap <leader>% :so ~/.vimrc<cr>
 
+"saving and quitting
+cmap Wq wq
+cmap W w
+cmap Q q
 nnoremap <leader>w :w<CR>
 nnoremap <leader>Q :q!<CR>
 nnoremap <leader>q :q<CR>

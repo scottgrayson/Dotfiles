@@ -69,6 +69,7 @@ if [[ -n ${INSIDE_EMACS} ]]; then
   export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -c"
 else
   plugins=(
+  composer
   git
   vi-mode
   colored-man-pages
@@ -146,7 +147,12 @@ alias qc="quasar build && cd cordova && cordova run ios"
 
 alias dc="docker-compose"
 alias dcz="docker-compose down && docker-compose up -d && subzero_devtools"
-#
+
+# chunkwm commands
+alias rch="sh ~/.chunkwmrc"
+alias qd="chunkc tiling::query --desktop id"
+alias qm="chunkc tiling::query --monitor id"
+
 # put in iterm. sends ctrlc tl enter: 0x03 0x74 0x6c 0xd
 # alias tl="valet log"
 alias tl="tail -fn 0 storage/logs/laravel.log"
