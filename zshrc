@@ -107,6 +107,7 @@ bindkey '^[[B' history-substring-search-down
 #bindkey '^l' vi-cmd-mode
 
 # aliases
+alias pip="pip3"
 alias vim="nvim"
 alias vi="nvim"
 alias v="nvim"
@@ -152,6 +153,9 @@ alias dcz="docker-compose down && docker-compose up -d && subzero_devtools"
 alias rch="sh ~/.chunkwmrc"
 alias qd="chunkc tiling::query --desktop id"
 alias qm="chunkc tiling::query --monitor id"
+
+# aws completions
+source /usr/local/bin/aws_zsh_completer.sh
 
 # put in iterm. sends ctrlc tl enter: 0x03 0x74 0x6c 0xd
 # alias tl="valet log"

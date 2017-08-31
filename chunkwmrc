@@ -61,7 +61,7 @@ chunkc set window_fade_inactive          1
 chunkc set window_fade_alpha             0.8
 chunkc set window_fade_duration          0.1
 
-./chwm-sa/inject_test/bin/inject
+~/chwm-sa/inject_test/bin/inject
 
 chunkc core::load tiling.so
 chunkc core::load ffm.so
