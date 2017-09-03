@@ -22,6 +22,7 @@ Plug 'posva/vim-vue'
 Plug 'othree/html5.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'stanangeloff/php.vim'
+Plug 'lumiliet/vim-twig'
 
 " Linting
 Plug 'w0rp/ale'

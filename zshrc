@@ -107,6 +107,7 @@ bindkey '^[[B' history-substring-search-down
 #bindkey '^l' vi-cmd-mode
 
 # aliases
+alias ctags="`brew --prefix`/bin/ctags"
 alias pip="pip3"
 alias vim="nvim"
 alias vi="nvim"
@@ -120,6 +121,14 @@ alias git="hub"
 alias gpr="hub pull-request"
 alias gbr="hub browse"
 alias gbroom="git branch --merged | egrep -v '(^\*|master|dev)' | xargs git branch -d"
+
+original_phpunit=$(which phpunit)
+
+phpunit() {
+    if [ -f vendor/bin/phpunit ]; then vendor/bin/phpunit $@
+    else eval "'$original_phpunit' $@"
+    fi
+  }
 
 alias pu="phpunit"
 alias pud="phpunit --group default"
