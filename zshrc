@@ -138,6 +138,7 @@ alias sql="mysql.server start"
 alias sqlu="mysql -u root"
 
 alias chrome="open -a 'Google Chrome'"
+alias vlc="open -a 'VLC'"
 
 alias sz="source ~/.zshrc"
 alias zrc="vim ~/.zshrc"
@@ -169,6 +170,8 @@ source /usr/local/bin/aws_zsh_completer.sh
 # put in iterm. sends ctrlc tl enter: 0x03 0x74 0x6c 0xd
 # alias tl="valet log"
 alias tl="tail -fn 0 storage/logs/laravel.log"
+
+alias rm-pgpid="rm ~/Library/Application\ Support/Postgres/var-9.6/postmaster.pid"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

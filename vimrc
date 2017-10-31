@@ -22,7 +22,6 @@ Plug 'posva/vim-vue'
 Plug 'othree/html5.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'stanangeloff/php.vim'
-Plug 'lumiliet/vim-twig'
 
 " Linting
 Plug 'w0rp/ale'
@@ -48,10 +47,6 @@ Plug 'honza/vim-snippets'
 Plug 'tpope/vim-fugitive'
 
 " open terminal at current file loc
-Plug 'justinmk/vim-gtfo'
-
-" color preview
-Plug 'gorodinskiy/vim-coloresque'
 
 " ---- End Plugin List
 call plug#end()            " required
@@ -232,9 +227,6 @@ function! Indent()
   normal! mzgg=G`z
 endfunction
 
-"function! StripTrailingWhitespace()
-"normal! :%s/\s\$//g<CR>
-"endfunction
 " }}}
 
 " Mappings {{{
@@ -242,16 +234,17 @@ set timeoutlen=1000 ttimeoutlen=0
 let mapleader=","
 
 nnoremap == :call Indent()<CR>
-" nnoremap <leader>- :call StripTrailingWhitespace()<CR>
+nnoremap <leader>- :%s/\s\+$//e<CR>
 
 "edit vimrc
 nnoremap <leader>C :e ~/.vimrc<cr>
 nnoremap <leader>% :so ~/.vimrc<cr>
 
 "saving and quitting
-cmap Wq wq
-cmap W w
-cmap Q q
+cmap Wq<cr> wq<cr>
+cmap WQ<cr> wq<cr>
+cmap W<cr> w<cr>
+cmap Q<cr> q<cr>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>Q :q!<CR>
 nnoremap <leader>q :q<CR>

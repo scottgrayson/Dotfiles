@@ -1,0 +1,10 @@
+let mapleader = ','
+set sortlinkhints
+set smoothscroll
+set showtabindices
+let hintcharacters="wertyuoasdfghjklcvnm"
+imap <C-o> editWithVim
+let vimport=8001
+map <leader>f :buffer<space>
+map <leader>d :tabdetach<cr>
+map <leader>a :tabattach<space>
