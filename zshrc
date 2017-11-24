@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/Scott/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -51,7 +51,7 @@ ZSH_THEME="avit"
 # Add wisely, as too many plugins slow down shell startup.
 # User configuration
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin"
+export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin"
 export PATH="$PATH:~/.composer/vendor/bin"
 export PATH="$PATH:/Users/Scott/Code/spark-installer"
 export ANDROID_HOME=~/Library/Android/sdk
@@ -76,7 +76,7 @@ else
   history-substring-search
   )
 
-  source ~/.iterm2_shell_integration.`basename $SHELL`
+  # source ~/.iterm2_shell_integration.`basename $SHELL`
   #
   # Preferred editor for local and remote sessions
   if [[ -n $SSH_CONNECTION ]]; then
@@ -107,7 +107,7 @@ bindkey '^[[B' history-substring-search-down
 #bindkey '^l' vi-cmd-mode
 
 # aliases
-alias ctags="`brew --prefix`/bin/ctags"
+#alias ctags="`brew --prefix`/bin/ctags"
 alias pip="pip3"
 alias vim="nvim"
 alias vi="nvim"
@@ -116,7 +116,7 @@ alias rmsw="rm ~/.vim/swaps/*"
 
 alias cl="clear"
 
-alias git="hub"
+#alias git="hub"
 
 alias gpr="hub pull-request"
 alias gbr="hub browse"
@@ -165,7 +165,7 @@ alias qd="chunkc tiling::query --desktop id"
 alias qm="chunkc tiling::query --monitor id"
 
 # aws completions
-source /usr/local/bin/aws_zsh_completer.sh
+# source /usr/local/bin/aws_zsh_completer.sh
 
 # put in iterm. sends ctrlc tl enter: 0x03 0x74 0x6c 0xd
 # alias tl="valet log"
