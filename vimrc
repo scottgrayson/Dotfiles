@@ -266,6 +266,11 @@ map <leader>ln :lnext<cr>
 map <leader>lp :lprev<cr>
 map <leader>l :ll<cr>
 
+" skip through linter errors
+map <leader>lo :diffg LO<cr>
+map <leader>re :diffg RE<cr>
+map <leader>ba :diffg BA<cr>
+
 " Colorschemes
 map <leader>c :Colors<cr>
 map <Leader>bg :let &background = ( &background == "dark"? "light" : "dark" )<CR>
