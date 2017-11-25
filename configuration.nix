@@ -31,13 +31,16 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
-    wget 
-dmenu
-neovim
-(python36.withPackages(ps: with ps; [neovim]))
-chromium
-git
-gitAndTools.hub
+    wget
+    dmenu
+    neovim
+    (python36.withPackages(ps: with ps; [neovim]))
+    chromium
+    nodejs
+    php
+    php71Packages.composer
+    git
+    gitAndTools.hub
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
