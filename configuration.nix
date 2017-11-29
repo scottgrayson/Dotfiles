@@ -78,6 +78,19 @@
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.windowManager.xmonad.enable = true;
 
+#  services.xserver.exportConfiguration = true;
+  services.xserver.xrandrHeads = [
+    { output = "HDMI1"; primary = true; monitorConfig = ''
+        Option "PreferredMode" "3440x1440"
+      '';
+    }
+    {
+      output = "VGA1"; monitorConfig = ''
+        Option "Rotate" "right"
+      '';
+    }
+  ];
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.extraUsers.scott = {
 shell = pkgs.zsh;
