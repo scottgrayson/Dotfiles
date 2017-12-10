@@ -9,33 +9,31 @@ cmd + ctrl - j :   khd -p "shift - down"
 cmd + ctrl - k :   khd -p "shift - up"
 cmd + ctrl - l :   khd -p "shift - right"
 
-# remap left-control + cmd u / d   -> home / end
+## remap left-control + cmd u / d   -> home / end
 ctrl + cmd - u         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "0x73"
 ctrl + cmd - d         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "0x77"
 
-# remap left-control u / d   -> page up / down
+## remap left-control u / d   -> page up / down
 ctrl - u         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "0x74"
 ctrl - d         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "0x79"
 
-# remap left-control 0 / 4   -> start / end of line
+## remap left-control 0 / 4   -> start / end of line
 ctrl - 0         :   khd -p "cmd - left"
 ctrl - 4         :   khd -p "cmd - right"
 cmd + ctrl - 0 :   khd -p "shift + cmd - left"
 cmd + ctrl - 4 :   khd -p "shift + cmd - right"
 
-# remap left-control g / G   -> start / end of text
+## remap left-control g / G   -> start / end of text
 ctrl - g         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd - up"
 ctrl + shift - g ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd - down"
 
-
-# remap left-control b / e   -> start / end of word
+## remap left-control b / e   -> start / end of word
 ctrl - b         :   khd -p "alt - left"
 ctrl - e         :   khd -p "alt - right"
-
 cmd + ctrl - b :   khd -p "shift + alt - left"
 cmd + ctrl - e :   khd -p "shift + alt - right"
 
-# remap left-control x       -> forward delete
+## remap left-control x       -> forward delete
 ctrl - x         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "- delete"
 
 # remap left-control [       -> escape
