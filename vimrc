@@ -27,14 +27,17 @@ Plug 'stanangeloff/php.vim'
 Plug 'w0rp/ale'
 
 " Editing
+Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'scrooloose/nerdcommenter'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'arnaud-lb/vim-php-namespace'
 
 " Github
 Plug 'tpope/vim-rhubarb'
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
 
 " Autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -43,8 +46,8 @@ Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'honza/vim-snippets'
 
-" Github
-Plug 'tpope/vim-fugitive'
+" WakaTime
+Plug 'wakatime/vim-wakatime'
 
 " open terminal at current file loc
 
@@ -53,6 +56,16 @@ call plug#end()            " required
 " }}}
 
 " Misc {{{
+let g:AutoPairsFlyMode = 0
+
+" php use statements
+function! IPhpInsertUse()
+    call PhpInsertUse()
+    call feedkeys('a',  'n')
+endfunction
+autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
+autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
+
 " escape alternatives
 inoremap jk <esc>
 inoremap kj <esc>
@@ -160,6 +173,10 @@ set scrolloff=3
 " }}}
 
 " Fonts {{{
+if has("gui_macvim")
+  set guifont=Fira\ Code:h18
+endif
+
 set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
 " }}}
 
@@ -200,7 +217,9 @@ nnoremap <CR> :noh<CR>
 " }}}
 
 " Plugins {{{
+if has("nvim")
 let g:deoplete#enable_at_startup = 1
+endif
 " tab to cyle completions
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 

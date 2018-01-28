@@ -110,7 +110,7 @@ bindkey '^[[B' history-substring-search-down
 # aliases
 #alias ctags="`brew --prefix`/bin/ctags"
 alias pip="pip3"
-alias vim="nvim"
+#alias vim="nvim"
 alias vi="nvim"
 alias v="nvim"
 alias rmsw="rm ~/.vim/swaps/*"
@@ -137,6 +137,7 @@ alias puf="phpunit --stop-on-failure"
 
 alias sql="mysql.server start"
 alias sqlu="mysql -u root"
+alias tdbr="mysql -u root -e 'drop database test; create database test;'"
 
 alias chrome="open -a 'Google Chrome'"
 alias vlc="open -a 'VLC'"
@@ -165,6 +166,9 @@ alias rch="sh ~/.chunkwmrc"
 alias qd="chunkc tiling::query --desktop id"
 alias qm="chunkc tiling::query --monitor id"
 
+# teensy loader cli
+alias teensy="teensy_loader_cli"
+
 # aws completions
 # source /usr/local/bin/aws_zsh_completer.sh
 
@@ -178,4 +182,8 @@ alias rm-pgpid="rm ~/Library/Application\ Support/Postgres/var-9.6/postmaster.pi
 
 if [[ -n !${INSIDE_EMACS} ]]; then
   # test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+fi
+
+if [ $TERM_PROGRAM = "iTerm.app" ]; then
+  source ~/.iterm2_shell_integration.`basename $SHELL`
 fi

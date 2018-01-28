@@ -26,6 +26,8 @@ cmd + ctrl - 4 :   khd -p "shift + cmd - right"
 ## remap left-control g / G   -> start / end of text
 ctrl - g         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd - up"
 ctrl + shift - g ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd - down"
+ctrl + cmd - g         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd + shift - up"
+ctrl + shift + cmd - g ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd + shift - down"
 
 ## remap left-control b / e   -> start / end of word
 ctrl - b         :   khd -p "alt - left"

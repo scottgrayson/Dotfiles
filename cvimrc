@@ -1,10 +1,16 @@
 let mapleader = ','
+"set typelinkhints
+"set numerichints
 set sortlinkhints
 set smoothscroll
 set showtabindices
-let hintcharacters="wertyuoasdfghjklcvnm"
+let hintcharacters="tnseriaodhplufywjgmvc"
 imap <C-o> editWithVim
 let vimport=8001
 map <leader>f :buffer<space>
 map <leader>d :tabdetach<cr>
 map <leader>a :tabattach<space>
+let blacklists = ["https://thetypingcat.com/*","http://thetypingcat.com/*","http://configure.ergodox-ez.com/*"]
+
+"let configpath='/Users/Scott/Code/dotfiles/cvimrc'
+"set localconfig
