@@ -14,3 +14,15 @@ let blacklists = ["https://thetypingcat.com/*","http://thetypingcat.com/*","http
 
 "let configpath='/Users/Scott/Code/dotfiles/cvimrc'
 "set localconfig
+
+-> {{
+const extraFilters = {
+'*://*': {
+accept: ['td.details-control'],
+}
+};
+
+Object.getOwnPropertyNames(extraFilters).forEach(pattern => {
+Hints.siteFilters[pattern] = extraFilters[pattern];
+});
+}}
