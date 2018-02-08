@@ -5,22 +5,34 @@ ctrl - h ![Emacs]         :   khd -p "- left"
 ctrl - j ![Emacs]         :   khd -p "- down"
 ctrl - k ![Emacs]         :   khd -p "- up"
 ctrl - l ![Emacs]         :   khd -p "- right"
-shift + ctrl - h :   khd -p "shift - left"
-shift + ctrl - j :   khd -p "shift - down"
-shift + ctrl - k :   khd -p "shift - up"
-shift + ctrl - l :   khd -p "shift - right"
+alt + ctrl - h :   khd -p "shift - left"
+alt + ctrl - j :   khd -p "shift - down"
+alt + ctrl - k :   khd -p "shift - up"
+alt + ctrl - l :   khd -p "shift - right"
 
 ## remap left-control 0 / 4   -> start / end of line
 ctrl - 0         :   khd -p "cmd - left"
 ctrl - 4         :   khd -p "cmd - right"
-shift + ctrl - 0 :   khd -p "shift + cmd - left"
-shift + ctrl - 4 :   khd -p "shift + cmd - right"
+alt + ctrl - 0 :   khd -p "shift + cmd - left"
+alt + ctrl - 4 :   khd -p "shift + cmd - right"
+
+## remap left-control ^ / $   -> start / end of line aswell
+ctrl + shift - 6         :   khd -p "cmd - left"
+ctrl + shift - 4         :   khd -p "cmd - right"
+alt + ctrl + shift - 6 :   khd -p "shift + cmd - left"
+alt + ctrl + shift - 4 :   khd -p "shift + cmd - right"
+
+## remap left-control g / G   -> start / end of text
+ctrl - g         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd - up"
+ctrl + shift - g ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd - down"
+ctrl + alt - g         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd + shift - up"
+ctrl + alt + shift - g ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd + shift - down"
 
 ## remap left-control b / e   -> start / end of word
 ctrl - b         :   khd -p "alt - left"
 ctrl - e         :   khd -p "alt - right"
-shift + ctrl - b :   khd -p "shift + alt - left"
-shift + ctrl - e :   khd -p "shift + alt - right"
+alt + ctrl - b :   khd -p "shift + alt - left"
+alt + ctrl - e :   khd -p "shift + alt - right"
 
 ## remap left-control x       -> forward delete
 ctrl - x         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "- delete"
