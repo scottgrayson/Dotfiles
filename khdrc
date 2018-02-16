@@ -1,62 +1,20 @@
-### globals
-
-# remap left-control h/j/k/l -> arrow keys
-ctrl - h ![Emacs]         :   khd -p "- left"
-ctrl - j ![Emacs]         :   khd -p "- down"
-ctrl - k ![Emacs]         :   khd -p "- up"
-ctrl - l ![Emacs]         :   khd -p "- right"
-alt + ctrl - h :   khd -p "shift - left"
-alt + ctrl - j :   khd -p "shift - down"
-alt + ctrl - k :   khd -p "shift - up"
-alt + ctrl - l :   khd -p "shift - right"
-
-## remap left-control 0 / 4   -> start / end of line
-ctrl - 0         :   khd -p "cmd - left"
-ctrl - 4         :   khd -p "cmd - right"
-alt + ctrl - 0 :   khd -p "shift + cmd - left"
-alt + ctrl - 4 :   khd -p "shift + cmd - right"
-
-## remap left-control ^ / $   -> start / end of line aswell
-ctrl + shift - 6         :   khd -p "cmd - left"
-ctrl + shift - 4         :   khd -p "cmd - right"
-alt + ctrl + shift - 6 :   khd -p "shift + cmd - left"
-alt + ctrl + shift - 4 :   khd -p "shift + cmd - right"
-
-## remap left-control g / G   -> start / end of text
-ctrl - g         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd - up"
-ctrl + shift - g ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd - down"
-ctrl + alt - g         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd + shift - up"
-ctrl + alt + shift - g ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "cmd + shift - down"
-
-## remap left-control b / e   -> start / end of word
-ctrl - b         :   khd -p "alt - left"
-ctrl - e         :   khd -p "alt - right"
-alt + ctrl - b :   khd -p "shift + alt - left"
-alt + ctrl - e :   khd -p "shift + alt - right"
-
-## remap left-control x       -> forward delete
-ctrl - x         ![HyperTerm,Terminal,iTerm2,Emacs]      :   khd -p "- delete"
-
-# remap left-control [       -> escape
-ctrl - 0x21         :   khd -p "0x35"
-
 # Enable the prefix mode
 khd mode prefix prefix on
 khd mode prefix timeout 1
 khd mode prefix restore default
 
 # Activate prefix mode
-alt - space                 :    khd -e "mode activate prefix"
+shift + ctrl + alt + cmd - space                 :    khd -e "mode activate prefix"
 
 prefix - r            :    khd -e "reload"
 
 ### ChunkWM
 
 # focus window
-alt - h : chunkc tiling::window --focus west
-alt - j : chunkc tiling::window --focus south
-alt - k : chunkc tiling::window --focus north
-alt - l : chunkc tiling::window --focus east
+shift + ctrl + alt + cmd - h : chunkc tiling::window --focus west
+shift + ctrl + alt + cmd - j : chunkc tiling::window --focus south
+shift + ctrl + alt + cmd - k : chunkc tiling::window --focus north
+shift + ctrl + alt + cmd - l : chunkc tiling::window --focus east
 
 # swap window
 prefix - h : chunkc tiling::window --swap west
@@ -65,17 +23,17 @@ prefix - k : chunkc tiling::window --swap north
 prefix - l : chunkc tiling::window --swap east
 
 # move window
-prefix + alt - h : chunkc tiling::window --warp west
-prefix + alt - j : chunkc tiling::window --warp south
-prefix + alt - k : chunkc tiling::window --warp north
-prefix + alt - l : chunkc tiling::window --warp east
+prefix + shift + ctrl + alt + cmd - h : chunkc tiling::window --warp west
+prefix + shift + ctrl + alt + cmd - j : chunkc tiling::window --warp south
+prefix + shift + ctrl + alt + cmd - k : chunkc tiling::window --warp north
+prefix + shift + ctrl + alt + cmd - l : chunkc tiling::window --warp east
 
 # focus monitor
-shift + alt - tab  : chunkc tiling::monitor -f prev
-alt - tab  : chunkc tiling::monitor -f next
-alt - 1  : chunkc tiling::monitor -f 1
-alt - 2  : chunkc tiling::monitor -f 2
-alt - 3  : chunkc tiling::monitor -f 3
+shift + shift + ctrl + alt + cmd - tab  : chunkc tiling::monitor -f prev
+shift + ctrl + alt + cmd - tab  : chunkc tiling::monitor -f next
+shift + ctrl + alt + cmd - 1  : chunkc tiling::monitor -f 1
+shift + ctrl + alt + cmd - 2  : chunkc tiling::monitor -f 2
+shift + ctrl + alt + cmd - 3  : chunkc tiling::monitor -f 3
 
 # send window to monitor and follow focus
 prefix - 1  : chunkc tiling::window --send-to-monitor 1; chunkc tiling::monitor -f 1
@@ -83,24 +41,24 @@ prefix - 2  : chunkc tiling::window --send-to-monitor 2; chunkc tiling::monitor 
 prefix - 3  : chunkc tiling::window --send-to-monitor 3; chunkc tiling::monitor -f 3
 
 # rotate tree
-alt - r : chunkc tiling::desktop --rotate 90
+shift + ctrl + alt + cmd - r : chunkc tiling::desktop --rotate 90
 
 # mirror tree y-axis
-alt - y : chunkc tiling::desktop --mirror vertical
+shift + ctrl + alt + cmd - y : chunkc tiling::desktop --mirror vertical
 
 # mirror tree x-axis
-alt - x : chunkc tiling::desktop --mirror horizontal
+shift + ctrl + alt + cmd - x : chunkc tiling::desktop --mirror horizontal
 
 # toggle desktop offset
-alt - o : chunkc tiling::desktop --toggle offset
+shift + ctrl + alt + cmd - o : chunkc tiling::desktop --toggle offset
 
 # toggle window fullscreen
-alt - f : chunkc tiling::window --toggle fullscreen
+shift + ctrl + alt + cmd - f : chunkc tiling::window --toggle fullscreen
 
 # toggle window native fullscreen
 prefix - f : chunkc tiling::window --toggle native-fullscreen
 
 # change layout of desktop
-alt - a : chunkc tiling::desktop --layout bsp
-alt - s : chunkc tiling::desktop --layout monocle
-alt - d : chunkc tiling::desktop --layout float
+shift + ctrl + alt + cmd - a : chunkc tiling::desktop --layout bsp
+shift + ctrl + alt + cmd - s : chunkc tiling::desktop --layout monocle
+shift + ctrl + alt + cmd - d : chunkc tiling::desktop --layout float
