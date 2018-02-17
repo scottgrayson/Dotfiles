@@ -57,14 +57,6 @@
     (evil-mode 1))
 #+END_SRC
 
-* Project Management
-#+BEGIN_SRC emacs-lisp
-  (use-package projectile
-    :ensure t
-    :config
-    (projectile-global-mode))
-#+END_SRC
-
 * Git
 #+BEGIN_SRC emacs-lisp
   (use-package magit
@@ -93,6 +85,7 @@ Filtering for searches, commands, history, etc
     :config
     (progn
       (ivy-mode 1)
+      (setq enable-recursive-minibuffers t)
       (global-set-key "\C-s" 'swiper)
       (global-set-key (kbd "C-c C-r") 'ivy-resume)
       (global-set-key (kbd "M-x") 'counsel-M-x)
@@ -118,6 +111,15 @@ Filtering for searches, commands, history, etc
 
   (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done)
   (define-key ivy-minibuffer-map (kbd "C-f") 'eh-ivy-open-current-typed-path)
+#+END_SRC
+
+* Project Management
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :ensure t
+    :config
+    (projectile-global-mode)
+    (setq projectile-completion-system 'ivy))
 #+END_SRC
 
 * Autocomplete
