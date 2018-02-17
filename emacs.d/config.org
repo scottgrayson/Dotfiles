@@ -1,48 +1,135 @@
 * Terminal
-set bash as ansi-term
+use eshell with super (gui) RET
 #+BEGIN_SRC emacs-lisp
-(defvar my-term-shell "/usr/local/bin/bash")
-(defadvice ansi-term (before force-bash)
-  (interactive (list my-term-shell)))
-(ad-activate 'ansi-term)
+    (global-set-key (kbd "<s-return>") 'eshell)
 #+END_SRC
 * Org
   ** Org Bullets
-#+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp
   (use-package org-bullets
     :ensure t
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
+  #+END_SRC
+  
+* Evil
+#+BEGIN_SRC emacs-lisp
+  (defun air--config-evil-leader ()
+    "Configure evil leader mode."
+    (evil-leader/set-leader ",")
+    (evil-leader/set-key
+     ","  'other-window
+     "p"  'counsel-yank-pop
+     "b"  'ivy-switch-buffer
+     "a"  'avy-goto-char-2
+     "c"  'comment-dwim
+     "d"  'kill-this-buffer
+     "f"  'counsel-git
+     "s"  'counsel-git-grep
+     "S"  'delete-trailing-whitespace
+     "r"  'replace-regexp
+     "l"  'whitespace-mode
+     "w"  'save-buffer
+     "x"  'counsel-M-x))
+
+  (use-package evil
+    :ensure t
+    :config
+
+    (use-package evil-leader
+      :ensure t
+      :config
+      (global-evil-leader-mode)
+      (air--config-evil-leader))
+
+    (use-package evil-surround
+      :ensure t
+      :config
+      (global-evil-surround-mode))
+
+    (use-package evil-indent-textobject
+      :ensure t)
+
+    (evil-mode 1))
 #+END_SRC
-(setq make-backup-file nil)
-(setq auto-save-default nil)
 
-(defalias 'yes-or-no-p 'y-or-n-p)
+* Ivy
+#+BEGIN_SRC emacs-lisp
+  (use-package counsel
+    :ensure t
+    )
 
-(global-set-key (kbd "<s-return>") 'ansi-term)
+  (use-package swiper
+    :ensure t
+    :config
+    (progn
+      (ivy-mode 1)
+      (global-set-key "\C-s" 'swiper)
+      (global-set-key (kbd "C-c C-r") 'ivy-resume)
+      (global-set-key (kbd "M-x") 'counsel-M-x)
+      (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+      (global-set-key (kbd "C-c f") 'counsel-git)
+      (global-set-key (kbd "C-c s") 'counsel-git-grep)
+      (global-set-key (kbd "C-c S") 'counsel-ag)
+      (global-set-key (kbd "C-c p") 'counsel-yank-pop)
+      (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)))
+#+END_SRC
 
-(setq scroll-conservatively 100)
+* Other Packages
+  #+BEGIN_SRC emacs-lisp
+    (use-package which-key
+      :ensure t
+      :init
+      (which-key-mode))
 
-(setq ring-bell-function 'ignore)
+    (use-package rainbow-mode
+      :ensure t
+      :init
+      (rainbow-mode 1))
 
-(when window-system (global-hl-line-mode t))
-(when window-system (global-prettify-symbols-mode t))
+    (use-package avy
+      :ensure t
+      :bind
+      ("M-s" . avy-goto-char))
 
-(use-package which-key
-  :ensure t
-  :init
-  (which-key-mode))
+    (use-package beacon
+      :ensure t
+      :init
+      (beacon-mode 1))
+  #+END_SRC
+  
+* Custom Functions
+  #+BEGIN_SRC emacs-lisp
+    (defun config-visit ()
+      (interactive)
+      (find-file "~/.emacs.d/config.org"))
+    (global-set-key (kbd "C-c e") 'config-visit)
 
-(use-package beacon
-  :ensure t
-  :init
-  (beacon-mode 1))
+    (defun config-reload ()
+      (interactive)
+      (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+    (global-set-key (kbd "C-c r") 'config-reload)
+  #+END_SRC
+  
+* Misc
+  #+BEGIN_SRC emacs-lisp
+    (setq make-backup-file nil)
+    (setq auto-save-default nil)
 
-(set-default-font "Fira Code 18")
+    (defalias 'yes-or-no-p 'y-or-n-p)
 
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
+    (setq scroll-conservatively 100)
 
-(setq inhibit-startup-message t)
+    (setq ring-bell-function 'ignore)
 
+    (when window-system (global-hl-line-mode t))
+    (when window-system (global-prettify-symbols-mode t))
+
+    (set-default-font "Fira Code 18")
+
+    (tool-bar-mode -1)
+    (menu-bar-mode -1)
+    (scroll-bar-mode -1)
+
+    (setq inhibit-startup-message t)
+  #+END_SRC

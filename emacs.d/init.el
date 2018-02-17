@@ -24,7 +24,9 @@
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
  '(custom-enabled-themes (quote (misterioso)))
- '(package-selected-packages (quote (org-bullets beacon which-key use-package))))
+ '(package-selected-packages
+   (quote
+    (evil-indent-textobject evil-surround evil-leader counsel swiper rainbow-mode avy org-bullets beacon which-key use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
