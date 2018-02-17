@@ -238,7 +238,7 @@ xmap <s-tab>     <Plug>(neosnippet_expand_target)
 set conceallevel=2 concealcursor=niv
 
 " FZF ignore things in gitignore
-let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+let $FZF_DEFAULT_COMMAND = 'ag -g "" --ignore ./spark'
 " }}}
 
 " Syntax {{{
