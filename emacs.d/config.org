@@ -1,36 +1,40 @@
 * Terminal
-use eshell with super (gui) RET
+** use eshell with super RET
 #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "<s-return>") 'eshell)
 #+END_SRC
 * Org
-  ** Org Bullets
-  #+BEGIN_SRC emacs-lisp
-  (use-package org-bullets
-    :ensure t
-    :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
-  #+END_SRC
-  
-* Evil
+** Org Src
+#+BEGIN_SRC emacs-lisp
+  (setq org-src-window-setup 'current-window)
+  (setq org-src-fontify-natively t)
+  (setq org-startup-indented t)
+#+END_SRC
+** Org Bullets
+#+BEGIN_SRC emacs-lisp
+    (use-package org-bullets
+      :ensure t
+      :config
+      (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
+#+END_SRC
+
+** Org Snippets
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'org-structure-template-alist
+               '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+#+END_SRC
+* Vim
 #+BEGIN_SRC emacs-lisp
   (defun air--config-evil-leader ()
     "Configure evil leader mode."
     (evil-leader/set-leader ",")
     (evil-leader/set-key
-     ","  'other-window
-     "p"  'counsel-yank-pop
      "b"  'ivy-switch-buffer
-     "a"  'avy-goto-char-2
      "c"  'comment-dwim
-     "d"  'kill-this-buffer
      "f"  'counsel-git
-     "s"  'counsel-git-grep
-     "S"  'delete-trailing-whitespace
      "r"  'replace-regexp
-     "l"  'whitespace-mode
-     "w"  'save-buffer
-     "x"  'counsel-M-x))
+     "s"  'counsel-git-grep
+     "w"  'save-buffer))
 
   (use-package evil
     :ensure t
@@ -53,7 +57,32 @@ use eshell with super (gui) RET
     (evil-mode 1))
 #+END_SRC
 
-* Ivy
+* Project Management
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :ensure t
+    :config
+    (projectile-global-mode))
+#+END_SRC
+
+* Git
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t
+    :init
+    (progn
+      (bind-key "C-x g" 'magit-status)
+      ))
+
+  (use-package git-gutter
+    :ensure t
+    :init
+    (global-git-gutter-mode +1))
+#+END_SRC
+
+* Filtering
+Filtering for searches, commands, history, etc
+** Ivy/Counsel/Swiper
 #+BEGIN_SRC emacs-lisp
   (use-package counsel
     :ensure t
@@ -67,37 +96,153 @@ use eshell with super (gui) RET
       (global-set-key "\C-s" 'swiper)
       (global-set-key (kbd "C-c C-r") 'ivy-resume)
       (global-set-key (kbd "M-x") 'counsel-M-x)
+      (global-set-key (kbd "M-y") 'counsel-yank-pop)
       (global-set-key (kbd "C-x C-f") 'counsel-find-file)
       (global-set-key (kbd "C-c f") 'counsel-git)
       (global-set-key (kbd "C-c s") 'counsel-git-grep)
       (global-set-key (kbd "C-c S") 'counsel-ag)
       (global-set-key (kbd "C-c p") 'counsel-yank-pop)
-      (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)))
+      (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
+    )
+
+  (setq ivy-extra-directories nil)
+
+  (defun eh-ivy-open-current-typed-path ()
+    (interactive)
+    (when ivy--directory
+      (let* ((dir ivy--directory)
+             (text-typed ivy-text)
+             (path (concat dir text-typed)))
+        (delete-minibuffer-contents)
+        (ivy--done path))))
+
+  (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done)
+  (define-key ivy-minibuffer-map (kbd "C-f") 'eh-ivy-open-current-typed-path)
 #+END_SRC
 
-* Other Packages
+* Autocomplete
+** Company
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :ensure t
+    :config
+      (setq company-dabbrev-downcase 0)
+      (setq company-idle-delay 0)
+      (setq company-minimum-prefix-length 2)
+    :init
+      (add-hook 'after-init-hook 'global-company-mode))
+
+  (with-eval-after-load 'company
+      (define-key company-active-map (kbd "M-n") nil)
+      (define-key company-active-map (kbd "M-p") nil)
+      (define-key company-active-map (kbd "C-n") #'company-select-next)
+      (define-key company-active-map (kbd "C-p") #'company-select-previous))
+#+END_SRC
+* Themes
   #+BEGIN_SRC emacs-lisp
-    (use-package which-key
-      :ensure t
-      :init
-      (which-key-mode))
+    ;; (use-package solarized-theme
+    ;;   :ensure t
+    ;;   )
 
-    (use-package rainbow-mode
-      :ensure t
-      :init
-      (rainbow-mode 1))
+    ;; (use-package leuven-theme
+    ;;   :ensure t
+    ;;   )
 
-    (use-package avy
-      :ensure t
-      :bind
-      ("M-s" . avy-goto-char))
+    ;; (use-package spacemacs-theme
+    ;;   :ensure t
+    ;;   )
 
-    (use-package beacon
+    ;; (use-package gruvbox-theme
+    ;;   :ensure t
+    ;;   )
+
+    (use-package zenburn-theme
       :ensure t
-      :init
-      (beacon-mode 1))
+      )
+
+    (load-theme 'zenburn t)
   #+END_SRC
-  
+* Modeline
+** Spaceline
+  #+BEGIN_SRC emacs-lisp
+    (use-package spaceline
+      :ensure t
+      :config
+      (require 'spaceline-config)
+      (setq powerline-default-separator (quote bar))
+      (spaceline-highlight-face-evil-state)
+      (spaceline-spacemacs-theme))
+  #+END_SRC
+** Diminish
+  #+BEGIN_SRC emacs-lisp
+    (use-package diminish
+      :ensure t
+      :init
+      (diminish 'beacon-mode)
+      (diminish 'company-mode)
+      (diminish 'undo-tree-mode)
+      (diminish 'which-key-mode)
+      (diminish 'rainbow-mode)
+      (diminish 'rainbow-delimiters-mode)
+      (diminish 'linum-relative-mode)
+      (diminish 'ivy-mode))
+  #+END_SRC
+* Other Packages
+#+BEGIN_SRC emacs-lisp
+  (use-package symon
+    :ensure t
+    :config
+    (setq symon-sparkline-type (quote plain))
+    (symon-mode))
+
+  (use-package dashboard
+    :ensure t
+    :config
+    (dashboard-setup-startup-hook)
+    (setq dashboard-items '((recents . 10)
+                            (projects . 5))))
+
+  (use-package rainbow-delimiters
+    :ensure t
+    :init
+    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+
+  (use-package sudo-edit
+    :ensure t
+    )
+
+  (use-package which-key
+    :ensure t
+    :init
+    (which-key-mode))
+
+  (use-package rainbow-mode
+    :ensure t
+    :init
+    (rainbow-mode 1))
+
+  (use-package avy
+    :ensure t
+    :bind
+    ("M-s" . avy-goto-char-2))
+
+  (use-package linum-relative
+    :ensure t
+    :config
+    (setq linum-relative-current-symbol "")
+    (linum-relative-mode))
+
+  (use-package beacon
+    :ensure t
+    :init
+    (beacon-mode 1))
+  #+END_SRC
+
+* Custom Keymaps
+  #+BEGIN_SRC emacs-lisp
+
+  #+END_SRC
+
 * Custom Functions
   #+BEGIN_SRC emacs-lisp
     (defun config-visit ()
@@ -110,26 +255,42 @@ use eshell with super (gui) RET
       (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
     (global-set-key (kbd "C-c r") 'config-reload)
   #+END_SRC
-  
+
+* Languages
+#+BEGIN_SRC emacs-lisp
+  (use-package php-mode
+    :ensure t
+    )
+
+  (use-package web-mode
+    :ensure t
+    :config 
+    (add-to-list 'auto-mode-alist '("\\.blade.php\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode)))
+#+END_SRC
 * Misc
-  #+BEGIN_SRC emacs-lisp
-    (setq make-backup-file nil)
-    (setq auto-save-default nil)
+#+BEGIN_SRC emacs-lisp
+  (electric-pair-mode)
 
-    (defalias 'yes-or-no-p 'y-or-n-p)
+  (setq make-backup-file nil)
+  (setq auto-save-default nil)
 
-    (setq scroll-conservatively 100)
+  (defalias 'yes-or-no-p 'y-or-n-p)
 
-    (setq ring-bell-function 'ignore)
+  (setq scroll-conservatively 10)
 
-    (when window-system (global-hl-line-mode t))
-    (when window-system (global-prettify-symbols-mode t))
+  (setq ring-bell-function 'ignore)
 
-    (set-default-font "Fira Code 18")
+  (when window-system (global-hl-line-mode t))
+  (when window-system (global-prettify-symbols-mode t))
 
-    (tool-bar-mode -1)
-    (menu-bar-mode -1)
-    (scroll-bar-mode -1)
+  (set-default-font "Fira Code 18")
 
-    (setq inhibit-startup-message t)
-  #+END_SRC
+  (tool-bar-mode -1)
+  (tooltip-mode nil)
+  (setq show-help-function nil)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+
+  (setq inhibit-startup-message t)
+#+END_SRC
