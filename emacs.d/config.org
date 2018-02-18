@@ -25,26 +25,10 @@
 #+END_SRC
 * Vim
 #+BEGIN_SRC emacs-lisp
-  (defun air--config-evil-leader ()
-    "Configure evil leader mode."
-    (evil-leader/set-leader ",")
-    (evil-leader/set-key
-     "b"  'ivy-switch-buffer
-     "c"  'comment-dwim
-     "f"  'counsel-git
-     "r"  'replace-regexp
-     "s"  'counsel-git-grep
-     "w"  'save-buffer))
-
   (use-package evil
     :ensure t
     :config
-
-    (use-package evil-leader
-      :ensure t
-      :config
-      (global-evil-leader-mode)
-      (air--config-evil-leader))
+    '(evil-search-module (quote evil-search))
 
     (use-package evil-surround
       :ensure t
@@ -55,6 +39,30 @@
       :ensure t)
 
     (evil-mode 1))
+
+  (use-package general
+    :ensure t
+    :init
+    (general-define-key
+     :keymaps 'normal
+     "C-f" 'evil-forward-char
+     "C-b" 'evil-backward-char
+     "C-p" 'evil-previous-line
+     "C-n" 'evil-next-line
+     "RET" nil
+     "SPC" nil
+     "s" 'save-buffer)
+
+    (setq my-leader1 ",")
+    (general-define-key
+     :prefix my-leader1
+     :keymaps 'normal
+     "b"  'ivy-switch-buffer
+     "c"  'comment-dwim
+     "f"  'projectile-find-file
+     "r"  'replace-regexp
+     "w"  'save-buffer
+     "s"  'counsel-git-grep))
 #+END_SRC
 
 * Git
@@ -91,7 +99,6 @@ Filtering for searches, commands, history, etc
       (global-set-key (kbd "M-x") 'counsel-M-x)
       (global-set-key (kbd "M-y") 'counsel-yank-pop)
       (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-      (global-set-key (kbd "C-c f") 'counsel-git)
       (global-set-key (kbd "C-c s") 'counsel-git-grep)
       (global-set-key (kbd "C-c S") 'counsel-ag)
       (global-set-key (kbd "C-c p") 'counsel-yank-pop)
@@ -119,7 +126,24 @@ Filtering for searches, commands, history, etc
     :ensure t
     :config
     (projectile-global-mode)
-    (setq projectile-completion-system 'ivy))
+    (setq projectile-completion-system 'ivy)
+    (global-set-key (kbd "C-c f") 'projectile-find-file)
+
+    (defun projectile-term ()
+      "Create an ansi-term at the project root"
+      (interactive)
+      (let ((root (projectile-project-root))
+            (buff-name (concat " [term] " (projectile-project-root))))
+        (if (get-buffer buff-name)
+            (switch-to-buffer-other-window buff-name)
+          (progn
+            (split-window-sensibly (selected-window))
+            (other-window 1)
+            (setq default-directory root)
+            (eshell (getenv "SHELL"))
+            (rename-buffer buff-name t)))))
+
+    (global-set-key (kbd "C-x M-t") 'projectile-term))
 #+END_SRC
 
 * Autocomplete
@@ -176,7 +200,7 @@ Filtering for searches, commands, history, etc
       (spaceline-spacemacs-theme))
   #+END_SRC
 ** Diminish
-  #+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp
     (use-package diminish
       :ensure t
       :init
@@ -188,7 +212,13 @@ Filtering for searches, commands, history, etc
       (diminish 'rainbow-delimiters-mode)
       (diminish 'linum-relative-mode)
       (diminish 'ivy-mode))
-  #+END_SRC
+#+END_SRC
+
+* Windows
+#+BEGIN_SRC emacs-lisp
+  (setq split-height-threshold nil)
+  (setq split-width-threshold 100)
+#+END_SRC
 * Other Packages
 #+BEGIN_SRC emacs-lisp
   (use-package symon
@@ -246,7 +276,7 @@ Filtering for searches, commands, history, etc
   #+END_SRC
 
 * Custom Functions
-  #+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp
     (defun config-visit ()
       (interactive)
       (find-file "~/.emacs.d/config.org"))
@@ -256,7 +286,7 @@ Filtering for searches, commands, history, etc
       (interactive)
       (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
     (global-set-key (kbd "C-c r") 'config-reload)
-  #+END_SRC
+#+END_SRC
 
 * Languages
 #+BEGIN_SRC emacs-lisp
@@ -295,4 +325,6 @@ Filtering for searches, commands, history, etc
   (scroll-bar-mode -1)
 
   (setq inhibit-startup-message t)
+
+  (setq vc-follow-symlinks t)
 #+END_SRC
