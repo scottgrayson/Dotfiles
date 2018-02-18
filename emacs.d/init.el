@@ -20,9 +20,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(evil-search-module (quote evil-search))
  '(package-selected-packages
    (quote
-    (general web-mode php-mode projectile git-gutter magit linum-relative linumm-relative symon diminish spaceline company dashboard rainbow-delimiters rainbow-delimeters sudo-edit hungry-delete zenburn-theme which-key use-package solarized-theme rainbow-mode org-bullets leuven-theme gruvbox-theme evil-surround evil-leader evil-indent-textobject counsel beacon avy))))
+    (evil-magit magithub general web-mode php-mode projectile git-gutter magit linum-relative linumm-relative symon diminish spaceline company dashboard rainbow-delimiters rainbow-delimeters sudo-edit hungry-delete zenburn-theme which-key use-package solarized-theme rainbow-mode org-bullets leuven-theme gruvbox-theme evil-surround evil-leader evil-indent-textobject counsel beacon avy))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
