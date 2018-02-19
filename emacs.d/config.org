@@ -25,44 +25,56 @@
 #+END_SRC
 * Vim
 #+BEGIN_SRC emacs-lisp
-  (use-package evil
-    :ensure t
-    :config
-    '(evil-search-module (quote evil-search))
-
-    (use-package evil-surround
+    (use-package evil
       :ensure t
       :config
-      (global-evil-surround-mode))
+      '(evil-search-module (quote evil-search))
 
-    (use-package evil-indent-textobject
-      :ensure t)
+      (use-package evil-surround
+        :ensure t
+        :config
+        (global-evil-surround-mode))
 
-    (evil-mode 1))
+      (use-package evil-indent-textobject
+        :ensure t)
 
-  (use-package general
-    :ensure t
-    :init
-    (general-define-key
-     :keymaps 'normal
-     "C-f" 'evil-forward-char
-     "C-b" 'evil-backward-char
-     "C-p" 'evil-previous-line
-     "C-n" 'evil-next-line
-     "RET" nil
-     "SPC" nil
-     "s" 'save-buffer)
+      (evil-mode 1))
 
-    (setq my-leader1 ",")
-    (general-define-key
-     :prefix my-leader1
-     :keymaps 'normal
-     "b"  'ivy-switch-buffer
-     "c"  'comment-dwim
-     "f"  'projectile-find-file
-     "r"  'replace-regexp
-     "w"  'save-buffer
-     "s"  'counsel-git-grep))
+    (use-package general
+      :ensure t
+      :init
+
+      (general-define-key
+       :keymaps 'visual
+       "#" 'comment-line)
+
+      (defun evil-nohl ()
+        (interactive)
+        (evil-ex-nohighlight))
+
+      (general-define-key
+       :keymaps 'normal
+       "C-f" 'evil-forward-char
+       "C-b" 'evil-backward-char
+       "C-p" 'evil-previous-line
+       "C-n" 'evil-next-line
+       "RET" 'evil-nohl
+       "SPC" 'switch-to-previous-buffer
+       "#" 'comment-line
+       "s" 'avy-goto-word-1)
+
+      (setq my-leader1 ",")
+      (general-define-key
+       :prefix my-leader1
+       :keymaps 'normal
+       "b"  'ivy-switch-buffer
+       "c"  'comment-line
+       "f"  'projectile-find-file
+       "r"  'replace-regexp
+       "w"  'save-buffer
+       "p" 'switch-to-previous-buffer
+       "="  'indent-buffer
+       "s"  'counsel-git-grep))
 #+END_SRC
 
 * Git
@@ -263,11 +275,6 @@ Filtering for searches, commands, history, etc
     :init
     (rainbow-mode 1))
 
-  (use-package avy
-    :ensure t
-    :bind
-    ("M-s" . avy-goto-char-2))
-
   (use-package linum-relative
     :ensure t
     :config
@@ -278,7 +285,18 @@ Filtering for searches, commands, history, etc
     :ensure t
     :init
     (beacon-mode 1))
-  #+END_SRC
+#+END_SRC
+* Avy
+#+BEGIN_SRC emacs-lisp
+  (use-package avy
+    :ensure t
+    :config
+    (setq avy-keys '(
+                    ?t ?n ?s ?e ?r ?i ?o ?a ?p ?l ?f ?u ?c ?, ?v ?d ?h ?y ?w ?. ?x ?' ?; ?q ?j ?g ?/ 
+                    ))
+    :bind
+    ("M-s" . avy-goto-word-1))
+#+END_SRC
 
 * Custom Keymaps
   #+BEGIN_SRC emacs-lisp
@@ -287,26 +305,42 @@ Filtering for searches, commands, history, etc
 
 * Custom Functions
 #+BEGIN_SRC emacs-lisp
-    (defun config-visit ()
-      (interactive)
-      (find-file "~/.emacs.d/config.org"))
-    (global-set-key (kbd "C-c e") 'config-visit)
+  (defun switch-to-previous-buffer ()
+    "Switch to previously open buffer.
+  Repeated invocations toggle between the two most recently open buffers."
+    (interactive)
+    (switch-to-buffer (other-buffer (current-buffer) 1)))
 
-    (defun config-reload ()
-      (interactive)
-      (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
-    (global-set-key (kbd "C-c r") 'config-reload)
+  (defun indent-buffer ()
+    "Indent the currently visited buffer."
+    (interactive)
+    (indent-region (point-min) (point-max)))
+
+  (defun config-visit ()
+    (interactive)
+    (find-file "~/.emacs.d/config.org"))
+  (global-set-key (kbd "C-c e") 'config-visit)
+
+  (defun config-reload ()
+    (interactive)
+    (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+  (global-set-key (kbd "C-c r") 'config-reload)
 #+END_SRC
 
 * Languages
 #+BEGIN_SRC emacs-lisp
   (use-package php-mode
     :ensure t
+    :config
+    (setq comment-use-syntax t)
     )
 
   (use-package web-mode
     :ensure t
     :config 
+    (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-css-indent-offset 2)
+    (setq web-mode-code-indent-offset 2)
     (add-to-list 'auto-mode-alist '("\\.blade.php\\'" . web-mode))
     (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode)))
 #+END_SRC
