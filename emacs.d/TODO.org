@@ -1,0 +1,26 @@
+* Terminal
+** disable recent buffer autocomplete
+** Going from normal to insert mode should jump to the current command
+* Autocomplete
+** fix case
+** try a different key for completing instead of RET
+** fix _underscore and -dash being removed
+** get some useful language completion
+** eshell should not use recent buffers for completion
+* Magithub
+** Figure out how to create an issue
+*** getting stuck at the add labels part
+* Rainbow delimiters
+** not loading always
+* Startup time
+** profile and try to improve
+* Windows
+** try window switching package. maybe hydra
+* Diff
+** figure out how ediff works
+* TMP Files
+** stop creating files that end with ~
+* Evil mode
+** dont use , for leader. it can be useful
+* Project search
+** find a replacement for fzf.vim with ag
