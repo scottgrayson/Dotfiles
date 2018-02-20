@@ -1,7 +1,9 @@
 * Terminal
 ** use eshell with super RET
 #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "<s-return>") 'eshell)
+  (global-set-key (kbd "<s-return>") 'eshell)
+  (global-set-key (kbd "<M-return>") 'projectile-term)
+
 #+END_SRC
 * Org
 ** Org Src
@@ -54,10 +56,6 @@
 
       (general-define-key
        :keymaps 'normal
-       "C-f" 'evil-forward-char
-       "C-b" 'evil-backward-char
-       "C-p" 'evil-previous-line
-       "C-n" 'evil-next-line
        "RET" 'evil-nohl
        "SPC" 'switch-to-previous-buffer
        "#" 'comment-line
@@ -168,8 +166,26 @@ Filtering for searches, commands, history, etc
     (global-set-key (kbd "C-x M-t") 'projectile-term))
 #+END_SRC
 
+* Emmet
+#+BEGIN_SRC emacs-lisp
+  (use-package emmet-mode
+    :ensure t
+      )
+#+END_SRC
+
+* Snippets
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet
+    :ensure t
+    :config
+      (yas-global-mode 1))
+
+  (use-package yasnippet-snippets
+    :ensure t
+    :config
+      )
+#+END_SRC
 * Autocomplete
-** Company
 #+BEGIN_SRC emacs-lisp
   (use-package company
     :ensure t
@@ -187,12 +203,29 @@ Filtering for searches, commands, history, etc
       (define-key company-active-map (kbd "C-p") #'company-select-previous))
 #+END_SRC
 * Themes
+** Theme list
   #+BEGIN_SRC emacs-lisp
     ;; (use-package solarized-theme
     ;;   :ensure t
     ;;   )
 
-    ;; (use-package leuven-theme
+    ;; (use-package darktooth-theme
+    ;;   :ensure t
+    ;;   )
+
+    ;; (use-package ample-theme
+    ;;   :ensure t
+    ;;   )
+
+    ;; (use-package material-theme
+    ;;   :ensure t
+    ;;   )
+
+    ;; (use-package base16-theme
+    ;;   :ensure t
+    ;;   )
+
+    ;; (use-package color-theme-sanityinc-tomorrow
     ;;   :ensure t
     ;;   )
 
@@ -204,12 +237,78 @@ Filtering for searches, commands, history, etc
     ;;   :ensure t
     ;;   )
 
-    (use-package zenburn-theme
+    ;; (use-package zenburn-theme
+    ;;   :ensure t
+    ;;   )
+
+    ;; (use-package kaolin-themes
+    ;;   :ensure t
+    ;;   )
+
+    ;; (use-package nord-theme
+    ;;   :ensure t
+    ;;   )
+
+    ;; (use-package tao-theme
+    ;;   :ensure t
+    ;;   )
+
+    ;; (use-package quasi-monochrome-theme
+    ;;   :ensure t
+    ;;   )
+
+    (use-package minimal-theme
       :ensure t
       )
 
-    (load-theme 'zenburn t)
+    ;; (use-package monochrome-theme
+    ;;   :ensure t
+    ;;   )
+
+    (load-theme 'minimal-light t)
+
   #+END_SRC
+** Theme Switcher
+#+BEGIN_SRC emacs-lisp
+  (defun sb/disable-all-themes ()
+    (interactive)
+    (mapc #'disable-theme custom-enabled-themes))
+
+  (defun sb/load-theme (theme)
+    "Enhance `load-theme' by first disabling enabled themes."
+    (sb/disable-all-themes)
+    (load-theme theme t))
+
+  (setq sb/hydra-selectors
+        "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
+  (defun sb/sort-themes (themes)
+    (sort themes
+          (lambda (a b)
+            (string<
+             (symbol-name a)
+             (symbol-name b)))))
+
+  (defun sb/hydra-load-theme-heads (themes)
+    (mapcar* (lambda (a b)
+               (list (char-to-string a)
+                     `(sb/load-theme ',b)
+                     (symbol-name b)))
+             sb/hydra-selectors themes))
+
+  (bind-keys ("C-c w t" .
+              (lambda ()
+                (interactive)
+                (call-interactively
+                 (eval `(defhydra sb/hydra-select-themes
+                          (:hint nil :color pink)
+                          "Select Theme"
+                          ,@(sb/hydra-load-theme-heads
+                             (sb/sort-themes
+                              (custom-available-themes)))
+                          ("DEL" (sb/disable-all-themes))
+                          ("RET" nil "done" :color blue)))))))
+#+END_SRC
 * Modeline
 ** Spaceline
   #+BEGIN_SRC emacs-lisp
@@ -233,6 +332,9 @@ Filtering for searches, commands, history, etc
       (diminish 'rainbow-mode)
       (diminish 'rainbow-delimiters-mode)
       (diminish 'linum-relative-mode)
+      (diminish 'git-gutter-mode)
+      (diminish 'yas-mode)
+      (diminish 'arev-mode)
       (diminish 'ivy-mode))
 #+END_SRC
 
@@ -275,11 +377,11 @@ Filtering for searches, commands, history, etc
     :init
     (rainbow-mode 1))
 
-  (use-package linum-relative
-    :ensure t
-    :config
-    (setq linum-relative-current-symbol "")
-    (linum-relative-mode))
+  ;; (use-package linum-relative
+  ;;   :ensure t
+  ;;   :config
+  ;;   (setq linum-relative-current-symbol "")
+  ;;   (linum-relative-mode))
 
   (use-package beacon
     :ensure t
@@ -296,6 +398,13 @@ Filtering for searches, commands, history, etc
                     ))
     :bind
     ("M-s" . avy-goto-word-1))
+#+END_SRC
+
+* Hydra
+#+BEGIN_SRC emacs-lisp
+    (use-package hydra
+      :ensure t
+      )
 #+END_SRC
 
 * Custom Keymaps
@@ -360,7 +469,7 @@ Filtering for searches, commands, history, etc
   (when window-system (global-hl-line-mode t))
   (when window-system (global-prettify-symbols-mode t))
 
-  (set-default-font "Fira Code 18")
+  (set-default-font "Anonymous Pro 18")
 
   (tool-bar-mode -1)
   (tooltip-mode nil)

@@ -15,18 +15,20 @@
   (package-install 'use-package))
 
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(evil-search-module (quote evil-search))
- '(package-selected-packages
-   (quote
-    (evil-magit magithub general web-mode php-mode projectile git-gutter magit linum-relative linumm-relative symon diminish spaceline company dashboard rainbow-delimiters rainbow-delimeters sudo-edit hungry-delete zenburn-theme which-key use-package solarized-theme rainbow-mode org-bullets leuven-theme gruvbox-theme evil-surround evil-leader evil-indent-textobject counsel beacon avy))))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (web-mode php-mode hydra avy beacon rainbow-mode which-key sudo-edit rainbow-delimiters dashboard symon diminish spaceline minimal-theme company yasnippet-snippets yasnippet emmet-mode projectile counsel git-gutter magithub evil-magit magit general evil-indent-textobject evil-surround evil org-bullets use-package))))
