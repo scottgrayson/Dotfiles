@@ -1,9 +1,15 @@
+* Modeline
+** show save status of file
+** show full file path below modeline when not entering command
+*** like symon did with system monitor
+*** put full file name in title of window too
 * Terminal
 ** disable recent buffer autocomplete
 ** Going from normal to insert mode should jump to the current command
 * Autocomplete
 ** fix case
 ** try a different key for completing instead of RET
+*** make sure emmet, snippets, and completion dont conflict
 ** fix _underscore and -dash being removed
 ** get some useful language completion
 ** eshell should not use recent buffers for completion
@@ -19,8 +25,19 @@
 * Diff
 ** figure out how ediff works
 * TMP Files
-** stop creating files that end with ~
+** stop creating files that end with ~ (done)
 * Evil mode
 ** dont use , for leader. it can be useful
 * Project search
 ** find a replacement for fzf.vim with ag
+* PHP
+** phpunit.el
+** make sure that ac-php isnt creating too big of tags/docs files
+* JS
+** autocomplete
+* html
+** autocomplete and linter
+* expand region
+** find a good way to replace vims inner word, tag, <, {, (, etc with one command
+* which key
+** can this be made to popup without a prefix? for the base commands in a buffer

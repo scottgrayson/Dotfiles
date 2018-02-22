@@ -5,6 +5,7 @@
   (global-set-key (kbd "<M-return>") 'projectile-term)
 
 #+END_SRC
+
 * Org
 ** Org Src
 #+BEGIN_SRC emacs-lisp
@@ -25,54 +26,59 @@
   (add-to-list 'org-structure-template-alist
                '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
 #+END_SRC
+  
 * Vim
 #+BEGIN_SRC emacs-lisp
-    (use-package evil
+  (use-package evil
+    :ensure t
+    :config
+
+    (use-package evil-surround
       :ensure t
       :config
-      '(evil-search-module (quote evil-search))
+      (global-evil-surround-mode))
 
-      (use-package evil-surround
-        :ensure t
-        :config
-        (global-evil-surround-mode))
+    (use-package evil-indent-textobject
+      :ensure t)
 
-      (use-package evil-indent-textobject
-        :ensure t)
+    (evil-mode 1))
 
-      (evil-mode 1))
+  (use-package general
+    :ensure t
+    :init
 
-    (use-package general
-      :ensure t
-      :init
+    (general-define-key
+     :keymaps 'visual
+     "#" 'comment-line)
 
-      (general-define-key
-       :keymaps 'visual
-       "#" 'comment-line)
+    (defun evil-nohl ()
+      (interactive)
+      (evil-ex-nohighlight))
 
-      (defun evil-nohl ()
-        (interactive)
-        (evil-ex-nohighlight))
+    (general-define-key
+     :keymaps 'normal
+     "RET" 'evil-nohl
+     "SPC" nil
+     "," 'evil-repeat-find-char-reverse
+     "(" 'git-gutter:previous-hunk
+     ")" 'git-gutter:next-hunk
+     "[" 'flycheck-previous-error
+     "]" 'flycheck-next-error
+     "#" 'comment-line
+     "s" 'avy-goto-word-1
+     "S" 'avy-goto-char)
 
-      (general-define-key
-       :keymaps 'normal
-       "RET" 'evil-nohl
-       "SPC" 'switch-to-previous-buffer
-       "#" 'comment-line
-       "s" 'avy-goto-word-1)
-
-      (setq my-leader1 ",")
-      (general-define-key
-       :prefix my-leader1
-       :keymaps 'normal
-       "b"  'ivy-switch-buffer
-       "c"  'comment-line
-       "f"  'projectile-find-file
-       "r"  'replace-regexp
-       "w"  'save-buffer
-       "p" 'switch-to-previous-buffer
-       "="  'indent-buffer
-       "s"  'counsel-git-grep))
+    (setq my-leader1 "SPC")
+    (general-define-key
+     :prefix my-leader1
+     :keymaps 'normal
+     "b"  'ivy-switch-buffer
+     "f"  'projectile-find-file
+     "r"  'replace-regexp
+     "w"  'save-buffer
+     "p" 'switch-to-previous-buffer
+     "i"  'indent-buffer
+     "s"  'counsel-git-grep))
 #+END_SRC
 
 * Git
@@ -173,6 +179,29 @@ Filtering for searches, commands, history, etc
       )
 #+END_SRC
 
+* Linting
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+    :ensure t
+    :init
+    (global-flycheck-mode)
+    (flycheck-add-mode 'javascript-eslint 'web-mode)
+
+    ;; use local eslint from node_modules before global
+    ;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
+    (defun my/use-eslint-from-node-modules ()
+      (let* ((root (locate-dominating-file
+                    (or (buffer-file-name) default-directory)
+                    "node_modules"))
+             (eslint (and root
+                          (expand-file-name "node_modules/eslint/bin/eslint.js"
+                                            root))))
+        (when (and eslint (file-executable-p eslint))
+          (setq-local flycheck-javascript-eslint-executable eslint))))
+    (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+    )
+#+END_SRC
+
 * Snippets
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
@@ -185,6 +214,7 @@ Filtering for searches, commands, history, etc
     :config
       )
 #+END_SRC
+
 * Autocomplete
 #+BEGIN_SRC emacs-lisp
   (use-package company
@@ -202,6 +232,7 @@ Filtering for searches, commands, history, etc
       (define-key company-active-map (kbd "C-n") #'company-select-next)
       (define-key company-active-map (kbd "C-p") #'company-select-previous))
 #+END_SRC
+
 * Themes
 ** Theme list
   #+BEGIN_SRC emacs-lisp
@@ -220,7 +251,7 @@ Filtering for searches, commands, history, etc
        'leuven
        `(default ((t (:foreground "#333333" :background "#FFFFE0"))))
        `(fringe ((t (:background "#FFFFE0"))))
-   `(lazy-highlight ((t (:foreground "#333333" :underline "#FF9632" :background "#FFFF00")))) ; isearch others
+       `(lazy-highlight ((t (:foreground "#333333" :underline "#FF9632" :background "#FFFF00")))) ; isearch others
        ))
 
     ;;   :ensure t
@@ -341,23 +372,24 @@ Filtering for searches, commands, history, etc
   (setq split-height-threshold nil)
   (setq split-width-threshold 100)
 #+END_SRC
+
 * Other Packages
 #+BEGIN_SRC emacs-lisp
-  (use-package dashboard
-    :ensure t
-    :config
-    (dashboard-setup-startup-hook)
-    (setq dashboard-items '((recents . 10)
-                            (projects . 5))))
+  ;; (use-package dashboard
+  ;;   :ensure t
+  ;;   :config
+  ;;   (dashboard-setup-startup-hook)
+  ;;   (setq dashboard-items '((recents . 10)
+  ;;                           (projects . 5))))
 
   (use-package rainbow-delimiters
     :ensure t
     :init
     (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
-  (use-package sudo-edit
-    :ensure t
-    )
+  ;; (use-package sudo-edit
+  ;;   :ensure t
+  ;;   )
 
   (use-package which-key
     :ensure t
@@ -380,6 +412,7 @@ Filtering for searches, commands, history, etc
     :init
     (beacon-mode 1))
 #+END_SRC
+
 * Avy
 #+BEGIN_SRC emacs-lisp
   (use-package avy
@@ -433,18 +466,39 @@ Filtering for searches, commands, history, etc
   (use-package php-mode
     :ensure t
     :config
-    (setq comment-use-syntax t)
+    )
+
+  (use-package ac-php
+    :ensure t
+    )
+
+  (use-package company-php
+    :ensure t
+    )
+
+  (add-hook 'php-mode-hook
+            '(lambda ()
+               (require 'company-php)
+               (company-mode t)
+               (ac-php-core-eldoc-setup) ;; enable eldoc
+               (make-local-variable 'company-backends)
+               (add-to-list 'company-backends 'company-ac-php-backend)))
+
+  (use-package js2-mode
+    :ensure t
     )
 
   (use-package web-mode
     :ensure t
-    :config 
+    :config
     (setq web-mode-markup-indent-offset 2)
     (setq web-mode-css-indent-offset 2)
     (setq web-mode-code-indent-offset 2)
     (add-to-list 'auto-mode-alist '("\\.blade.php\\'" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode)))
+    (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
+    )
 #+END_SRC
+
 * Misc
 #+BEGIN_SRC emacs-lisp
   (electric-pair-mode)
@@ -461,7 +515,9 @@ Filtering for searches, commands, history, etc
   (when window-system (global-hl-line-mode t))
   (when window-system (global-prettify-symbols-mode t))
 
-  (set-default-font "Iosevka Slab 18")
+  (set-default-font "Iosevka Slab 16")
+  ;; (set-default-font "Dina ttf 10px 17")
+  ;; (set-default-font "Terminus 17")
 
   (tool-bar-mode -1)
   (tooltip-mode nil)

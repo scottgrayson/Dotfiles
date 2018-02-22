@@ -24,11 +24,13 @@
  )
 
 
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(evil-search-module (quote evil-search))
  '(package-selected-packages
    (quote
-    (web-mode php-mode hydra avy beacon rainbow-mode which-key sudo-edit rainbow-delimiters dashboard symon diminish spaceline minimal-theme company yasnippet-snippets yasnippet emmet-mode projectile counsel git-gutter magithub evil-magit magit general evil-indent-textobject evil-surround evil org-bullets use-package))))
+    (company-php ac-php php-extras exec-path-from-shell js2-mode vue-mode flycheck yasnippet-snippets which-key web-mode use-package symon sudo-edit spaceline solarized-theme rainbow-mode rainbow-delimiters projectile plan9-theme php-mode org-bullets minimal-theme magithub leuven-theme hydra gruvbox-theme git-gutter general evil-surround evil-magit evil-indent-textobject emmet-mode diminish dashboard counsel company beacon avy))))
