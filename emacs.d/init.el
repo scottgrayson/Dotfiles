@@ -30,7 +30,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("b9cbfb43711effa2e0a7fbc99d5e7522d8d8c1c151a3194a4b176ec17c9a8215" default)))
  '(evil-search-module (quote evil-search))
  '(package-selected-packages
    (quote
-    (company-php ac-php php-extras exec-path-from-shell js2-mode vue-mode flycheck yasnippet-snippets which-key web-mode use-package symon sudo-edit spaceline solarized-theme rainbow-mode rainbow-delimiters projectile plan9-theme php-mode org-bullets minimal-theme magithub leuven-theme hydra gruvbox-theme git-gutter general evil-surround evil-magit evil-indent-textobject emmet-mode diminish dashboard counsel company beacon avy))))
+    (phpunit phpunit\.el evil-collection moe-theme ace-window company-php ac-php php-extras exec-path-from-shell js2-mode vue-mode flycheck yasnippet-snippets which-key web-mode use-package symon sudo-edit spaceline solarized-theme rainbow-mode rainbow-delimiters projectile plan9-theme php-mode org-bullets minimal-theme magithub leuven-theme hydra gruvbox-theme git-gutter general evil-surround evil-magit evil-indent-textobject emmet-mode diminish dashboard counsel company beacon avy))))

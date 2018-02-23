@@ -1,3 +1,5 @@
+* Flycheck
+** disable chaingin bg and fg color so visual hl still works
 * Modeline
 ** show save status of file
 ** show full file path below modeline when not entering command
@@ -6,6 +8,10 @@
 * Terminal
 ** disable recent buffer autocomplete
 ** Going from normal to insert mode should jump to the current command
+** add path to shell from zsh
+* Filesystem
+** file manager
+** quick way to rename files
 * Autocomplete
 ** fix case
 ** try a different key for completing instead of RET
@@ -13,10 +19,11 @@
 ** fix _underscore and -dash being removed
 ** get some useful language completion
 ** eshell should not use recent buffers for completion
+** when evil mode is on, only autocomplete in insert mode
 * Magithub
 ** Figure out how to create an issue
 *** getting stuck at the add labels part
-* Rainbow delimiters
+* DONE Rainbow delimiters
 ** not loading always
 * Startup time
 ** profile and try to improve
@@ -24,11 +31,16 @@
 ** try window switching package. maybe hydra
 * Diff
 ** figure out how ediff works
-* TMP Files
+* DONE TMP Files
 ** stop creating files that end with ~ (done)
 * Evil mode
-** dont use , for leader. it can be useful
-* Project search
+** DONE dont use , for leader. it can be useful
+** remove hjkl movement and map them to other things
+** add ctrln p f b for movement
+*** will have to rebind ctrlp ctrln paste history commnads
+** fix ctru and ctrld for 
+** add git gutter jumping and flycheck jumping to visual mode
+* DONE Project search
 ** find a replacement for fzf.vim with ag
 * PHP
 ** phpunit.el
@@ -41,3 +53,20 @@
 ** find a good way to replace vims inner word, tag, <, {, (, etc with one command
 * which key
 ** can this be made to popup without a prefix? for the base commands in a buffer
+* aggressive indent
+* column alignment tool
+** for comments, keyboard config and ascii art
+* dumb jump
+* system emacs shortcuts
+** I don't use altgr so try setting the common text editing commands in mac with khdrc
+* auto pairs
+** allow moving paren past the word
+*** ()word 
+*** with a keystorke becomes...
+*** (word)
+** allow moving paren past the word
+*** ()word 
+*** with a keystorke becomes...
+*** (word)
+* email
+** mbsync and mu4e
