@@ -1,12 +1,60 @@
 * Terminal
-** use eshell with super RET
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "<s-return>") 'eshell)
-  (global-set-key (kbd "<M-return>") 'projectile-term)
+  (global-set-key (kbd "<s-M-return>") 'ansi-term)
 
   (use-package exec-path-from-shell
     :ensure t
     )
+
+  (defun my-shell-kill-pending-command ()
+    (interactive)
+    (eshell-bol)
+    (kill-line)
+    (evil-insert 1))
+
+  (defun my-evil-shell ()
+    (evil-define-key 'normal eshell-mode-map
+      "cc" 'my-shell-kill-pending-command))
+
+  (add-hook 'eshell-mode-hook 'my-evil-shell)
+
+  (setq eshell-prompt-function
+        (lambda nil
+          (concat
+           (eshell/pwd)
+           "\n")))
+  (defun move-point-to-writeable-last-line ()
+    "Move the point to a non-read-only part of the last line.
+      If point is not on the last line, move point to the maximum position
+      in the buffer.  Otherwise if the point is in read-only text, move the
+      point forward out of the read-only sections."
+    (interactive)
+    (let* ((curline (line-number-at-pos))
+           (endline (line-number-at-pos (point-max))))
+      (if (= curline endline)
+          (if (not (eobp))
+              (let (
+                    ;; Get text-properties at the current location
+                    (plist (text-properties-at (point)))
+                    ;; Record next change in text-properties
+                    (next-change
+                     (or (next-property-change (point) (current-buffer))
+                         (point-max))))
+                ;; If current text is read-only, go to where that property changes
+                (if (plist-get plist 'read-only)
+                    (goto-char next-change))))
+        (goto-char (point-max)))))
+
+  (defun move-point-on-insert-to-writeable-last-line ()
+    "Only edit the current command in insert mode."
+    (add-hook 'evil-insert-state-entry-hook
+              'move-point-to-writeable-last-line
+              nil
+              t))
+
+  (add-hook 'eshell-mode-hook
+            'move-point-on-insert-to-writeable-last-line)
 
   ;; (defun my-terminal-insert ()
   ;;   (interactive)
@@ -42,8 +90,10 @@
 #+BEGIN_SRC emacs-lisp
   (use-package evil
     :ensure t
-    :config
+    :init
+    (setq evil-want-integration nil)
 
+    :config
     (use-package evil-surround
       :ensure t
       :config
@@ -475,9 +525,13 @@ Filtering for searches, commands, history, etc
 
 * Custom Functions
 #+BEGIN_SRC emacs-lisp
+  (defun my-hello-world ()
+    (interactive)
+    (message "hello world"))
+
   (defun switch-to-previous-buffer ()
     "Switch to previously open buffer.
-  Repeated invocations toggle between the two most recently open buffers."
+    Repeated invocations toggle between the two most recently open buffers."
     (interactive)
     (switch-to-buffer (other-buffer (current-buffer) 1)))
 
