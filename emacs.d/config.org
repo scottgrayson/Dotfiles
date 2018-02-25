@@ -7,17 +7,21 @@
     :ensure t
     )
 
-  (defun my-shell-kill-pending-command ()
-    (interactive)
-    (eshell-bol)
-    (kill-line)
-    (evil-insert 1))
+  ;; (defun my-shell-kill-pending-command ()
+  ;;   (interactive)
+  ;;   (eshell-bol)
+  ;;   (kill-line)
+  ;;   (evil-insert 1))
 
-  (defun my-evil-shell ()
-    (evil-define-key 'normal eshell-mode-map
-      "cc" 'my-shell-kill-pending-command))
+  (defun my-shell-completion ()
+    (setq pcomplete-ignore-case t))
 
-  (add-hook 'eshell-mode-hook 'my-evil-shell)
+  ;; (defun my-evil-shell ()
+  ;;   (evil-define-key 'normal eshell-mode-map
+  ;;     "cc" 'my-shell-kill-pending-command))
+
+  ;; (add-hook 'eshell-mode-hook 'my-evil-shell)
+  (add-hook 'eshell-mode-hook 'my-shell-completion)
 
   (setq eshell-prompt-function
         (lambda nil
@@ -26,9 +30,9 @@
            "\n")))
   (defun move-point-to-writeable-last-line ()
     "Move the point to a non-read-only part of the last line.
-      If point is not on the last line, move point to the maximum position
-      in the buffer.  Otherwise if the point is in read-only text, move the
-      point forward out of the read-only sections."
+        If point is not on the last line, move point to the maximum position
+        in the buffer.  Otherwise if the point is in read-only text, move the
+        point forward out of the read-only sections."
     (interactive)
     (let* ((curline (line-number-at-pos))
            (endline (line-number-at-pos (point-max))))
@@ -146,6 +150,10 @@
      "p" 'switch-to-previous-buffer
      "i"  'indent-buffer
      "s"  'counsel-ag))
+
+  (evil-define-minor-mode-key 'normal 'org-src-mode
+    (kbd "SPC w") 'org-edit-src-exit)
+
 #+END_SRC
 
 * Git
@@ -296,6 +304,10 @@ Filtering for searches, commands, history, etc
   (with-eval-after-load 'company
       (define-key company-active-map (kbd "M-n") nil)
       (define-key company-active-map (kbd "M-p") nil)
+      (define-key company-active-map (kbd "C-f") #'company-complete-common)
+      (define-key company-active-map (kbd "RET") #'company-complete-selection)
+      (define-key company-active-map (kbd "C-u") #'company-previous-page)
+      (define-key company-active-map (kbd "C-d") #'company-next-page)
       (define-key company-active-map (kbd "C-n") #'company-select-next)
       (define-key company-active-map (kbd "C-p") #'company-select-previous))
 #+END_SRC
@@ -304,14 +316,6 @@ Filtering for searches, commands, history, etc
 ** Theme list
   #+BEGIN_SRC emacs-lisp
     ;; (use-package solarized-theme
-    ;;   :ensure t
-    ;;   )
-
-    ;; (use-package darktooth-theme
-    ;;   :ensure t
-    ;;   )
-
-    ;; (use-package moe-theme
     ;;   :ensure t
     ;;   )
 
@@ -325,41 +329,13 @@ Filtering for searches, commands, history, etc
     ;;    `(lazy-highlight ((t (:foreground "#333333" :underline "#FF9632" :background "#FFFF00")))) ; isearch others
     ;;    ))
 
-    ;; (use-package material-theme
-    ;;   :ensure t
-    ;;   )
+     ;; (use-package base16-theme
+     ;;   :ensure t
+     ;;   )
 
-    ;; (use-package base16-theme
-    ;;   :ensure t
-    ;;   )
-
-    ;; (use-package color-theme-sanityinc-tomorrow
-    ;;   :ensure t
-    ;;   )
-
-    ;; (use-package spacemacs-theme
-    ;;   :ensure t
-    ;;   )
-
-    ;; (use-package gruvbox-theme
-    ;;   :ensure t
-    ;;   )
-
-    ;; (use-package zenburn-theme
-    ;;   :ensure t
-    ;;   )
-
-    ;; (use-package kaolin-themes
-    ;;   :ensure t
-    ;;   )
-
-    ;; (use-package nord-theme
-    ;;   :ensure t
-    ;;   )
-
-    ;; (use-package minimal-theme
-    ;;   :ensure t
-    ;;   )
+    (use-package kaolin-themes
+      :ensure t
+      )
 
     (use-package plan9-theme
       :ensure t
@@ -415,6 +391,7 @@ Filtering for searches, commands, history, etc
       (require 'spaceline-config)
       (setq powerline-default-separator (quote bar))
       (spaceline-highlight-face-evil-state)
+      (spaceline-toggle-minor-modes-off)
       (spaceline-spacemacs-theme))
   #+END_SRC
 ** Diminish
@@ -455,27 +432,36 @@ Filtering for searches, commands, history, etc
   ;;   (setq dashboard-items '((recents . 10)
   ;;                           (projects . 5))))
 
-  (use-package rainbow-delimiters
-    :ensure t
-    :config
-    (require 'cl-lib)
+  ;; (use-package rainbow-delimiters
+  ;;   :ensure t
+  ;;   :config
+  ;;   ;; (require 'cl-lib)
 
-    (defvar my-paren-dual-colors
-      '("hot pink" "dodger blue"))
+  ;; (defvar my-paren-dual-colors
+  ;;   '("hot pink" "dodger blue"))
 
-    (cl-loop
-     for index from 1 to rainbow-delimiters-max-face-count
-     do
-     (set-face-foreground
-      (intern (format "rainbow-delimiters-depth-%d-face" index))
-      (elt my-paren-dual-colors
-           (if (cl-evenp index) 0 1))))
+  ;; (cl-loop
+  ;;  for index from 1 to rainbow-delimiters-max-face-count
+  ;;  do
+  ;;  (set-face-foreground
+  ;;   (intern (format "rainbow-delimiters-depth-%d-face" index))
+  ;;   (elt my-paren-dual-colors
+  ;;        (if (cl-evenp index) 0 1))))
 
-    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+  ;; (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
   ;; (use-package sudo-edit
   ;;   :ensure t
   ;;   )
+
+  (use-package smartparens
+    :ensure t
+    :config
+    (add-hook 'prog-mode-hook #'smartparens-mode)
+    (bind-keys
+     :map smartparens-mode-map
+     ("C-(" . sp-backward-slurp-sexp)
+     ("C-)" . sp-forward-barf-sexp)))
 
   (use-package which-key
     :ensure t
@@ -520,7 +506,7 @@ Filtering for searches, commands, history, etc
 
 * Custom Keymaps
   #+BEGIN_SRC emacs-lisp
-
+    (global-set-key (kbd "C-x M-s") 'set-visited-file-name)
   #+END_SRC
 
 * Custom Functions
@@ -599,6 +585,8 @@ Filtering for searches, commands, history, etc
 
 * Misc
 #+BEGIN_SRC emacs-lisp
+  (setq pcomplete-ignore-case t)
+
   (setq frame-title-format
         (list '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
 
@@ -608,8 +596,6 @@ Filtering for searches, commands, history, etc
     ;; TODO run this on a timer
     (message (buffer-file-name))
     )
-
-  (electric-pair-mode)
 
   (setq make-backup-files nil)
   (setq auto-save-default nil)

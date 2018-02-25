@@ -7,8 +7,9 @@
 *** put full file name in title of window too
 * Terminal
 ** disable recent buffer autocomplete
-** Going from normal to insert mode should jump to the current command
+** DONE Going from normal to insert mode should jump to the current command
 ** add path to shell from zsh
+** make C-p n f b work for motion
 * Filesystem
 ** file manager
 ** quick way to rename files
@@ -44,7 +45,9 @@
 ** find a replacement for fzf.vim with ag
 * PHP
 ** phpunit.el
+*** make phpunit-current-test run the last test file if not in test 
 ** make sure that ac-php isnt creating too big of tags/docs files
+*** make completion keys the same as other filetypes
 * JS
 ** autocomplete
 * html
@@ -64,9 +67,11 @@
 *** ()word 
 *** with a keystorke becomes...
 *** (word)
-** allow moving paren past the word
-*** ()word 
-*** with a keystorke becomes...
-*** (word)
+** blade {{}} is adding {{}}}}
 * email
 ** mbsync and mu4e
+* tags
+** skip through php tags
+** auto use statement with tags
+** spell checking using tags
+* pomodorro timer
