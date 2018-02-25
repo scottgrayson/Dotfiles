@@ -60,31 +60,31 @@ export PATH=${PATH}:${ANDROID_HOME}/tools
 export PATH=${PATH}:${ANDROID_HOME}/platform-tools
 
 if [[ -n ${INSIDE_EMACS} ]]; then
-  # This shell runs inside an Emacs *shell*/*term* buffer.
-  plugins=(
-  git
-  colored-man-pages
-  history-substring-search
-  )
+# This shell runs inside an Emacs *shell*/*term* buffer.
+plugins=(
+git
+colored-man-pages
+history-substring-search
+)
 
-  export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -c"
+export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -c"
 else
-  plugins=(
-  composer
-  git
-  vi-mode
-  colored-man-pages
-  history-substring-search
-  )
+plugins=(
+composer
+git
+vi-mode
+colored-man-pages
+history-substring-search
+)
 
-  # source ~/.iterm2_shell_integration.`basename $SHELL`
-  #
-  # Preferred editor for local and remote sessions
-  if [[ -n $SSH_CONNECTION ]]; then
-    export EDITOR='vim'
-  else
-    export EDITOR='nvim'
-  fi
+# source ~/.iterm2_shell_integration.`basename $SHELL`
+#
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+export EDITOR='vim'
+else
+export EDITOR='nvim'
+fi
 
 fi
 
@@ -126,10 +126,10 @@ alias gbroom="git branch --merged | egrep -v '(^\*|master|dev)' | xargs git bran
 original_phpunit=$(which phpunit)
 
 phpunit() {
-    if [ -f vendor/bin/phpunit ]; then vendor/bin/phpunit $@
-    else eval "'$original_phpunit' $@"
-    fi
-  }
+if [ -f vendor/bin/phpunit ]; then vendor/bin/phpunit $@
+else eval "'$original_phpunit' $@"
+fi
+}
 
 alias pu="phpunit"
 alias pud="phpunit --group default"
@@ -181,11 +181,11 @@ alias rm-pgpid="rm ~/Library/Application\ Support/Postgres/var-9.6/postmaster.pi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 if [[ -n !${INSIDE_EMACS} ]]; then
-  # test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+# test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 fi
 
 if [ $TERM_PROGRAM = "iTerm.app" ]; then
-  source ~/.iterm2_shell_integration.`basename $SHELL`
+source ~/.iterm2_shell_integration.`basename $SHELL`
 fi
 
 # Load version control information
@@ -194,8 +194,9 @@ precmd() { vcs_info }
 
 # Format the vcs_info_msg_0_ variable
 zstyle ':vcs_info:git:*' formats 'on branch %b'
- 
+
 # Set up the prompt (with git branch name)
 setopt PROMPT_SUBST
 PROMPT='${PWD/#$HOME/~} ${vcs_info_msg_0_}
 '
+alias | sed 's/^alias //' | sed -E "s/^([^=]+)='(.+?)'$/\1=\2/" | sed "s/'\\\\''/'/g" | sed "s/'\\\\$/'/;" | sed -E 's/^([^=]+)=(.+)$/alias \1 \2/' >~/.emacs.d/eshell/alias
