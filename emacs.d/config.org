@@ -16,18 +16,26 @@
   (defun my-shell-completion ()
     (setq pcomplete-ignore-case t))
 
-  ;; (defun my-evil-shell ()
-  ;;   (evil-define-key 'normal eshell-mode-map
-  ;;     "cc" 'my-shell-kill-pending-command))
+  (defun my-evil-shell ()
+    (evil-define-key 'insert eshell-mode-map
+      (kbd "C-p") 'eshell-previous-matching-input-from-input
+      (kbd "C-n") 'eshell-nexlst-matching-input-from-input))
 
   ;; (add-hook 'eshell-mode-hook 'my-evil-shell)
   (add-hook 'eshell-mode-hook 'my-shell-completion)
 
-  (setq eshell-prompt-function
-        (lambda nil
-          (concat
-           (eshell/pwd)
-           "\n")))
+  (add-hook 'eshell-mode-hook
+            (lambda ()
+
+              (my-evil-shell)
+              (my-shell-completion)
+
+              (setq eshell-prompt-function
+                    (lambda nil
+                      (concat
+                       (eshell/pwd)
+                       "\n")))))
+
   (defun move-point-to-writeable-last-line ()
     "Move the point to a non-read-only part of the last line.
         If point is not on the last line, move point to the maximum position
@@ -329,13 +337,20 @@ Filtering for searches, commands, history, etc
     ;;    `(lazy-highlight ((t (:foreground "#333333" :underline "#FF9632" :background "#FFFF00")))) ; isearch others
     ;;    ))
 
-     ;; (use-package base16-theme
-     ;;   :ensure t
-     ;;   )
+    ;; (use-package base16-theme
+    ;;   :ensure t
+    ;;   )
 
     (use-package kaolin-themes
       :ensure t
-      )
+      :config
+      (load-theme 'kaolin-dark)
+      (setq kaolin-hl-line-colored t)
+      (custom-theme-set-faces
+       'kaolin-dark
+       '(region           ((t (:background "dark grey"))))
+       '(lazy-highlight           ((t (:foreground "black" :background "dark grey"))))
+       ))
 
     (use-package plan9-theme
       :ensure t
@@ -432,23 +447,23 @@ Filtering for searches, commands, history, etc
   ;;   (setq dashboard-items '((recents . 10)
   ;;                           (projects . 5))))
 
-  ;; (use-package rainbow-delimiters
-  ;;   :ensure t
-  ;;   :config
-  ;;   ;; (require 'cl-lib)
+  (use-package rainbow-delimiters
+    :ensure t
+    :config
+    ;; (require 'cl-lib)
 
-  ;; (defvar my-paren-dual-colors
-  ;;   '("hot pink" "dodger blue"))
+  (defvar my-paren-dual-colors
+    '("hot pink" "dodger blue"))
 
-  ;; (cl-loop
-  ;;  for index from 1 to rainbow-delimiters-max-face-count
-  ;;  do
-  ;;  (set-face-foreground
-  ;;   (intern (format "rainbow-delimiters-depth-%d-face" index))
-  ;;   (elt my-paren-dual-colors
-  ;;        (if (cl-evenp index) 0 1))))
+  (cl-loop
+   for index from 1 to rainbow-delimiters-max-face-count
+   do
+   (set-face-foreground
+    (intern (format "rainbow-delimiters-depth-%d-face" index))
+    (elt my-paren-dual-colors
+         (if (cl-evenp index) 0 1))))
 
-  ;; (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
   ;; (use-package sudo-edit
   ;;   :ensure t
