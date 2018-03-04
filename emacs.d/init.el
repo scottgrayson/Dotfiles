@@ -6,9 +6,9 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 
-(setq package-archives
-	     '(("gnu" . "https://elpa.gnu.org/packages/")
-	     ("melpa" . "https://melpa.org/packages/")))
+(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;; (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 
 (package-initialize)
 
@@ -32,11 +32,12 @@
  '(hl-paren-colors (quote ("#40883f" "#0287c8" "#b85c57")))
  '(package-selected-packages
    (quote
-    (ivy-rich company-quickhelp whitespace-cleanup-mode evil-nerd-commenter evilnc indent-guide hungry-delete dumb-jump ivy-hydra counsel-projectile "sqlup-mode" "sqlup-mode" "sqlup-mode" sqlup sqlup-mode sql-indent groovy-mode yasnippet-snippets which-key web-mode use-package spaceline smartparens rainbow-mode rainbow-delimiters projectile plan9-theme phpunit org-bullets magithub kaolin-themes js2-mode hydra git-gutter general flycheck exec-path-from-shell evil-surround evil-magit evil-indent-textobject evil-collection emmet-mode diminish counsel company-php beacon ace-window ac-php)))
+    (calfw-ical calfw-org calfw-gcal calfw org-plus-contrib org-gcal ivy-rich company-quickhelp whitespace-cleanup-mode evil-nerd-commenter evilnc indent-guide hungry-delete dumb-jump ivy-hydra counsel-projectile "sqlup-mode" "sqlup-mode" "sqlup-mode" sqlup sqlup-mode sql-indent groovy-mode yasnippet-snippets which-key web-mode use-package spaceline smartparens rainbow-mode rainbow-delimiters projectile plan9-theme phpunit org-bullets magithub kaolin-themes js2-mode hydra git-gutter general flycheck exec-path-from-shell evil-surround evil-magit evil-indent-textobject evil-collection emmet-mode diminish counsel company-php beacon ace-window ac-php)))
  '(sml/active-background-color "#98ece8")
  '(sml/active-foreground-color "#424242")
  '(sml/inactive-background-color "#4fa8a8")
- '(sml/inactive-foreground-color "#424242"))
+ '(sml/inactive-foreground-color "#424242")
+ '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

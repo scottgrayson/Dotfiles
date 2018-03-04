@@ -1,3 +1,10 @@
+* Env file
+#+BEGIN_SRC emacs-lisp
+  ;; env file should have the format
+  ;; (setenv "SECRET_KEY" "secret-val")
+  ;; (require 'env)
+  (load "~/.emacs.d/env.el")
+#+END_SRC
 * Terminal
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "<s-return>") 'eshell)
@@ -78,6 +85,13 @@
 #+END_SRC
 
 * Org
+** Org Updated
+#+BEGIN_SRC emacs-lisp
+ (use-package org
+   :ensure org-plus-contrib ;; <- here is the workaround
+   :init
+   (setq org-src-tab-acts-natively t))
+#+END_SRC
 ** Org Src
 #+BEGIN_SRC emacs-lisp
   (setq org-src-window-setup 'current-window)
@@ -96,6 +110,49 @@
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'org-structure-template-alist
                '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+#+END_SRC
+  
+** Org Capture
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-c c")
+                  'org-capture)
+
+  (setq org-capture-templates
+        '(("c" "Calendar" entry (file  "~/org/gcal.org" )
+           "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
+          ("l" "Link" entry (file+headline "~/org/links.org" "Links")
+           "* %? %^L %^g \n%T" :prepend t)
+          ("e" "Emacs Todo" entry (file+headline "~/org/todo.org" "Emacs")
+           "* TODO %?\n%u" :prepend t)
+          ("t" "Todo" entry (file+headline "~/org/todo.org" "Other")
+           "* TODO %?\n%u" :prepend t)))
+#+END_SRC
+** Org Calendar
+#+BEGIN_SRC emacs-lisp
+  (setq package-check-signature nil)
+
+  (use-package org-gcal
+    :ensure t
+    :config
+    (setq org-gcal-client-id (getenv "GCAL_ID")
+          org-gcal-client-secret (getenv "GCAL_SECRET")
+          org-gcal-file-alist '(("dscottgrayson@gmail.com" .  "~/org/gcal.org"))))
+
+  (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
+  (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
+
+  (setq org-agenda-files (list "~/org/gcal.org$"))
+
+  (global-set-key "\C-ca" 'org-agenda)
+
+  (general-define-key :keymaps 'org-mode-map
+                      "C-c x" 'org-gcal-delete-at-point)
+
+  (use-package calfw
+    :ensure t
+    :config
+    (require 'calfw-org))
+
 #+END_SRC
   
 * Vim
@@ -169,7 +226,7 @@
     (setq my-leader1 "SPC")
     (general-define-key
      :prefix my-leader1
-     :keymaps 'normal 'override
+     :keymaps 'normal
      "b"  'ivy-switch-buffer
      "f"  'counsel-projectile-find-file
      "F"  'counsel-file-jump
@@ -631,7 +688,7 @@ Filtering for searches, commands, history, etc
 
   (defun todo-visit ()
     (interactive)
-    (find-file "~/Code/dotfiles/emacs.d/TODO.org"))
+    (find-file "~/org/todo.org"))
   (global-set-key (kbd "C-c t") 'todo-visit)
 
   (defun config-visit ()
