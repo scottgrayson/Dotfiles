@@ -104,6 +104,7 @@
     :ensure t
     :init
     (setq evil-want-integration nil)
+    '(evil-search-module (quote evil-search))
 
     :config
     (use-package evil-surround
@@ -128,11 +129,29 @@
 
     (general-define-key
      :keymaps 'visual
-     "#" 'comment-line)
+     "#" 'evilnc-comment-or-uncomment-lines)
+
+     (general-define-key
+     :keymaps 'evil-window-map
+     "q" 'evil-window-delete
+     "s" 'evil-window-vsplit
+     "S" 'evil-window-split
+     "c" 'ace-swap-window
+     "x" 'evil-window-delete
+     "n" 'evil-window-next
+     "u" 'winner-undo
+     "r" 'winner-redo
+     "a" 'balance-windows
+     "SPC" 'ace-window)
 
     (defun evil-nohl ()
       (interactive)
       (evil-ex-nohighlight))
+
+    (general-define-key
+     :keymaps 'insert
+     "DEL" 'hungry-delete-backward
+     )
 
     (general-define-key
      :keymaps 'normal
@@ -143,24 +162,31 @@
      ")" 'git-gutter:next-hunk
      "[" 'flycheck-previous-error
      "]" 'flycheck-next-error
-     "#" 'comment-line
+     "#" 'evilnc-comment-or-uncomment-lines
      "s" 'avy-goto-word-1
      "S" 'avy-goto-char)
 
     (setq my-leader1 "SPC")
     (general-define-key
      :prefix my-leader1
-     :keymaps 'normal
+     :keymaps 'normal 'override
      "b"  'ivy-switch-buffer
-     "f"  'projectile-find-file
+     "f"  'counsel-projectile-find-file
+     "F"  'counsel-file-jump
+     "." 'ivy-resume
      "r"  'replace-regexp
      "w"  'save-buffer
      "p" 'switch-to-previous-buffer
+     "t"  'ac-php-find-symbol-at-point
+     "("  'ac-php-location-stack-back
+     ")"  'ac-php-location-stack-forward
+     "["  'dumb-jump-back
+     "]"  'dumb-jump-go
      "i"  'indent-buffer
-     "s"  'counsel-ag))
+     "s"  'counsel-projectile-rg))
 
   (evil-define-minor-mode-key 'normal 'org-src-mode
-    (kbd "SPC w") 'org-edit-src-exit)
+    (kbd "SPC w") 'nil)
 
 #+END_SRC
 
@@ -189,6 +215,17 @@
     (global-git-gutter-mode +1))
 #+END_SRC
 
+* Hydra
+#+BEGIN_SRC emacs-lisp
+    (use-package hydra
+      :ensure t
+      )
+
+    (use-package ivy-hydra
+      :ensure t
+      )
+#+END_SRC
+
 * Filtering
 Filtering for searches, commands, history, etc
 ** Ivy/Counsel/Swiper
@@ -200,18 +237,15 @@ Filtering for searches, commands, history, etc
   (use-package swiper
     :ensure t
     :config
-    (progn
-      (ivy-mode 1)
-      (setq enable-recursive-minibuffers t)
-      (global-set-key "\C-s" 'swiper)
-      (global-set-key (kbd "C-c C-r") 'ivy-resume)
-      (global-set-key (kbd "M-x") 'counsel-M-x)
-      (global-set-key (kbd "M-y") 'counsel-yank-pop)
-      (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-      (global-set-key (kbd "C-c s") 'counsel-git-grep)
-      (global-set-key (kbd "C-c S") 'counsel-ag)
-      (global-set-key (kbd "C-c p") 'counsel-yank-pop)
-      (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
+    (ivy-mode 1)
+    ;; (setq enable-recursive-minibuffers t)
+    (setq ivy-re-builders-alist
+          '((t . ivy--regex-ignore-order)))
+    (global-set-key "\C-s" 'swiper)
+    (global-set-key (kbd "M-x") 'counsel-M-x)
+    (global-set-key (kbd "M-y") 'counsel-yank-pop)
+    (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+    (global-set-key (kbd "C-c p") 'counsel-yank-pop)
     )
 
   (setq ivy-extra-directories nil)
@@ -227,6 +261,10 @@ Filtering for searches, commands, history, etc
 
   (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done)
   (define-key ivy-minibuffer-map (kbd "C-f") 'eh-ivy-open-current-typed-path)
+
+  (use-package ivy-rich
+    :config
+    (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer))
 #+END_SRC
 
 * Project Management
@@ -253,8 +291,30 @@ Filtering for searches, commands, history, etc
             (rename-buffer buff-name t)))))
 
     (global-set-key (kbd "C-x M-t") 'projectile-term))
+
+  (use-package counsel-projectile
+    :ensure t
+    :config
+    (counsel-projectile-mode))
 #+END_SRC
 
+* Dumb Jump
+#+BEGIN_SRC emacs-lisp
+  (use-package dumb-jump
+    :ensure t
+    :config
+    ;; shorcuts in vim section
+    (setq dumb-jump-selector 'ivy)
+    (setq dumb-jump-force-searcher 'rg)
+    (setq dumb-jump-rg-cmd "rg -u")
+    )
+#+END_SRC
+* Commenting
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-nerd-commenter
+    :ensure t
+    )
+#+END_SRC
 * Emmet
 #+BEGIN_SRC emacs-lisp
   (use-package emmet-mode
@@ -303,21 +363,31 @@ Filtering for searches, commands, history, etc
   (use-package company
     :ensure t
     :config
-      (setq company-dabbrev-downcase 0)
-      (setq company-idle-delay 0)
-      (setq company-minimum-prefix-length 2)
+    (setq company-dabbrev-downcase 0)
+    (setq company-idle-delay 0)
+    (setq company-minimum-prefix-length 2)
     :init
-      (add-hook 'after-init-hook 'global-company-mode))
+    (add-hook 'after-init-hook 'global-company-mode))
 
   (with-eval-after-load 'company
-      (define-key company-active-map (kbd "M-n") nil)
-      (define-key company-active-map (kbd "M-p") nil)
-      (define-key company-active-map (kbd "C-f") #'company-complete-common)
-      (define-key company-active-map (kbd "RET") #'company-complete-selection)
-      (define-key company-active-map (kbd "C-u") #'company-previous-page)
-      (define-key company-active-map (kbd "C-d") #'company-next-page)
-      (define-key company-active-map (kbd "C-n") #'company-select-next)
-      (define-key company-active-map (kbd "C-p") #'company-select-previous))
+    (define-key company-active-map (kbd "M-n") nil)
+    (define-key company-active-map (kbd "M-p") nil)
+    (define-key company-active-map (kbd "C-f") #'company-complete-common)
+    (define-key company-active-map (kbd "RET") #'company-complete-selection)
+    (define-key company-active-map (kbd "C-u") #'company-previous-page)
+    (define-key company-active-map (kbd "C-d") #'company-next-page)
+    (define-key company-active-map (kbd "C-n") #'company-select-next)
+    (define-key company-active-map (kbd "C-p") #'company-select-previous))
+
+  ;; chunkwm does not like this popup
+  ;; (use-package pos-tip
+  ;;   :ensure t
+  ;;   )
+
+  ;; (use-package company-quickhelp
+  ;;   :ensure t
+  ;;   :init
+  ;;   (company-quickhelp-mode))
 #+END_SRC
 
 * Themes
@@ -344,16 +414,18 @@ Filtering for searches, commands, history, etc
     (use-package kaolin-themes
       :ensure t
       :config
-      (load-theme 'kaolin-dark)
-      (setq kaolin-hl-line-colored t)
-      (custom-theme-set-faces
-       'kaolin-dark
-       '(region           ((t (:background "dark grey"))))
-       '(lazy-highlight           ((t (:foreground "black" :background "dark grey"))))
-       ))
+      ;; (load-theme 'kaolin-dark t)
+      ;; (setq kaolin-hl-line-colored t)
+      ;; (custom-theme-set-faces
+       ;; 'kaolin-dark
+       ;; '(region           ((t (:background "dark grey"))))
+       ;; '(lazy-highlight           ((t (:foreground "black" :background "dark grey"))))
+       )
 
     (use-package plan9-theme
       :ensure t
+      :config
+      (load-theme 'plan9 t)
       )
   #+END_SRC
 ** Theme Switcher
@@ -429,75 +501,98 @@ Filtering for searches, commands, history, etc
 
 * Windows
 #+BEGIN_SRC emacs-lisp
+  (when (fboundp 'winner-mode)
+    (winner-mode 1))
+
   (setq split-height-threshold nil)
   (setq split-width-threshold 100)
   (use-package ace-window
     :ensure t
     :config
-    (setq aw-keys '(?a ?r ?s ?t ?n ?e ?i ?o))
-    (global-set-key (kbd "M-o") 'ace-window))
+    ;; (setq aw-keys '(?a ?r ?s ?t ?n ?e ?i ?o))
+    (global-set-key (kbd "M-w") 'ace-window))
 #+END_SRC
 
 * Other Packages
 #+BEGIN_SRC emacs-lisp
-  ;; (use-package dashboard
-  ;;   :ensure t
-  ;;   :config
-  ;;   (dashboard-setup-startup-hook)
-  ;;   (setq dashboard-items '((recents . 10)
-  ;;                           (projects . 5))))
+    ;; (use-package dashboard
+    ;;   :ensure t
+    ;;   :config
+    ;;   (dashboard-setup-startup-hook)
+    ;;   (setq dashboard-items '((recents . 10)
+    ;;                           (projects . 5))))
 
-  (use-package rainbow-delimiters
-    :ensure t
-    :config
-    ;; (require 'cl-lib)
+    (use-package whitespace-cleanup-mode
+      :ensure t
+      :config
+      (global-whitespace-cleanup-mode)
+      )
 
-  (defvar my-paren-dual-colors
-    '("hot pink" "dodger blue"))
+    (use-package hungry-delete
+      :ensure t
+      )
 
-  (cl-loop
-   for index from 1 to rainbow-delimiters-max-face-count
-   do
-   (set-face-foreground
-    (intern (format "rainbow-delimiters-depth-%d-face" index))
-    (elt my-paren-dual-colors
-         (if (cl-evenp index) 0 1))))
+    (use-package indent-guide
+      :ensure t
+      :config
+      (indent-guide-global-mode)
+      )
 
-  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+    (use-package rainbow-delimiters
+      :ensure t
+      :config
+      ;; (require 'cl-lib)
 
-  ;; (use-package sudo-edit
-  ;;   :ensure t
-  ;;   )
+      (defvar my-paren-dual-colors
+        '("hot pink" "dodger blue"))
 
-  (use-package smartparens
-    :ensure t
-    :config
-    (add-hook 'prog-mode-hook #'smartparens-mode)
-    (bind-keys
-     :map smartparens-mode-map
-     ("C-(" . sp-backward-slurp-sexp)
-     ("C-)" . sp-forward-barf-sexp)))
+      (cl-loop
+       for index from 1 to rainbow-delimiters-max-face-count
+       do
+       (set-face-foreground
+        (intern (format "rainbow-delimiters-depth-%d-face" index))
+        (elt my-paren-dual-colors
+             (if (cl-evenp index) 0 1))))
 
-  (use-package which-key
-    :ensure t
-    :init
-    (which-key-mode))
+      (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
-  (use-package rainbow-mode
-    :ensure t
-    :init
-    (rainbow-mode 1))
+    ;; (use-package sudo-edit
+    ;;   :ensure t
+    ;;   )
 
-  ;; (use-package linum-relative
-  ;;   :ensure t
-  ;;   :config
-  ;;   (setq linum-relative-current-symbol "")
-  ;;   (linum-relative-mode))
+    (use-package smartparens
+      :ensure t
+      :config
+      (add-hook 'prog-mode-hook #'smartparens-mode)
+      (bind-keys
+       :map smartparens-mode-map
+       ("C-(" . sp-forward-barf-sexp)
+       ("C-)" . sp-forward-slurp-sexp)))
 
-  (use-package beacon
-    :ensure t
-    :init
-    (beacon-mode 1))
+    (use-package which-key
+      :ensure t
+      :init
+      (which-key-mode))
+
+    (use-package groovy-mode
+      :ensure t
+      )
+
+    (use-package rainbow-mode
+      :ensure t
+      :init
+      (rainbow-mode 1))
+
+    ;; (use-package linum-relative
+    ;;   :ensure t
+    ;;   :config
+    ;;   (setq linum-relative-current-symbol "")
+    ;;   (linum-relative-mode))
+
+    (use-package beacon
+      :ensure t
+      :init
+      (beacon-mode 1))
 #+END_SRC
 
 * Avy
@@ -512,16 +607,9 @@ Filtering for searches, commands, history, etc
     ("M-s" . avy-goto-word-1))
 #+END_SRC
 
-* Hydra
-#+BEGIN_SRC emacs-lisp
-    (use-package hydra
-      :ensure t
-      )
-#+END_SRC
-
 * Custom Keymaps
   #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "C-x M-s") 'set-visited-file-name)
+;;
   #+END_SRC
 
 * Custom Functions
@@ -541,9 +629,14 @@ Filtering for searches, commands, history, etc
     (interactive)
     (indent-region (point-min) (point-max)))
 
+  (defun todo-visit ()
+    (interactive)
+    (find-file "~/Code/dotfiles/emacs.d/TODO.org"))
+  (global-set-key (kbd "C-c t") 'todo-visit)
+
   (defun config-visit ()
     (interactive)
-    (find-file "~/.emacs.d/config.org"))
+    (find-file "~/Code/dotfiles/emacs.d/config.org"))
   (global-set-key (kbd "C-c e") 'config-visit)
 
   (defun config-reload ()
@@ -554,6 +647,15 @@ Filtering for searches, commands, history, etc
 
 * Languages
 #+BEGIN_SRC emacs-lisp
+
+  (use-package sqlup-mode
+    :ensure t
+    )
+
+  (use-package sql-indent
+    :ensure t
+    :pin gnu)
+
   (use-package php-mode
     :ensure t
     :config
@@ -562,6 +664,8 @@ Filtering for searches, commands, history, etc
   (use-package phpunit
     :ensure t
     :config
+    (setq phpunit-stop-on-error t)
+    (setq phpunit-stop-on-failure t)
     (define-key php-mode-map (kbd "M-t t") 'phpunit-current-test)
     (define-key php-mode-map (kbd "M-t c") 'phpunit-current-class)
     (define-key php-mode-map (kbd "M-t p") 'phpunit-current-project)
