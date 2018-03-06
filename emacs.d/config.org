@@ -141,18 +141,47 @@
   (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
   (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
 
-  (setq org-agenda-files (list "~/org/gcal.org$"))
+   (setq org-agenda-files (list "~/org/gcal.org"))
 
-  (global-set-key "\C-ca" 'org-agenda)
+   (global-set-key "\C-ca" 'org-agenda)
 
-  (general-define-key :keymaps 'org-mode-map
-                      "C-c x" 'org-gcal-delete-at-point)
+   (general-define-key :keymaps 'org-mode-map
+                       "C-c x" 'org-gcal-delete-at-point)
 
-  (use-package calfw
-    :ensure t
-    :config
-    (require 'calfw-org))
+   (use-package calfw
+     :ensure t
+     :config
+     (require 'calfw-org))
 
+#+END_SRC
+  
+* Email
+#+BEGIN_SRC emacs-lisp
+  ; add the source shipped with mu to load-path
+  (add-to-list 'load-path (expand-file-name "/usr/local/Cellar/mu/1.0/share/emacs/site-lisp/mu/mu4e"))
+
+  ; make sure emacs finds applications in /usr/local/bin
+  (setq exec-path (cons "/usr/local/bin" exec-path))
+
+  ; require mu4e
+  (require 'mu4e)
+
+  ; tell mu4e where my Maildir is
+  (setq mu4e-maildir "/Users/Scott/Mail")
+  ; tell mu4e how to sync email
+  (setq mu4e-get-mail-command "/usr/local/bin/mbsync -a")
+  ; tell mu4e to use w3m for html rendering
+  (setq mu4e-html2text-command "/usr/local/bin/w3m -T text/html")
+
+  ; taken from mu4e page to define bookmarks
+  (add-to-list 'mu4e-bookmarks
+              '("size:5M..500M"       "Big messages"     ?b))
+
+  ; mu4e requires to specify drafts, sent, and trash dirs
+  ; a smarter configuration allows to select directories according to the account (see mu4e page)
+  (setq mu4e-drafts-folder "/work/drafts")
+  (setq mu4e-sent-folder "/work/sent")
+  (setq mu4e-trash-folder "/work/trash")
 #+END_SRC
   
 * Vim
@@ -754,6 +783,9 @@ Filtering for searches, commands, history, etc
     (setq web-mode-markup-indent-offset 2)
     (setq web-mode-css-indent-offset 2)
     (setq web-mode-code-indent-offset 2)
+    (setq web-mode-script-padding 0)
+    (setq web-mode-style-padding 0)
+    (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
     (add-to-list 'auto-mode-alist '("\\.blade.php\\'" . web-mode))
     (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
     )
