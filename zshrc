@@ -200,3 +200,7 @@ setopt PROMPT_SUBST
 PROMPT='${PWD/#$HOME/~} ${vcs_info_msg_0_}
 '
 alias | sed 's/^alias //' | sed -E "s/^([^=]+)='(.+?)'$/\1=\2/" | sed "s/'\\\\''/'/g" | sed "s/'\\\\$/'/;" | sed -E 's/^([^=]+)=(.+)$/alias \1 \2/' >~/.emacs.d/eshell/alias
+
+# for accessing last output without rerunning command
+# does not work yet
+#bindkey -s "\n" " | tee ~/.last_zsh_output\n"

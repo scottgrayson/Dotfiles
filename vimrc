@@ -133,7 +133,7 @@ let g:terminal_color_15 = "#ebdbb2"
 " Syntax {{
 syntax enable
 
-hi Comment gui=italic
+"hi Comment gui=italic
 
 autocmd FileType vue syntax sync fromstart
 
@@ -250,9 +250,11 @@ endfunction
 
 " Mappings {{{
 set timeoutlen=1000 ttimeoutlen=0
-let mapleader=","
 
-nnoremap == :call Indent()<CR>
+" map leader to SPACE
+let mapleader=" "
+
+nnoremap <leader>i :call Indent()<CR>
 nnoremap <leader>- :%s/\s\+$//e<CR>
 
 "edit vimrc

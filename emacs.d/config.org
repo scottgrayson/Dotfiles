@@ -7,7 +7,9 @@
 #+END_SRC
 * Terminal
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "<s-return>") 'eshell)
+  ;; (global-set-key (kbd "<s-return>") 'eshell)
+
+  (global-set-key (kbd "<s-return>") 'term)
   (global-set-key (kbd "<s-M-return>") 'ansi-term)
 
   (use-package exec-path-from-shell
@@ -87,10 +89,11 @@
 * Org
 ** Org Updated
 #+BEGIN_SRC emacs-lisp
- (use-package org
-   :ensure org-plus-contrib ;; <- here is the workaround
-   :init
-   (setq org-src-tab-acts-natively t))
+  (use-package org
+    ;; :ensure org-plus-contrib ;; <- here is the workaround
+    :ensure t
+    :init
+    (setq org-src-tab-acts-natively t))
 #+END_SRC
 ** Org Src
 #+BEGIN_SRC emacs-lisp
@@ -100,10 +103,10 @@
 #+END_SRC
 ** Org Bullets
 #+BEGIN_SRC emacs-lisp
-    (use-package org-bullets
-      :ensure t
-      :config
-      (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
+  (use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
 #+END_SRC
 
 ** Org Snippets
@@ -141,77 +144,128 @@
   (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
   (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
 
-   (setq org-agenda-files (list "~/org/gcal.org"))
+  (setq org-agenda-files (list "~/org/gcal.org"))
 
-   (global-set-key "\C-ca" 'org-agenda)
+  (global-set-key "\C-ca" 'org-agenda)
 
-   (general-define-key :keymaps 'org-mode-map
-                       "C-c x" 'org-gcal-delete-at-point)
+  (general-define-key :keymaps 'org-mode-map
+                      "C-c x" 'org-gcal-delete-at-point)
 
-   (use-package calfw
-     :ensure t
-     :config
-     (require 'calfw-org))
+  (use-package calfw
+    :ensure t
+    :config
+    (require 'calfw-org))
 
 #+END_SRC
   
 * Email
 #+BEGIN_SRC emacs-lisp
-    (add-to-list 'load-path "~/place/to/your/mu4e")
-    (require 'smtpmail)
+  (add-to-list 'load-path "~/place/to/your/mu4e")
+  (require 'smtpmail)
 
-                                            ; smtp
-    ;; I have my "default" parameters from Gmail
-    (setq mu4e-sent-folder "/Users/Scott/Mail/sent"
-          ;; mu4e-sent-messages-behavior 'delete ;; Unsure how this should be configured
-          mu4e-drafts-folder "/Users/Scott/Mail/drafts"
-          user-mail-address "dscottgrayson@gmail.com"
-          smtpmail-smtp-user "dscottgrayson"
-          smtpmail-local-domain "gmail.com"
-          smtpmail-default-smtp-server "smtp.gmail.com"
-          smtpmail-smtp-server "smtp.gmail.com"
-          smtpmail-smtp-service 587)
+                                          ; smtp
+  ;; I have my "default" parameters from Gmail
+  (setq mu4e-sent-folder "/Users/Scott/Mail/sent"
+        ;; mu4e-sent-messages-behavior 'delete ;; Unsure how this should be configured
+        mu4e-drafts-folder "/Users/Scott/Mail/drafts"
+        user-mail-address "dscottgrayson@gmail.com"
+        smtpmail-smtp-user "dscottgrayson"
+        smtpmail-local-domain "gmail.com"
+        smtpmail-default-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-service 587)
 
-                                            ; add the source shipped with mu to load-path
-    (add-to-list 'load-path (expand-file-name "/usr/local/Cellar/mu/1.0/share/emacs/site-lisp/mu/mu4e"))
+                                          ; add the source shipped with mu to load-path
+  (add-to-list 'load-path (expand-file-name "/usr/local/Cellar/mu/1.0/share/emacs/site-lisp/mu/mu4e"))
 
-                                            ; make sure emacs finds applications in /usr/local/bin
-    (setq exec-path (cons "/usr/local/bin" exec-path))
+                                          ; make sure emacs finds applications in /usr/local/bin
+  (setq exec-path (cons "/usr/local/bin" exec-path))
 
-                                            ; require mu4e
-    (require 'mu4e)
+                                          ; require mu4e
+  (require 'mu4e)
 
-    (setq mu4e-maildir "/Users/Scott/Mail")
-    (setq mu4e-get-mail-command "/usr/local/bin/mbsync -a")
+  (setq mu4e-maildir "/Users/Scott/Mail")
+  (setq mu4e-get-mail-command "/usr/local/bin/mbsync -a")
 
   ;; html rendering
-(require 'mu4e-contrib)
-(setq mu4e-html2text-command 'mu4e-shr2text)
-(add-hook 'mu4e-view-mode-hook
-          (lambda()
-            ;; try to emulate some of the eww key-bindings
-            (local-set-key (kbd "<tab>") 'shr-next-link)
-            (local-set-key (kbd "<backtab>") 'shr-previous-link)))
+  (require 'mu4e-contrib)
+  (setq mu4e-html2text-command 'mu4e-shr2text)
+  (add-hook 'mu4e-view-mode-hook
+            (lambda()
+              ;; try to emulate some of the eww key-bindings
+              (local-set-key (kbd "<tab>") 'shr-next-link)
+              (local-set-key (kbd "<backtab>") 'shr-previous-link)))
 
-    (setq mu4e-update-interval 120)
-    (setq mu4e-headers-auto-update t)
-    (setq mu4e-compose-signature-auto-include nil)
+  (setq mu4e-update-interval 120)
+  (setq mu4e-headers-auto-update t)
+  (setq mu4e-compose-signature-auto-include nil)
 
-    (setq mu4e-view-show-images t)
-    (when (fboundp 'imagemagick-register-types)
-      (imagemagick-register-types))
+  (setq mu4e-view-show-images t)
+  (when (fboundp 'imagemagick-register-types)
+    (imagemagick-register-types))
 
-                                            ; taken from mu4e page to define bookmarks
-    (add-to-list 'mu4e-bookmarks
-                 '("size:5M..500M"       "Big messages"     ?b))
+                                          ; taken from mu4e page to define bookmarks
+  (add-to-list 'mu4e-bookmarks
+               '("size:5M..500M"       "Big messages"     ?b))
 
-                                            ; mu4e requires to specify drafts, sent, and trash dirs
-                                            ; a smarter configuration allows to select directories according to the account (see mu4e page)
-    (setq mu4e-drafts-folder "/gmail/drafts")
-    (setq mu4e-sent-folder "/gmail/sent")
-    (setq mu4e-trash-folder "/gmail/trash")
+                                          ; mu4e requires to specify drafts, sent, and trash dirs
+                                          ; a smarter configuration allows to select directories according to the account (see mu4e page)
+  (setq mu4e-drafts-folder "/gmail/drafts")
+  (setq mu4e-sent-folder "/gmail/sent")
+  (setq mu4e-trash-folder "/gmail/trash")
 
-    (bind-key "C-c m" 'mu4e)
+  (bind-key "C-c m" 'mu4e)
+#+END_SRC
+  
+* Slack
+#+BEGIN_SRC emacs-lisp
+  ;;  (setq alert-default-style 'growl)
+  ;; I'm using use-package and el-get and evil
+
+  ;; (el-get-bundle slack)
+
+  ;; (use-package slack
+  ;;   :commands (slack-start)
+  ;;   :init
+  ;;   (setq slack-buffer-emojify t) ;; if you want to enable emoji, default nil
+  ;;   (setq slack-prefer-current-team t)
+  ;;   :config
+
+  ;;   (slack-register-team
+  ;;    :name "tappnetwork"
+  ;;    :client-id (getenv "SLACK_CLIENT_ID")
+  ;;    :client-secret (getenv "SLACK_CLIENT_SECRET")
+  ;;    :token (getenv "SLACK_TOKEN")
+  ;;    :subscribed-channels '(tappnetwork))
+
+  ;;   (evil-define-key 'normal slack-info-mode-map
+  ;;     ",u" 'slack-room-update-messages)
+  ;;   (evil-define-key 'normal slack-mode-map
+  ;;     ",c" 'slack-buffer-kill
+  ;;     ",ra" 'slack-message-add-reaction
+  ;;     ",rr" 'slack-message-remove-reaction
+  ;;     ",rs" 'slack-message-show-reaction-users
+  ;;     ",pl" 'slack-room-pins-list
+  ;;     ",pa" 'slack-message-pins-add
+  ;;     ",pr" 'slack-message-pins-remove
+  ;;     ",mm" 'slack-message-write-another-buffer
+  ;;     ",me" 'slack-message-edit
+  ;;     ",md" 'slack-message-delete
+  ;;     ",u" 'slack-room-update-messages
+  ;;     ",2" 'slack-message-embed-mention
+  ;;     ",3" 'slack-message-embed-channel
+  ;;     "\C-n" 'slack-buffer-goto-next-message
+  ;;     "\C-p" 'slack-buffer-goto-prev-message)
+  ;;   (evil-define-key 'normal slack-edit-message-mode-map
+  ;;     ",k" 'slack-message-cancel-edit
+  ;;     ",s" 'slack-message-send-from-buffer
+  ;;     ",2" 'slack-message-embed-mention
+  ;;     ",3" 'slackd-message-embed-channel))
+
+  ;; (use-package alert
+  ;;   :commands (alert)
+  ;;   :init
+  ;;   (setq alert-default-style 'notifier))
 #+END_SRC
   
 * Vim
@@ -220,7 +274,6 @@
     :ensure t
     :init
     (setq evil-want-integration nil)
-    '(evil-search-module (quote evil-search))
 
     :config
     (use-package evil-surround
@@ -233,6 +286,22 @@
 
     (evil-mode 1))
 
+  (use-package evil-ediff
+    :after evil
+    :ensure t
+    )
+
+  (use-package evil-org
+    :ensure t
+    :after org
+    :config
+    (add-hook 'org-mode-hook 'evil-org-mode)
+    (add-hook 'evil-org-mode-hook
+              (lambda ()
+                (evil-org-set-key-theme)))
+    (require 'evil-org-agenda)
+    (evil-org-agenda-set-keys))
+
   (use-package evil-mu4e
     :after evil
     :ensure t
@@ -244,73 +313,8 @@
     :config
     (evil-collection-init))
 
-  (use-package general
-    :ensure t
-    :init
-
-    (general-define-key
-     :keymaps 'visual
-     "#" 'evilnc-comment-or-uncomment-lines)
-
-    (general-define-key
-     :keymaps 'evil-window-map
-     "q" 'evil-window-delete
-     "s" 'evil-window-vsplit
-     "S" 'evil-window-split
-     "c" 'ace-swap-window
-     "x" 'evil-window-delete
-     "n" 'evil-window-next
-     "u" 'winner-undo
-     "r" 'winner-redo
-     "a" 'balance-windows
-     "SPC" 'ace-window)
-
-    (defun evil-nohl ()
-      (interactive)
-      (evil-ex-nohighlight))
-
-    (general-define-key
-     :keymaps 'insert
-     "DEL" 'hungry-delete-backward
-     )
-
-    (general-define-key
-     :keymaps 'normal
-     "RET" 'evil-nohl
-     "SPC" nil
-     "," 'evil-repeat-find-char-reverse
-     "(" 'git-gutter:previous-hunk
-     ")" 'git-gutter:next-hunk
-     "[" 'flycheck-previous-error
-     "]" 'flycheck-next-error
-     "#" 'evilnc-comment-or-uncomment-lines
-     "s" 'avy-goto-word-1
-     "S" 'avy-goto-char)
-
-    (setq my-leader1 "SPC")
-    (general-define-key
-     :prefix my-leader1
-     :keymaps 'normal
-     "b"  'ivy-switch-buffer
-     "f"  'counsel-projectile-find-file
-     "F"  'counsel-file-jump
-     "." 'ivy-resume
-     "r"  'replace-regexp
-     "w"  'save-buffer
-     "p" 'switch-to-previous-buffer
-     "t"  'ac-php-find-symbol-at-point
-     "("  'ac-php-location-stack-back
-     ")"  'ac-php-location-stack-forward
-     "["  'dumb-jump-back
-     "]"  'dumb-jump-go
-     "i"  'indent-buffer
-     "s"  'counsel-projectile-rg))
-
-  (evil-define-minor-mode-key 'normal 'org-src-mode
-    (kbd "SPC w") 'nil)
 
 #+END_SRC
-
 * Git
 #+BEGIN_SRC emacs-lisp
   (use-package magit
@@ -325,10 +329,24 @@
     :ensure t
     )
 
+  (use-package evil-matchit
+    :after magit
+    :ensure t
+    :config
+    (global-evil-matchit-mode 1)
+    )
+
+  (use-package browse-at-remote
+    :after magit
+    :ensure t
+    :config
+    )
+
   (use-package magithub
     :after magit
     :ensure t
-    :config (magithub-feature-autoinject t))
+    ;; :config (magithub-feature-autoinject t)
+    )
 
   (use-package git-gutter
     :ensure t
@@ -336,30 +354,47 @@
     (global-git-gutter-mode +1))
 #+END_SRC
 
+* EDiff
+#+BEGIN_SRC emacs-lisp
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+  (setq ediff-split-window-function 'split-window-horizontally)
+#+END_SRC
+
 * Hydra
 #+BEGIN_SRC emacs-lisp
-    (use-package hydra
-      :ensure t
-      )
+  (use-package hydra
+    :ensure t
+    )
 
-    (use-package ivy-hydra
-      :ensure t
-      )
+  (use-package ivy-hydra
+    :ensure t
+    )
 #+END_SRC
 
 * Filtering
 Filtering for searches, commands, history, etc
-** Ivy/Counsel/Swiper
+Ivy/Counsel/Swiper
 #+BEGIN_SRC emacs-lisp
+  (use-package smex
+    :ensure t
+    )
+
   (use-package counsel
     :ensure t
+    :config
+    (setq counsel-git-cmd "rg --files")
+    (setq counsel-rg-base-command
+          "rg -i -M 120 --no-heading --line-number --color never %s .")
     )
 
   (use-package swiper
     :ensure t
     :config
     (ivy-mode 1)
-    ;; (setq enable-recursive-minibuffers t)
+    (setq ivy-extra-directories nil)
+    (setq enable-recursive-minibuffers t)
+    (setq ivy-use-selectable-prompt t)
     (setq ivy-re-builders-alist
           '((t . ivy--regex-ignore-order)))
     (global-set-key "\C-s" 'swiper)
@@ -369,7 +404,6 @@ Filtering for searches, commands, history, etc
     (global-set-key (kbd "C-c p") 'counsel-yank-pop)
     )
 
-  (setq ivy-extra-directories nil)
 
   (defun eh-ivy-open-current-typed-path ()
     (interactive)
@@ -440,43 +474,30 @@ Filtering for searches, commands, history, etc
 #+BEGIN_SRC emacs-lisp
   (use-package emmet-mode
     :ensure t
-      )
+    )
 #+END_SRC
 
 * Linting
 #+BEGIN_SRC emacs-lisp
-  (use-package flycheck
-    :ensure t
-    :init
-    (global-flycheck-mode)
-    (flycheck-add-mode 'javascript-eslint 'web-mode)
+  ;; (use-package flycheck
+  ;;   :ensure t
+  ;;   :init
+  ;;   (global-flycheck-mode)
+  ;;   (flycheck-add-mode 'javascript-eslint 'web-mode)
 
-    ;; use local eslint from node_modules before global
-    ;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
-    (defun my/use-eslint-from-node-modules ()
-      (let* ((root (locate-dominating-file
-                    (or (buffer-file-name) default-directory)
-                    "node_modules"))
-             (eslint (and root
-                          (expand-file-name "node_modules/eslint/bin/eslint.js"
-                                            root))))
-        (when (and eslint (file-executable-p eslint))
-          (setq-local flycheck-javascript-eslint-executable eslint))))
-    (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
-    )
-#+END_SRC
-
-* Snippets
-#+BEGIN_SRC emacs-lisp
-  (use-package yasnippet
-    :ensure t
-    :config
-      (yas-global-mode 1))
-
-  (use-package yasnippet-snippets
-    :ensure t
-    :config
-      )
+  ;;   ;; use local eslint from node_modules before global
+  ;;   ;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
+  ;;   (defun my/use-eslint-from-node-modules ()
+  ;;     (let* ((root (locate-dominating-file
+  ;;                   (or (buffer-file-name) default-directory)
+  ;;                   "node_modules"))
+  ;;            (eslint (and root
+  ;;                         (expand-file-name "node_modules/eslint/bin/eslint.js"
+  ;;                                           root))))
+  ;;       (when (and eslint (file-executable-p eslint))
+  ;;         (setq-local flycheck-javascript-eslint-executable eslint))))
+  ;;   (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+  ;;   )
 #+END_SRC
 
 * Autocomplete
@@ -485,7 +506,7 @@ Filtering for searches, commands, history, etc
     :ensure t
     :config
     (setq company-dabbrev-downcase 0)
-    (setq company-idle-delay 0)
+    (setq company-idle-delay 0.4)
     (setq company-minimum-prefix-length 2)
     :init
     (add-hook 'after-init-hook 'global-company-mode))
@@ -493,12 +514,39 @@ Filtering for searches, commands, history, etc
   (with-eval-after-load 'company
     (define-key company-active-map (kbd "M-n") nil)
     (define-key company-active-map (kbd "M-p") nil)
+    (define-key company-active-map (kbd "tab") nil)
     (define-key company-active-map (kbd "C-f") #'company-complete-common)
     (define-key company-active-map (kbd "RET") #'company-complete-selection)
     (define-key company-active-map (kbd "C-u") #'company-previous-page)
     (define-key company-active-map (kbd "C-d") #'company-next-page)
     (define-key company-active-map (kbd "C-n") #'company-select-next)
     (define-key company-active-map (kbd "C-p") #'company-select-previous))
+
+  (setq company-show-numbers t)
+
+  (defun ora-company-number ()
+    "Forward to `company-complete-number'.
+    Unless the number is potentially part of the candidate.
+    In that case, insert the number."
+    (interactive)
+    (let* ((k (this-command-keys))
+           (re (concat "^" company-prefix k)))
+      (if (cl-find-if (lambda (s) (string-match re s))
+                      company-candidates)
+          (self-insert-command 1)
+        (company-complete-number
+         (if (equal k "0")
+             10
+           (string-to-number k))))))
+
+  (let ((map company-active-map))
+    (mapc (lambda (x) (define-key map (format "%d" x) 'ora-company-number))
+          (number-sequence 0 9))
+    (define-key map " " (lambda ()
+                          (interactive)
+                          (company-abort)
+                          (self-insert-command 1)))
+    (define-key map (kbd "<return>") nil))
 
   ;; chunkwm does not like this popup
   ;; (use-package pos-tip
@@ -513,42 +561,42 @@ Filtering for searches, commands, history, etc
 
 * Themes
 ** Theme list
-  #+BEGIN_SRC emacs-lisp
-    ;; (use-package solarized-theme
-    ;;   :ensure t
-    ;;   )
+#+BEGIN_SRC emacs-lisp
+  ;; (use-package solarized-theme
+  ;;   :ensure t
+  ;;   )
 
-    ;; (use-package leuven-theme
-    ;;   :ensure t
-    ;;   :config
-    ;;   (custom-theme-set-faces
-    ;;    'leuven
-    ;;    `(default ((t (:foreground "#333333" :background "#FFFFE0"))))
-    ;;    `(fringe ((t (:background "#FFFFE0"))))
-    ;;    `(lazy-highlight ((t (:foreground "#333333" :underline "#FF9632" :background "#FFFF00")))) ; isearch others
-    ;;    ))
+  ;; (use-package leuven-theme
+  ;;   :ensure t
+  ;;   :config
+  ;;   (custom-theme-set-faces
+  ;;    'leuven
+  ;;    `(default ((t (:foreground "#333333" :background "#FFFFE0"))))
+  ;;    `(fringe ((t (:background "#FFFFE0"))))
+  ;;    `(lazy-highlight ((t (:foreground "#333333" :underline "#FF9632" :background "#FFFF00")))) ; isearch others
+  ;;    ))
 
-    ;; (use-package base16-theme
-    ;;   :ensure t
-    ;;   )
+  ;; (use-package base16-theme
+  ;;   :ensure t
+  ;;   )
 
-    (use-package kaolin-themes
-      :ensure t
-      :config
-      ;; (load-theme 'kaolin-dark t)
-      ;; (setq kaolin-hl-line-colored t)
-      ;; (custom-theme-set-faces
-       ;; 'kaolin-dark
-       ;; '(region           ((t (:background "dark grey"))))
-       ;; '(lazy-highlight           ((t (:foreground "black" :background "dark grey"))))
-       )
+  (use-package kaolin-themes
+    :ensure t
+    :config
+    ;; (load-theme 'kaolin-dark t)
+    ;; (setq kaolin-hl-line-colored t)
+    ;; (custom-theme-set-faces
+    ;; 'kaolin-dark
+    ;; '(region           ((t (:background "dark grey"))))
+    ;; '(lazy-highlight           ((t (:foreground "black" :background "dark grey"))))
+    )
 
-    (use-package plan9-theme
-      :ensure t
-      :config
-      (load-theme 'plan9 t)
-      )
-  #+END_SRC
+  (use-package plan9-theme
+    :ensure t
+    :config
+    (load-theme 'plan9 t)
+    )
+#+END_SRC
 ** Theme Switcher
 #+BEGIN_SRC emacs-lisp
   (defun sb/disable-all-themes ()
@@ -592,32 +640,32 @@ Filtering for searches, commands, history, etc
 #+END_SRC
 * Modeline
 ** Spaceline
-  #+BEGIN_SRC emacs-lisp
-    (use-package spaceline
-      :ensure t
-      :config
-      (require 'spaceline-config)
-      (setq powerline-default-separator (quote bar))
-      (spaceline-highlight-face-evil-state)
-      (spaceline-toggle-minor-modes-off)
-      (spaceline-spacemacs-theme))
-  #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package spaceline
+    :ensure t
+    :config
+    (require 'spaceline-config)
+    (setq powerline-default-separator (quote bar))
+    (spaceline-highlight-face-evil-state)
+    (spaceline-toggle-minor-modes-off)
+    (spaceline-spacemacs-theme))
+#+END_SRC
 ** Diminish
 #+BEGIN_SRC emacs-lisp
-    (use-package diminish
-      :ensure t
-      :init
-      (diminish 'beacon-mode)
-      (diminish 'company-mode)
-      (diminish 'undo-tree-mode)
-      (diminish 'which-key-mode)
-      (diminish 'rainbow-mode)
-      (diminish 'rainbow-delimiters-mode)
-      (diminish 'linum-relative-mode)
-      (diminish 'git-gutter-mode)
-      (diminish 'yas-mode)
-      (diminish 'arev-mode)
-      (diminish 'ivy-mode))
+  (use-package diminish
+    :ensure t
+    :init
+    (diminish 'beacon-mode)
+    (diminish 'company-mode)
+    (diminish 'undo-tree-mode)
+    (diminish 'which-key-mode)
+    (diminish 'rainbow-mode)
+    (diminish 'rainbow-delimiters-mode)
+    (diminish 'linum-relative-mode)
+    (diminish 'git-gutter-mode)
+    (diminish 'yas-mode)
+    (diminish 'arev-mode)
+    (diminish 'ivy-mode))
 #+END_SRC
 
 * Windows
@@ -636,84 +684,122 @@ Filtering for searches, commands, history, etc
 
 * Other Packages
 #+BEGIN_SRC emacs-lisp
-    ;; (use-package dashboard
-    ;;   :ensure t
-    ;;   :config
-    ;;   (dashboard-setup-startup-hook)
-    ;;   (setq dashboard-items '((recents . 10)
-    ;;                           (projects . 5))))
+  (use-package visual-regexp
+    :ensure t
+    )
 
-    (use-package whitespace-cleanup-mode
-      :ensure t
-      :config
-      (global-whitespace-cleanup-mode)
-      )
+  (use-package dimmer
+    :ensure t
+    :config
+    (setq dimmer-fraction 0.2)
+    (dimmer-mode)
+    )
 
-    (use-package hungry-delete
-      :ensure t
-      )
+  ;; not working
+  ;; (use-package esup
+  ;;   :ensure t
+  ;;   )
 
-    (use-package indent-guide
-      :ensure t
-      :config
-      (indent-guide-global-mode)
-      )
+  ;; hard to use
+  ;; (use-package ialign
+  ;;   :ensure t
+  ;;   )
 
-    (use-package rainbow-delimiters
-      :ensure t
-      :config
-      ;; (require 'cl-lib)
+  (use-package ace-link
+    :ensure t
+    :config
+    (ace-link-setup-default)
+    )
 
-      (defvar my-paren-dual-colors
-        '("hot pink" "dodger blue"))
+  (use-package auto-package-update
+    :ensure t
+    :config
+    (auto-package-update-maybe)
+    (setq auto-package-update-delete-old-versions t)
+    )
 
-      (cl-loop
-       for index from 1 to rainbow-delimiters-max-face-count
-       do
-       (set-face-foreground
-        (intern (format "rainbow-delimiters-depth-%d-face" index))
-        (elt my-paren-dual-colors
-             (if (cl-evenp index) 0 1))))
+  ;; (use-package dashboard
+  ;;   :ensure t
+  ;;   :config
+  ;;   (dashboard-setup-startup-hook)
+  ;;   (setq dashboard-items '((recents . 10)
+  ;;                           (projects . 5))))
 
-      (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+  ;; (use-package expand-region
+  ;;   :ensure t
+  ;;   )
 
-    ;; (use-package sudo-edit
-    ;;   :ensure t
-    ;;   )
+  (use-package whitespace-cleanup-mode
+    :ensure t
+    :config
+    (global-whitespace-cleanup-mode)
+    )
 
-    (use-package smartparens
-      :ensure t
-      :config
-      (add-hook 'prog-mode-hook #'smartparens-mode)
-      (bind-keys
-       :map smartparens-mode-map
-       ("C-(" . sp-forward-barf-sexp)
-       ("C-)" . sp-forward-slurp-sexp)))
+  (use-package hungry-delete
+    :ensure t
+    )
 
-    (use-package which-key
-      :ensure t
-      :init
-      (which-key-mode))
+  (use-package indent-guide
+    :ensure t
+    :config
+    (indent-guide-global-mode)
+    )
 
-    (use-package groovy-mode
-      :ensure t
-      )
+  (use-package rainbow-delimiters
+    :ensure t
+    :config
+    ;; (require 'cl-lib)
 
-    (use-package rainbow-mode
-      :ensure t
-      :init
-      (rainbow-mode 1))
+    (defvar my-paren-dual-colors
+      '("hot pink" "dodger blue"))
 
-    ;; (use-package linum-relative
-    ;;   :ensure t
-    ;;   :config
-    ;;   (setq linum-relative-current-symbol "")
-    ;;   (linum-relative-mode))
+    (cl-loop
+     for index from 1 to rainbow-delimiters-max-face-count
+     do
+     (set-face-foreground
+      (intern (format "rainbow-delimiters-depth-%d-face" index))
+      (elt my-paren-dual-colors
+           (if (cl-evenp index) 0 1))))
 
-    (use-package beacon
-      :ensure t
-      :init
-      (beacon-mode 1))
+    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+
+  ;; (use-package sudo-edit
+  ;;   :ensure t
+  ;;   )
+
+  (use-package smartparens
+    :ensure t
+    :config
+    (add-hook 'prog-mode-hook #'smartparens-mode)
+    (bind-keys
+     :map smartparens-mode-map
+     ("C-(" . sp-forward-barf-sexp)
+     ("C-)" . sp-forward-slurp-sexp)))
+
+  (use-package which-key
+    :ensure t
+    :init
+    (which-key-mode))
+
+  (use-package groovy-mode
+    :ensure t
+    )
+
+  (use-package rainbow-mode
+    :ensure t
+    :init
+    (rainbow-mode 1))
+
+  ;; (use-package linum-relative
+  ;;   :ensure t
+  ;;   :config
+  ;;   (setq linum-relative-current-symbol "")
+  ;;   (linum-relative-mode))
+
+  (use-package beacon
+    :ensure t
+    :init
+    (beacon-mode 1))
 #+END_SRC
 
 * Avy
@@ -722,26 +808,40 @@ Filtering for searches, commands, history, etc
     :ensure t
     :config
     (setq avy-keys '(
-                    ?t ?n ?s ?e ?r ?i ?o ?a ?p ?l ?f ?u ?c ?, ?v ?d ?h ?y ?w ?. ?x ?' ?; ?q ?j ?g ?/ 
-                    ))
+                     ?t ?n ?s ?e ?r ?i ?o ?a ?p ?l ?f ?u ?c ?, ?v ?d ?h ?y ?w ?. ?x ?' ?; ?q ?j ?g ?/ 
+                        ))
     :bind
     ("M-s" . avy-goto-word-1))
 #+END_SRC
 
 * Custom Keymaps
-  #+BEGIN_SRC emacs-lisp
-;;
-  #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  ;;
+#+END_SRC
 
 * Custom Functions
 #+BEGIN_SRC emacs-lisp
+  (defun kill-other-buffers ()
+    "Kill all buffers but the current one.
+  Doesn't mess with special buffers."
+    (interactive)
+    (when (y-or-n-p "Are you sure you want to kill all buffers but the current one? ")
+      (seq-each
+       #'kill-buffer
+       (delete (current-buffer) (seq-filter #'buffer-file-name (buffer-list))))))
+
+  (defun indent-and-untabify ()
+    (interactive)
+    (untabify (point-min) (point-max))
+    (indent-buffer))
+
   (defun my-hello-world ()
     (interactive)
     (message "hello world"))
 
   (defun switch-to-previous-buffer ()
     "Switch to previously open buffer.
-    Repeated invocations toggle between the two most recently open buffers."
+          Repeated invocations toggle between the two most recently open buffers."
     (interactive)
     (switch-to-buffer (other-buffer (current-buffer) 1)))
 
@@ -771,15 +871,24 @@ Filtering for searches, commands, history, etc
 
   (use-package sqlup-mode
     :ensure t
+    :config
+    ;; Capitalize keywords in SQL mode
+    (add-hook 'sql-mode-hook 'sqlup-mode)
+    ;; Capitalize keywords in an interactive session (e.g. psql)
+    (add-hook 'sql-interactive-mode-hook 'sqlup-mode)
     )
 
   (use-package sql-indent
     :ensure t
-    :pin gnu)
+    :pin gnu
+    :config
+    (add-hook 'sql-mode-hook 'sqlind-minor-mode)
+    (add-hook 'sql-interactive-mode-hook 'sqlind-minor-mode))
 
   (use-package php-mode
     :ensure t
     :config
+    (add-hook 'php-mode-hook 'php-enable-psr2-coding-style)
     )
 
   (use-package phpunit
@@ -820,19 +929,19 @@ Filtering for searches, commands, history, etc
     (setq web-mode-code-indent-offset 2)
     (setq web-mode-script-padding 0)
     (setq web-mode-style-padding 0)
+    (setq-default indent-tabs-mode nil)
     (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
     (add-to-list 'auto-mode-alist '("\\.blade.php\\'" . web-mode))
     (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
     )
 #+END_SRC
 
-* Misc
+* Misc vars
 #+BEGIN_SRC emacs-lisp
   (setq pcomplete-ignore-case t)
 
   (setq frame-title-format
         (list '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
-
 
   (defun my--file-status-message ()
     ;; show file status in message area
@@ -863,5 +972,110 @@ Filtering for searches, commands, history, etc
   (menu-bar-mode -1)
   (scroll-bar-mode -1)
   (setq inhibit-startup-message t)
-  (setq vc-follow-symlinks t)
+#+END_SRC
+* General (keymaps)
+#+BEGIN_SRC emacs-lisp
+  (use-package general
+    :ensure t
+    :init
+
+    (general-override-mode)
+
+    (general-define-key
+     :keymaps '(evil-window-map)
+     "q" 'evil-window-delete
+     "s" 'evil-window-vsplit
+     "S" 'evil-window-split
+     "c" 'ace-swap-window
+     "x" 'evil-window-delete
+     "n" 'evil-window-next
+     "u" 'winner-undo
+     "r" 'winner-redo
+     "a" 'balance-windows
+     "SPC" 'ace-window)
+
+    (defun evil-nohl ()
+      (interactive)
+      (evil-ex-nohighlight))
+
+    (general-define-key
+     :keymaps 'insert
+     "DEL" 'hungry-delete-backward
+     "C-e" 'yas-expand
+     )
+
+    (general-define-key
+     :keymaps 'help-map
+     "y" 'yas-describe-tables
+     )
+
+    (general-define-key
+     :states '(normal visual)
+     "RET" 'evil-nohl
+     "SPC" nil
+     "," 'evil-repeat-find-char-reverse
+     "(" 'git-gutter:previous-hunk
+     ")" 'git-gutter:next-hunk
+     "[" 'flycheck-previous-error
+     "]" 'flycheck-next-error
+     "#" 'evilnc-comment-or-uncomment-lines
+     ;; "&" 'er/expand-region
+     "s" 'avy-goto-word-1
+     "S" 'avy-goto-char)
+
+    (setq my-leader1 "SPC")
+    (general-define-key
+     :prefix my-leader1
+     :states '(normal motion)
+     :keymaps '(override)
+     "o" 'ace-link
+     "b" 'ivy-switch-buffer
+     "k" 'which-key-show-top-level
+     "f" 'counsel-git
+     "F" 'counsel-file-jump
+     "." 'ivy-resume
+     "r" 'vr/replace
+     "R" 'vr/query-replace
+     "w" 'save-buffer
+     "p" 'switch-to-previous-buffer
+     "t" 'ac-php-find-symbol-at-point
+     "(" 'ac-php-location-stack-back
+     ")" 'ac-php-location-stack-forward
+     "[" 'dumb-jump-back
+     "]" 'dumb-jump-go
+     "i" 'indent-and-untabify
+     "s" 'counsel-rg
+     "g" nil
+     "gl" 'magit-log-buffer-file
+     "gb" 'magit-blame
+     "gp" 'magit-browse-pull-request
+     "gf" 'browse-at-remote
+     "y" nil
+     "ye" 'aya-expand
+     "yc" 'aya-create
+     "yo" 'aya-create-one-line
+     "yn" 'yas-new-snippet
+     )
+
+    (evil-define-minor-mode-key 'normal 'org-src-mode
+      (kbd "C-c r") 'nil
+      (kbd "C-c e") 'nil
+      (kbd "SPC w") 'nil
+      ))
+#+END_SRC
+* Snippets
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet
+    :ensure t
+    :config
+    (yas-global-mode 1)
+
+    (use-package auto-yasnippet
+      :ensure t
+      )
+
+    (use-package yasnippet-snippets
+      :ensure t
+      :config
+      ))
 #+END_SRC
