@@ -198,7 +198,7 @@ zstyle ':vcs_info:git:*' formats 'on branch %b'
 
 # Set up the prompt (with git branch name)
 setopt PROMPT_SUBST
-PROMPT='${PWD/#$HOME/~} ${vcs_info_msg_0_}
+PROMPT='⚡︎ ${PWD/#$HOME/~} ${vcs_info_msg_0_}
 '
 alias | sed 's/^alias //' | sed -E "s/^([^=]+)='(.+?)'$/\1=\2/" | sed "s/'\\\\''/'/g" | sed "s/'\\\\$/'/;" | sed -E 's/^([^=]+)=(.+)$/alias \1 \2/' >~/.emacs.d/eshell/alias
 
