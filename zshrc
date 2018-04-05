@@ -51,6 +51,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Add wisely, as too many plugins slow down shell startup.
 # User configuration
 
+export PATH="$PATH:/usr/local/opt/php@7.1/bin:/usr/local/opt/php@7.1/sbin"
 export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin"
 export PATH="$PATH:~/.composer/vendor/bin"
 export PATH="$PATH:/Users/Scott/Code/spark-installer"
@@ -184,9 +185,9 @@ if [[ -n !${INSIDE_EMACS} ]]; then
 # test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 fi
 
-if [ $TERM_PROGRAM = "iTerm.app" ]; then
-source ~/.iterm2_shell_integration.`basename $SHELL`
-fi
+# if [ $TERM_PROGRAM == "iTerm.app" ]; then
+# source ~/.iterm2_shell_integration.`basename $SHELL`
+# fi
 
 # Load version control information
 autoload -Uz vcs_info
@@ -204,3 +205,9 @@ alias | sed 's/^alias //' | sed -E "s/^([^=]+)='(.+?)'$/\1=\2/" | sed "s/'\\\\''
 # for accessing last output without rerunning command
 # does not work yet
 #bindkey -s "\n" " | tee ~/.last_zsh_output\n"
+
+# STARTUP
+# if [ $NVIM_STARTED ]; then
+# nvim -u ~/vterm.rc
+# NVIM_STARTED= true
+# fi

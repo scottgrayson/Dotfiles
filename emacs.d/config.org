@@ -505,7 +505,8 @@ Ivy/Counsel/Swiper
   (use-package company
     :ensure t
     :config
-    (setq company-dabbrev-downcase 0)
+    (setq company-dabbrev-downcase nil)
+    (setq company-dabbrev-ignore-prefix nil)
     (setq company-idle-delay 0.4)
     (setq company-minimum-prefix-length 2)
     :init
@@ -522,35 +523,40 @@ Ivy/Counsel/Swiper
     (define-key company-active-map (kbd "C-n") #'company-select-next)
     (define-key company-active-map (kbd "C-p") #'company-select-previous))
 
-  (setq company-show-numbers t)
+#+END_SRC
 
-  (defun ora-company-number ()
-    "Forward to `company-complete-number'.
-    Unless the number is potentially part of the candidate.
-    In that case, insert the number."
-    (interactive)
-    (let* ((k (this-command-keys))
-           (re (concat "^" company-prefix k)))
-      (if (cl-find-if (lambda (s) (string-match re s))
-                      company-candidates)
-          (self-insert-command 1)
-        (company-complete-number
-         (if (equal k "0")
-             10
-           (string-to-number k))))))
+** select completion with #
+#+BEGIN_SRC emacs-lisp
+    ;; (setq company-idle-delay 0)
+  ;; (setq company-show-numbers t)
 
-  (let ((map company-active-map))
-    (mapc (lambda (x) (define-key map (format "%d" x) 'ora-company-number))
-          (number-sequence 0 9))
-    (define-key map " " (lambda ()
-                          (interactive)
-                          (company-abort)
-                          (self-insert-command 1)))
-    (define-key map (kbd "<return>") nil))
+  ;; (defun ora-company-number ()
+  ;;   "Forward to `company-complete-number'.
+  ;;   Unless the number is potentially part of the candidate.
+  ;;   In that case, insert the number."
+  ;;   (interactive)
+  ;;   (let* ((k (this-command-keys))
+  ;;          (re (concat "^" company-prefix k)))
+  ;;     (if (cl-find-if (lambda (s) (string-match re s))
+  ;;                     company-candidates)
+  ;;         (self-insert-command 1)
+  ;;       (company-complete-number
+  ;;        (if (equal k "0")
+  ;;            10
+  ;;          (string-to-number k))))))
+
+  ;; (let ((map company-active-map))
+  ;;   (mapc (lambda (x) (define-key map (format "%d" x) 'ora-company-number))
+  ;;         (number-sequence 0 9))
+  ;;   (define-key map " " (lambda ()
+  ;;                         (interactive)
+  ;;                         (company-abort)
+  ;;                         (self-insert-command 1)))
+  ;;   (define-key map (kbd "<return>") nil))
 
   ;; chunkwm does not like this popup
   ;; (use-package pos-tip
-  ;;   :ensure t
+  ;;  :ensure t
   ;;   )
 
   ;; (use-package company-quickhelp
@@ -869,71 +875,72 @@ Ivy/Counsel/Swiper
 * Languages
 #+BEGIN_SRC emacs-lisp
 
-  (use-package sqlup-mode
-    :ensure t
-    :config
-    ;; Capitalize keywords in SQL mode
-    (add-hook 'sql-mode-hook 'sqlup-mode)
-    ;; Capitalize keywords in an interactive session (e.g. psql)
-    (add-hook 'sql-interactive-mode-hook 'sqlup-mode)
-    )
+    (use-package sqlup-mode
+      :ensure t
+      :config
+      ;; Capitalize keywords in SQL mode
+      (add-hook 'sql-mode-hook 'sqlup-mode)
+      ;; Capitalize keywords in an interactive session (e.g. psql)
+      (add-hook 'sql-interactive-mode-hook 'sqlup-mode)
+      )
 
-  (use-package sql-indent
-    :ensure t
-    :pin gnu
-    :config
-    (add-hook 'sql-mode-hook 'sqlind-minor-mode)
-    (add-hook 'sql-interactive-mode-hook 'sqlind-minor-mode))
+    (use-package sql-indent
+      :ensure t
+      :pin gnu
+      :config
+      (add-hook 'sql-mode-hook 'sqlind-minor-mode)
+      (add-hook 'sql-interactive-mode-hook 'sqlind-minor-mode))
 
-  (use-package php-mode
-    :ensure t
-    :config
-    (add-hook 'php-mode-hook 'php-enable-psr2-coding-style)
-    )
+    (use-package php-mode
+      :ensure t
+      :config
+  (setq c-basic-offset 4)
+      ;; (add-hook 'php-mode-hook 'php-enable-psr2-coding-style)
+      )
 
-  (use-package phpunit
-    :ensure t
-    :config
-    (setq phpunit-stop-on-error t)
-    (setq phpunit-stop-on-failure t)
-    (define-key php-mode-map (kbd "M-t t") 'phpunit-current-test)
-    (define-key php-mode-map (kbd "M-t c") 'phpunit-current-class)
-    (define-key php-mode-map (kbd "M-t p") 'phpunit-current-project)
-    )
+    (use-package phpunit
+      :ensure t
+      :config
+      (setq phpunit-stop-on-error t)
+      (setq phpunit-stop-on-failure t)
+      (define-key php-mode-map (kbd "M-t t") 'phpunit-current-test)
+      (define-key php-mode-map (kbd "M-t c") 'phpunit-current-class)
+      (define-key php-mode-map (kbd "M-t p") 'phpunit-current-project)
+      )
 
-  (use-package ac-php
-    :ensure t
-    )
+    (use-package ac-php
+      :ensure t
+      )
 
-  (use-package company-php
-    :ensure t
-    )
+    (use-package company-php
+      :ensure t
+      )
 
-  (add-hook 'php-mode-hook
-            '(lambda ()
-               (require 'company-php)
-               (company-mode t)
-               (ac-php-core-eldoc-setup) ;; enable eldoc
-               (make-local-variable 'company-backends)
-               (add-to-list 'company-backends 'company-ac-php-backend)))
+    (add-hook 'php-mode-hook
+              '(lambda ()
+                 (require 'company-php)
+                 (company-mode t)
+                 (ac-php-core-eldoc-setup) ;; enable eldoc
+                 (make-local-variable 'company-backends)
+                 (add-to-list 'company-backends 'company-ac-php-backend)))
 
-  (use-package js2-mode
-    :ensure t
-    )
+    (use-package js2-mode
+      :ensure t
+      )
 
-  (use-package web-mode
-    :ensure t
-    :config
-    (setq web-mode-markup-indent-offset 2)
-    (setq web-mode-css-indent-offset 2)
-    (setq web-mode-code-indent-offset 2)
-    (setq web-mode-script-padding 0)
-    (setq web-mode-style-padding 0)
-    (setq-default indent-tabs-mode nil)
-    (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
-    (add-to-list 'auto-mode-alist '("\\.blade.php\\'" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
-    )
+    (use-package web-mode
+      :ensure t
+      :config
+      (setq web-mode-markup-indent-offset 2)
+      (setq web-mode-css-indent-offset 2)
+      (setq web-mode-code-indent-offset 2)
+      (setq web-mode-script-padding 0)
+      (setq web-mode-style-padding 0)
+      (setq-default indent-tabs-mode nil)
+      (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
+      (add-to-list 'auto-mode-alist '("\\.blade.php\\'" . web-mode))
+      (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
+      )
 #+END_SRC
 
 * Misc vars
