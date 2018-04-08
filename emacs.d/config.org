@@ -148,9 +148,6 @@
 
   (global-set-key "\C-ca" 'org-agenda)
 
-  (general-define-key :keymaps 'org-mode-map
-                      "C-c x" 'org-gcal-delete-at-point)
-
   (use-package calfw
     :ensure t
     :config
@@ -311,7 +308,8 @@
     :after evil
     :ensure t
     :config
-    (evil-collection-init))
+    (evil-collection-init)
+    )
 
 
 #+END_SRC
@@ -470,54 +468,46 @@ Ivy/Counsel/Swiper
     :ensure t
     )
 #+END_SRC
-* Emmet
+* Linting
 #+BEGIN_SRC emacs-lisp
-  (use-package emmet-mode
+  (use-package flycheck
     :ensure t
+    :init
+    (global-flycheck-mode)
+    (flycheck-add-mode 'javascript-eslint 'web-mode)
+
+    ;; use local eslint from node_modules before global
+    ;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
+    (defun my/use-eslint-from-node-modules ()
+      (let* ((root (locate-dominating-file
+                    (or (buffer-file-name) default-directory)
+                    "node_modules"))
+             (eslint (and root
+                          (expand-file-name "node_modules/eslint/bin/eslint.js"
+                                            root))))
+        (when (and eslint (file-executable-p eslint))
+          (setq-local flycheck-javascript-eslint-executable eslint))))
+    (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
     )
 #+END_SRC
 
-* Linting
-#+BEGIN_SRC emacs-lisp
-  ;; (use-package flycheck
-  ;;   :ensure t
-  ;;   :init
-  ;;   (global-flycheck-mode)
-  ;;   (flycheck-add-mode 'javascript-eslint 'web-mode)
-
-  ;;   ;; use local eslint from node_modules before global
-  ;;   ;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
-  ;;   (defun my/use-eslint-from-node-modules ()
-  ;;     (let* ((root (locate-dominating-file
-  ;;                   (or (buffer-file-name) default-directory)
-  ;;                   "node_modules"))
-  ;;            (eslint (and root
-  ;;                         (expand-file-name "node_modules/eslint/bin/eslint.js"
-  ;;                                           root))))
-  ;;       (when (and eslint (file-executable-p eslint))
-  ;;         (setq-local flycheck-javascript-eslint-executable eslint))))
-  ;;   (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
-  ;;   )
-#+END_SRC
-
 * Autocomplete
+** company
 #+BEGIN_SRC emacs-lisp
   (use-package company
     :ensure t
     :config
     (setq company-dabbrev-downcase nil)
     (setq company-dabbrev-ignore-prefix nil)
-    (setq company-idle-delay 0.4)
+    (setq company-idle-delay 0)
     (setq company-minimum-prefix-length 2)
     :init
-    (add-hook 'after-init-hook 'global-company-mode))
+    (add-hook 'after-init-hook 'global-company-mode)
+    )
 
   (with-eval-after-load 'company
-    (define-key company-active-map (kbd "M-n") nil)
-    (define-key company-active-map (kbd "M-p") nil)
-    (define-key company-active-map (kbd "tab") nil)
     (define-key company-active-map (kbd "C-f") #'company-complete-common)
-    (define-key company-active-map (kbd "RET") #'company-complete-selection)
+    (define-key company-active-map (kbd "TAB") #'company-complete-common)
     (define-key company-active-map (kbd "C-u") #'company-previous-page)
     (define-key company-active-map (kbd "C-d") #'company-next-page)
     (define-key company-active-map (kbd "C-n") #'company-select-next)
@@ -527,42 +517,34 @@ Ivy/Counsel/Swiper
 
 ** select completion with #
 #+BEGIN_SRC emacs-lisp
-    ;; (setq company-idle-delay 0)
-  ;; (setq company-show-numbers t)
+    (setq company-idle-delay 0)
+    (setq company-show-numbers t)
 
-  ;; (defun ora-company-number ()
-  ;;   "Forward to `company-complete-number'.
-  ;;   Unless the number is potentially part of the candidate.
-  ;;   In that case, insert the number."
-  ;;   (interactive)
-  ;;   (let* ((k (this-command-keys))
-  ;;          (re (concat "^" company-prefix k)))
-  ;;     (if (cl-find-if (lambda (s) (string-match re s))
-  ;;                     company-candidates)
-  ;;         (self-insert-command 1)
-  ;;       (company-complete-number
-  ;;        (if (equal k "0")
-  ;;            10
-  ;;          (string-to-number k))))))
+    (defun ora-company-number ()
+      "Forward to `company-complete-number'.
+      Unless the number is potentially part of the candidate.
+      In that case, insert the number."
+      (interactive)
+      (let* ((k (this-command-keys))
+             (re (concat "^" company-prefix k)))
+        (if (cl-find-if (lambda (s) (string-match re s))
+                        company-candidates)
+            (self-insert-command 1)
+          (company-complete-number
+           (if (equal k "0")
+               10
+             (string-to-number k))))))
 
-  ;; (let ((map company-active-map))
-  ;;   (mapc (lambda (x) (define-key map (format "%d" x) 'ora-company-number))
-  ;;         (number-sequence 0 9))
-  ;;   (define-key map " " (lambda ()
-  ;;                         (interactive)
-  ;;                         (company-abort)
-  ;;                         (self-insert-command 1)))
-  ;;   (define-key map (kbd "<return>") nil))
+    (let ((map company-active-map))
+      (mapc (lambda (x) (define-key map (format "%d" x) 'ora-company-number))
+            (number-sequence 0 9))
+      ;; (define-key map " " (lambda ()
+      ;;                       (interactive)
+      ;;                       (company-abort)
+      ;;                       (self-insert-command 1)))
+      ;; (define-key map (kbd "<return>") nil)
+  )
 
-  ;; chunkwm does not like this popup
-  ;; (use-package pos-tip
-  ;;  :ensure t
-  ;;   )
-
-  ;; (use-package company-quickhelp
-  ;;   :ensure t
-  ;;   :init
-  ;;   (company-quickhelp-mode))
 #+END_SRC
 
 * Themes
@@ -690,6 +672,12 @@ Ivy/Counsel/Swiper
 
 * Other Packages
 #+BEGIN_SRC emacs-lisp
+  (use-package emojify
+    :ensure t
+    :config
+    (global-emojify-mode)
+    )
+
   (use-package visual-regexp
     :ensure t
     )
@@ -820,11 +808,6 @@ Ivy/Counsel/Swiper
     ("M-s" . avy-goto-word-1))
 #+END_SRC
 
-* Custom Keymaps
-#+BEGIN_SRC emacs-lisp
-  ;;
-#+END_SRC
-
 * Custom Functions
 #+BEGIN_SRC emacs-lisp
   (defun kill-other-buffers ()
@@ -875,72 +858,72 @@ Ivy/Counsel/Swiper
 * Languages
 #+BEGIN_SRC emacs-lisp
 
-    (use-package sqlup-mode
-      :ensure t
-      :config
-      ;; Capitalize keywords in SQL mode
-      (add-hook 'sql-mode-hook 'sqlup-mode)
-      ;; Capitalize keywords in an interactive session (e.g. psql)
-      (add-hook 'sql-interactive-mode-hook 'sqlup-mode)
-      )
+  (use-package sqlup-mode
+    :ensure t
+    :config
+    ;; Capitalize keywords in SQL mode
+    (add-hook 'sql-mode-hook 'sqlup-mode)
+    ;; Capitalize keywords in an interactive session (e.g. psql)
+    (add-hook 'sql-interactive-mode-hook 'sqlup-mode)
+    )
 
-    (use-package sql-indent
-      :ensure t
-      :pin gnu
-      :config
-      (add-hook 'sql-mode-hook 'sqlind-minor-mode)
-      (add-hook 'sql-interactive-mode-hook 'sqlind-minor-mode))
+  (use-package sql-indent
+    :ensure t
+    :pin gnu
+    :config
+    (add-hook 'sql-mode-hook 'sqlind-minor-mode)
+    (add-hook 'sql-interactive-mode-hook 'sqlind-minor-mode))
 
-    (use-package php-mode
-      :ensure t
-      :config
-  (setq c-basic-offset 4)
-      ;; (add-hook 'php-mode-hook 'php-enable-psr2-coding-style)
-      )
+  (use-package php-mode
+    :ensure t
+    :config
+    (setq c-basic-offset 4)
+    ;; (add-hook 'php-mode-hook 'php-enable-psr2-coding-style)
+    )
 
-    (use-package phpunit
-      :ensure t
-      :config
-      (setq phpunit-stop-on-error t)
-      (setq phpunit-stop-on-failure t)
-      (define-key php-mode-map (kbd "M-t t") 'phpunit-current-test)
-      (define-key php-mode-map (kbd "M-t c") 'phpunit-current-class)
-      (define-key php-mode-map (kbd "M-t p") 'phpunit-current-project)
-      )
+  (use-package phpunit
+    :ensure t
+    :config
+    (setq phpunit-stop-on-error t)
+    (setq phpunit-stop-on-failure t)
+    (define-key php-mode-map (kbd "M-t t") 'phpunit-current-test)
+    (define-key php-mode-map (kbd "M-t c") 'phpunit-current-class)
+    (define-key php-mode-map (kbd "M-t p") 'phpunit-current-project)
+    )
 
-    (use-package ac-php
-      :ensure t
-      )
+  (use-package ac-php
+    :ensure t
+    )
 
-    (use-package company-php
-      :ensure t
-      )
+  (use-package company-php
+    :ensure t
+    )
 
-    (add-hook 'php-mode-hook
-              '(lambda ()
-                 (require 'company-php)
-                 (company-mode t)
-                 (ac-php-core-eldoc-setup) ;; enable eldoc
-                 (make-local-variable 'company-backends)
-                 (add-to-list 'company-backends 'company-ac-php-backend)))
+  (add-hook 'php-mode-hook
+            '(lambda ()
+               ;; (require 'company-php)
+               ;; (company-mode t)
+               ;; (ac-php-core-eldoc-setup) ;; enable eldoc
+               (make-local-variable 'company-backends)
+               (add-to-list 'company-backends 'company-ac-php-backend)))
 
-    (use-package js2-mode
-      :ensure t
-      )
+  (use-package js2-mode
+    :ensure t
+    )
 
-    (use-package web-mode
-      :ensure t
-      :config
-      (setq web-mode-markup-indent-offset 2)
-      (setq web-mode-css-indent-offset 2)
-      (setq web-mode-code-indent-offset 2)
-      (setq web-mode-script-padding 0)
-      (setq web-mode-style-padding 0)
-      (setq-default indent-tabs-mode nil)
-      (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
-      (add-to-list 'auto-mode-alist '("\\.blade.php\\'" . web-mode))
-      (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
-      )
+  (use-package web-mode
+    :ensure t
+    :config
+    (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-css-indent-offset 2)
+    (setq web-mode-code-indent-offset 2)
+    (setq web-mode-script-padding 0)
+    (setq web-mode-style-padding 0)
+    (setq-default indent-tabs-mode nil)
+    (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
+    (add-to-list 'auto-mode-alist '("\\.blade.php\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
+    )
 #+END_SRC
 
 * Misc vars
@@ -984,7 +967,7 @@ Ivy/Counsel/Swiper
 #+BEGIN_SRC emacs-lisp
   (use-package general
     :ensure t
-    :init
+    :config
 
     (general-override-mode)
 
@@ -1008,6 +991,7 @@ Ivy/Counsel/Swiper
     (general-define-key
      :keymaps 'insert
      "DEL" 'hungry-delete-backward
+     "M-e" 'emmet-expand-line
      "C-e" 'yas-expand
      )
 
@@ -1064,6 +1048,14 @@ Ivy/Counsel/Swiper
      "yn" 'yas-new-snippet
      )
 
+    (general-define-key 
+     :keymaps 'company-active-map
+     :states 'normal
+     "SPC" 'ignore)
+
+    (general-define-key :keymaps 'org-mode-map
+                        "C-c x" 'org-gcal-delete-at-point)
+
     (evil-define-minor-mode-key 'normal 'org-src-mode
       (kbd "C-c r") 'nil
       (kbd "C-c e") 'nil
@@ -1072,6 +1064,10 @@ Ivy/Counsel/Swiper
 #+END_SRC
 * Snippets
 #+BEGIN_SRC emacs-lisp
+  (use-package emmet-mode
+    :ensure t
+    )
+
   (use-package yasnippet
     :ensure t
     :config
