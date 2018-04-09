@@ -3,24 +3,27 @@ khd mode prefix prefix on
 khd mode prefix timeout 1
 khd mode prefix restore default
 
+# System Shortcuts
+cmd - return : open -a /Applications/Kitty.app
+
 # Emacs keys
 
 # Motion char
-ctrl - n ![iTerm2,Emacs] : khd -p "- down"
-ctrl - p ![iTerm2,Emacs] : khd -p "- up"
+ctrl - n ![iTerm2,Emacs,Kitty] : khd -p "- down"
+ctrl - p ![iTerm2,Emacs,Kitty] : khd -p "- up"
 # forward is already in osx
 # back is already in osx
 # add shift to select
 
 # Motion word
-alt - f ![iTerm2,Emacs] : khd -p "alt - right"
-alt - b ![iTerm2,Emacs] : khd -p "alt - left"
-shift + alt - f ![iTerm2,Emacs] : khd -p "shift + alt - right"
-shift + alt - b ![iTerm2,Emacs] : khd -p "shift + alt - left"
+alt - f ![iTerm2,Emacs,Kitty] : khd -p "alt - right"
+alt - b ![iTerm2,Emacs,Kitty] : khd -p "alt - left"
+shift + alt - f ![iTerm2,Emacs,Kitty] : khd -p "shift + alt - right"
+shift + alt - b ![iTerm2,Emacs,Kitty] : khd -p "shift + alt - left"
 
 # forward delete
-alt - d ![iTerm2,Emacs] : khd -p "alt - delete"
-ctrl - d ![iTerm2,Emacs] : khd -p "- delete"
+alt - d ![iTerm2,Emacs,Kitty] : khd -p "alt - delete"
+ctrl - d ![iTerm2,Emacs,Kitty] : khd -p "- delete"
 
 # Already in osx
 # C-a C-e for beginning end of line (add shift to select)
@@ -32,7 +35,7 @@ ctrl - d ![iTerm2,Emacs] : khd -p "- delete"
 # Activate prefix mode
 shift + ctrl + alt + cmd - space                 :    khd -e "mode activate prefix"
 
-prefix - r            :    khd -e "reload"
+prefix - r            :    khd -e "reload" && pkill chunkwm
 
 ### ChunkWM
 
