@@ -4,7 +4,7 @@ khd mode prefix timeout 1
 khd mode prefix restore default
 
 # System Shortcuts
-cmd - return : open -a /Applications/Kitty.app
+shift + ctrl + alt + cmd - return : open -a /Applications/Kitty.app
 
 # Emacs keys
 
@@ -24,6 +24,10 @@ shift + alt - b ![iTerm2,Emacs,Kitty] : khd -p "shift + alt - left"
 # forward delete
 alt - d ![iTerm2,Emacs,Kitty] : khd -p "alt - delete"
 ctrl - d ![iTerm2,Emacs,Kitty] : khd -p "- delete"
+
+# Top and bottom of text
+alt + shift - 0x2B ![iTerm2,Emacs,Kitty] : khd -p "cmd - up"
+alt + shift - 0x2F ![iTerm2,Emacs,Kitty] : khd -p "cmd - down"
 
 # Already in osx
 # C-a C-e for beginning end of line (add shift to select)

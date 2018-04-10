@@ -672,128 +672,196 @@ Ivy/Counsel/Swiper
 
 * Other Packages
 #+BEGIN_SRC emacs-lisp
-  (use-package emojify
-    :ensure t
-    :config
-    (global-emojify-mode)
-    )
+    (use-package emojify
+      :ensure t
+      :config
+      (global-emojify-mode)
+      )
 
-  (use-package visual-regexp
-    :ensure t
-    )
+    (use-package visual-regexp
+      :ensure t
+      )
 
-  (use-package dimmer
-    :ensure t
-    :config
-    (setq dimmer-fraction 0.2)
-    (dimmer-mode)
-    )
+    (use-package dimmer
+      :ensure t
+      :config
+      (setq dimmer-fraction 0.2)
+      (dimmer-mode)
+      )
 
-  ;; not working
-  ;; (use-package esup
-  ;;   :ensure t
-  ;;   )
+    ;; not working
+    ;; (use-package esup
+    ;;   :ensure t
+    ;;   )
 
-  ;; hard to use
-  ;; (use-package ialign
-  ;;   :ensure t
-  ;;   )
+    ;; hard to use
+    ;; (use-package ialign
+    ;;   :ensure t
+    ;;   )
 
-  (use-package ace-link
-    :ensure t
-    :config
-    (ace-link-setup-default)
-    )
+    (use-package ace-link
+      :ensure t
+      :config
+      (ace-link-setup-default)
+      )
 
-  (use-package auto-package-update
-    :ensure t
-    :config
-    (auto-package-update-maybe)
-    (setq auto-package-update-delete-old-versions t)
-    )
+    (use-package auto-package-update
+      :ensure t
+      :config
+      (auto-package-update-maybe)
+      (setq auto-package-update-delete-old-versions t)
+      )
 
-  ;; (use-package dashboard
-  ;;   :ensure t
-  ;;   :config
-  ;;   (dashboard-setup-startup-hook)
-  ;;   (setq dashboard-items '((recents . 10)
-  ;;                           (projects . 5))))
+    ;; (use-package dashboard
+    ;;   :ensure t
+    ;;   :config
+    ;;   (dashboard-setup-startup-hook)
+    ;;   (setq dashboard-items '((recents . 10)
+    ;;                           (projects . 5))))
 
-  ;; (use-package expand-region
-  ;;   :ensure t
-  ;;   )
+    ;; (use-package expand-region
+    ;;   :ensure t
+    ;;   )
 
-  (use-package whitespace-cleanup-mode
-    :ensure t
-    :config
-    (global-whitespace-cleanup-mode)
-    )
+    (use-package whitespace-cleanup-mode
+      :ensure t
+      :config
+      (global-whitespace-cleanup-mode)
+      )
 
-  (use-package hungry-delete
-    :ensure t
-    )
+    (use-package hungry-delete
+      :ensure t
+      )
 
-  (use-package indent-guide
-    :ensure t
-    :config
-    (indent-guide-global-mode)
-    )
+    (use-package indent-guide
+      :ensure t
+      :config
+      (indent-guide-global-mode)
+      )
 
-  (use-package rainbow-delimiters
-    :ensure t
-    :config
-    ;; (require 'cl-lib)
+    (use-package rainbow-delimiters
+      :ensure t
+      :config
+      ;; (require 'cl-lib)
 
-    (defvar my-paren-dual-colors
-      '("hot pink" "dodger blue"))
+      (defvar my-paren-dual-colors
+        '("hot pink" "dodger blue"))
 
-    (cl-loop
-     for index from 1 to rainbow-delimiters-max-face-count
-     do
-     (set-face-foreground
-      (intern (format "rainbow-delimiters-depth-%d-face" index))
-      (elt my-paren-dual-colors
-           (if (cl-evenp index) 0 1))))
+      (cl-loop
+       for index from 1 to rainbow-delimiters-max-face-count
+       do
+       (set-face-foreground
+        (intern (format "rainbow-delimiters-depth-%d-face" index))
+        (elt my-paren-dual-colors
+             (if (cl-evenp index) 0 1))))
 
-    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+      (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
-  ;; (use-package sudo-edit
-  ;;   :ensure t
-  ;;   )
+    ;; (use-package sudo-edit
+    ;;   :ensure t
+    ;;   )
 
-  (use-package smartparens
-    :ensure t
-    :config
-    (add-hook 'prog-mode-hook #'smartparens-mode)
-    (bind-keys
-     :map smartparens-mode-map
-     ("C-(" . sp-forward-barf-sexp)
-     ("C-)" . sp-forward-slurp-sexp)))
+    (use-package smartparens
+      :ensure t
+      :config
+      (require 'smartparens-config)
+      (show-smartparens-mode)
+      (smartparens-global-strict-mode)
+      ;; (add-hook 'prog-mode-hook #'smartparens-strict-mode)
+      (bind-keys
+       :map smartparens-mode-map
+       ("C-(" . sp-forward-barf-sexp)
+       ("C-)" . sp-slurp-hybrid-sexp))
+  ;;; PHP
+  (sp-with-modes '(php-mode)
+    (sp-local-pair "/**" "*/" :post-handlers '(("| " "SPC")
+                                               (my-php-handle-docstring "RET")))
+    (sp-local-pair "/*." ".*/" :post-handlers '(("| " "SPC")))
+    (sp-local-pair "{" nil :post-handlers '(("||\n[i]" "RET") my-php-wrap-handler))
+    (sp-local-pair "(" nil :prefix "\\(\\sw\\|\\s_\\)*"))
 
-  (use-package which-key
-    :ensure t
-    :init
-    (which-key-mode))
+  (defun my-php-wrap-handler (&rest _ignored)
+    (save-excursion
+      (sp-get sp-last-wrapped-region
+        (goto-char :beg-in)
+        (unless (looking-at "[ \t]*$")
+          (newline-and-indent))
+        (goto-char :end-in)
+        (beginning-of-line)
+        (unless (looking-at "[ \t]*}[ \t]*$")
+          (goto-char :end-in)
+          (newline-and-indent))
+        (indent-region :beg-prf :end-suf))))
 
-  (use-package groovy-mode
-    :ensure t
-    )
+  (defun my-php-handle-docstring (&rest _ignored)
+    (-when-let (line (save-excursion
+                       (forward-line)
+                       (thing-at-point 'line)))
+      (cond
+       ;; variable
+       ((string-match (rx (or "private" "protected" "public" "var") (1+ " ") (group "$" (1+ alnum))) line)
+        (let ((var-name (match-string 1 line))
+              (type ""))
+          ;; try to guess the type from the constructor
+          (-when-let (constructor-args (my-php-get-function-args "__construct" t))
+            (setq type (or (cdr (assoc var-name constructor-args)) "")))
+          (insert "* @var " type)
+          (save-excursion
+            (insert "\n"))))
+       ((string-match-p "function" line)
+        (save-excursion
+          (let ((args (save-excursion
+                        (forward-line)
+                        (my-php-get-function-args nil t))))
+            (--each args
+              (when (my-php-should-insert-type-annotation (cdr it))
+                (insert (format "* @param %s%s\n"
+                                (my-php-translate-type-annotation (cdr it))
+                                (car it))))))
+          (let ((return-type (save-excursion
+                               (forward-line)
+                               (my-php-get-function-return-type))))
+            (when (my-php-should-insert-type-annotation return-type)
+              (insert (format "* @return %s\n" (my-php-translate-type-annotation return-type))))))
+        (re-search-forward (rx "@" (or "param" "return") " ") nil t))
+       ((string-match-p ".*class\\|interface" line)
+        (save-excursion (insert "\n"))
+        (insert "* ")))
+      (let ((o (sp--get-active-overlay)))
+        (indent-region (overlay-start o) (overlay-end o)))))
+  )
 
-  (use-package rainbow-mode
-    :ensure t
-    :init
-    (rainbow-mode 1))
+    ;; (use-package evil-smartparens
+    ;;   :ensure t
+    ;;   :config
+    ;;   (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode)
+    ;;   )
 
-  ;; (use-package linum-relative
-  ;;   :ensure t
-  ;;   :config
-  ;;   (setq linum-relative-current-symbol "")
-  ;;   (linum-relative-mode))
 
-  (use-package beacon
-    :ensure t
-    :init
-    (beacon-mode 1))
+    (use-package which-key
+      :ensure t
+      :init
+      (which-key-mode))
+
+    ;; (use-package groovy-mode
+    ;;   :ensure t
+    ;;   )
+
+    (use-package rainbow-mode
+      :ensure t
+      :init
+      (rainbow-mode 1))
+
+    ;; (use-package linum-relative
+    ;;   :ensure t
+    ;;   :config
+    ;;   (setq linum-relative-current-symbol "")
+    ;;   (linum-relative-mode))
+
+    (use-package beacon
+      :ensure t
+      :init
+      (beacon-mode 1))
 #+END_SRC
 
 * Avy
@@ -801,6 +869,8 @@ Ivy/Counsel/Swiper
   (use-package avy
     :ensure t
     :config
+    (setq avy-case-fold-search nil)
+    (setq avy-background t)
     (setq avy-keys '(
                      ?t ?n ?s ?e ?r ?i ?o ?a ?p ?l ?f ?u ?c ?, ?v ?d ?h ?y ?w ?. ?x ?' ?; ?q ?j ?g ?/ 
                         ))

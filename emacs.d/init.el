@@ -38,7 +38,7 @@
  '(evil-search-module (quote evil-search))
  '(package-selected-packages
    (quote
-    (visual-regexp dimmer smex esup ialign ace-link auto-package-update auto-yasnippet evil-org expand-region evil-matchit browse-at-remote yasnippet-snippets whitespace-cleanup-mode which-key web-mode use-package sqlup-mode sql-indent spaceline smartparens slack rainbow-mode rainbow-delimiters plan9-theme phpunit org-plus-contrib org-gcal org-bullets magithub kaolin-themes js2-mode ivy-rich ivy-hydra indent-guide hungry-delete groovy-mode git-gutter general flycheck exec-path-from-shell evil-surround evil-nerd-commenter evil-mu4e evil-magit evil-indent-textobject evil-ediff evil-collection emmet-mode dumb-jump diminish counsel-projectile company-php calfw-org calfw-ical calfw-gcal calfw beacon ace-window ac-php))))
+    (evil-smartparens visual-regexp dimmer smex esup ialign ace-link auto-package-update auto-yasnippet evil-org expand-region evil-matchit browse-at-remote yasnippet-snippets whitespace-cleanup-mode which-key web-mode use-package sqlup-mode sql-indent spaceline smartparens slack rainbow-mode rainbow-delimiters plan9-theme phpunit org-plus-contrib org-gcal org-bullets magithub kaolin-themes js2-mode ivy-rich ivy-hydra indent-guide hungry-delete groovy-mode git-gutter general flycheck exec-path-from-shell evil-surround evil-nerd-commenter evil-mu4e evil-magit evil-indent-textobject evil-ediff evil-collection emmet-mode dumb-jump diminish counsel-projectile company-php calfw-org calfw-ical calfw-gcal calfw beacon ace-window ac-php))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
