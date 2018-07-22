@@ -143,6 +143,9 @@ alias tdbr="mysql -u root -e 'drop database test; create database test;'"
 alias chrome="open -a 'Google Chrome'"
 alias vlc="open -a 'VLC'"
 
+alias sp="spotify"
+alias spf="spotify status >> ~/spotify.favorites && spotify share url >> ~/spotify.favorites"
+
 alias sz="source ~/.zshrc"
 alias zrc="nvim ~/.zshrc"
 alias vrc="nvim ~/.vimrc"
@@ -198,7 +201,9 @@ zstyle ':vcs_info:git:*' formats 'on branch %b'
 
 # Set up the prompt (with git branch name)
 setopt PROMPT_SUBST
-PROMPT='⚡︎ ${PWD/#$HOME/~} ${vcs_info_msg_0_}
+# PROMPT='⚡︎ ${PWD/#$HOME/~} ${vcs_info_msg_0_}
+PROMPT='
+${PWD/#$HOME/~} ${vcs_info_msg_0_}
 '
 alias | sed 's/^alias //' | sed -E "s/^([^=]+)='(.+?)'$/\1=\2/" | sed "s/'\\\\''/'/g" | sed "s/'\\\\$/'/;" | sed -E 's/^([^=]+)=(.+)$/alias \1 \2/' >~/.emacs.d/eshell/alias
 
@@ -211,3 +216,9 @@ alias | sed 's/^alias //' | sed -E "s/^([^=]+)='(.+?)'$/\1=\2/" | sed "s/'\\\\''
 # nvim -u ~/vterm.rc
 # NVIM_STARTED= true
 # fi
+
+# spotify
+source ~/.pytify.sh
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

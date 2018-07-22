@@ -36,9 +36,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(evil-search-module (quote evil-search))
+ '(org-agenda-files (quote ("~/hunting_seasons.org" "~/org/gcal.org")))
+ '(org-export-backends (quote (ascii html icalendar latex md odt)))
  '(package-selected-packages
    (quote
-    (evil-smartparens visual-regexp dimmer smex esup ialign ace-link auto-package-update auto-yasnippet evil-org expand-region evil-matchit browse-at-remote yasnippet-snippets whitespace-cleanup-mode which-key web-mode use-package sqlup-mode sql-indent spaceline smartparens slack rainbow-mode rainbow-delimiters plan9-theme phpunit org-plus-contrib org-gcal org-bullets magithub kaolin-themes js2-mode ivy-rich ivy-hydra indent-guide hungry-delete groovy-mode git-gutter general flycheck exec-path-from-shell evil-surround evil-nerd-commenter evil-mu4e evil-magit evil-indent-textobject evil-ediff evil-collection emmet-mode dumb-jump diminish counsel-projectile company-php calfw-org calfw-ical calfw-gcal calfw beacon ace-window ac-php))))
+    (elm-mode sudo-edit simple-mpc haskell-mode evil-smartparens visual-regexp dimmer smex esup ialign ace-link auto-package-update auto-yasnippet evil-org expand-region evil-matchit browse-at-remote yasnippet-snippets whitespace-cleanup-mode which-key web-mode use-package sqlup-mode sql-indent spaceline smartparens slack rainbow-mode rainbow-delimiters plan9-theme phpunit org-plus-contrib org-gcal org-bullets magithub kaolin-themes js2-mode ivy-rich ivy-hydra indent-guide hungry-delete groovy-mode git-gutter general flycheck exec-path-from-shell evil-surround evil-nerd-commenter evil-mu4e evil-magit evil-indent-textobject evil-ediff evil-collection emmet-mode dumb-jump diminish counsel-projectile company-php calfw-org calfw-ical calfw-gcal calfw beacon ace-window ac-php)))
+ '(send-mail-function (quote smtpmail-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
