@@ -59,6 +59,7 @@ export PATH="$PATH:/usr/local/opt/ncurses/bin:$PATH"
 export ANDROID_HOME=~/Library/Android/sdk
 export PATH=${PATH}:${ANDROID_HOME}/tools
 export PATH=${PATH}:${ANDROID_HOME}/platform-tools
+export PATH="/usr/local/opt/mysql-client/bin:$PATH"
 
 if [[ -n ${INSIDE_EMACS} ]]; then
 # This shell runs inside an Emacs *shell*/*term* buffer.
@@ -137,8 +138,8 @@ alias pud="phpunit --group default"
 alias puf="phpunit --stop-on-failure"
 
 alias sql="mysql.server start"
-alias sqlu="mysql -u root"
-alias tdbr="mysql -u root -e 'drop database test; create database test;'"
+alias sqlu="mysql -uroot -proot -h 127.0.0.1"
+alias tdbr="mysql -uroot -proot -h 127.0.0.1 -e 'drop database test; create database test;'"
 
 alias chrome="open -a 'Google Chrome'"
 alias vlc="open -a 'VLC'"
@@ -205,7 +206,7 @@ setopt PROMPT_SUBST
 PROMPT='
 ${PWD/#$HOME/~} ${vcs_info_msg_0_}
 '
-alias | sed 's/^alias //' | sed -E "s/^([^=]+)='(.+?)'$/\1=\2/" | sed "s/'\\\\''/'/g" | sed "s/'\\\\$/'/;" | sed -E 's/^([^=]+)=(.+)$/alias \1 \2/' >~/.emacs.d/eshell/alias
+#alias | sed 's/^alias //' | sed -E "s/^([^=]+)='(.+?)'$/\1=\2/" | sed "s/'\\\\''/'/g" | sed "s/'\\\\$/'/;" | sed -E 's/^([^=]+)=(.+)$/alias \1 \2/' >~/.emacs.d/eshell/alias
 
 # for accessing last output without rerunning command
 # does not work yet
@@ -222,3 +223,5 @@ source ~/.pytify.sh
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export PATH="/usr/local/opt/avr-gcc@7/bin:$PATH"
+export PATH="/usr/local/opt/avr-gcc@6/bin:$PATH"

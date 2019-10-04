@@ -157,61 +157,61 @@
   
 * Email
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'load-path "~/place/to/your/mu4e")
-  (require 'smtpmail)
+  ;; (add-to-list 'load-path "~/place/to/your/mu4e")
+  ;; (require 'smtpmail)
 
                                           ; smtp
   ;; I have my "default" parameters from Gmail
-  (setq mu4e-sent-folder "/Users/Scott/Mail/sent"
+  ;; (setq mu4e-sent-folder "/Users/Scott/Mail/sent"
         ;; mu4e-sent-messages-behavior 'delete ;; Unsure how this should be configured
-        mu4e-drafts-folder "/Users/Scott/Mail/drafts"
-        user-mail-address "dscottgrayson@gmail.com"
-        smtpmail-smtp-user "dscottgrayson"
-        smtpmail-local-domain "gmail.com"
-        smtpmail-default-smtp-server "smtp.gmail.com"
-        smtpmail-smtp-server "smtp.gmail.com"
-        smtpmail-smtp-service 587)
+        ;; mu4e-drafts-folder "/Users/Scott/Mail/drafts"
+        ;; user-mail-address "dscottgrayson@gmail.com"
+        ;; smtpmail-smtp-user "dscottgrayson"
+        ;; smtpmail-local-domain "gmail.com"
+        ;; smtpmail-default-smtp-server "smtp.gmail.com"
+        ;; smtpmail-smtp-server "smtp.gmail.com"
+        ;; smtpmail-smtp-service 587)
 
                                           ; add the source shipped with mu to load-path
-  (add-to-list 'load-path (expand-file-name "/usr/local/Cellar/mu/1.0/share/emacs/site-lisp/mu/mu4e"))
+  ;; (add-to-list 'load-path (expand-file-name "/usr/local/Cellar/mu/1.0/share/emacs/site-lisp/mu/mu4e"))
 
                                           ; make sure emacs finds applications in /usr/local/bin
-  (setq exec-path (cons "/usr/local/bin" exec-path))
+  ;; (setq exec-path (cons "/usr/local/bin" exec-path))
 
                                           ; require mu4e
-  (require 'mu4e)
+  ;; (require 'mu4e)
 
-  (setq mu4e-maildir "/Users/Scott/Mail")
-  (setq mu4e-get-mail-command "/usr/local/bin/mbsync -a")
+  ;; (setq mu4e-maildir "/Users/Scott/Mail")
+  ;; (setq mu4e-get-mail-command "/usr/local/bin/mbsync -a")
 
   ;; html rendering
-  (require 'mu4e-contrib)
-  (setq mu4e-html2text-command 'mu4e-shr2text)
-  (add-hook 'mu4e-view-mode-hook
-            (lambda()
+  ;; (require 'mu4e-contrib)
+  ;; (setq mu4e-html2text-command 'mu4e-shr2text)
+  ;; (add-hook 'mu4e-view-mode-hook
+            ;; (lambda()
               ;; try to emulate some of the eww key-bindings
-              (local-set-key (kbd "<tab>") 'shr-next-link)
-              (local-set-key (kbd "<backtab>") 'shr-previous-link)))
+              ;; (local-set-key (kbd "<tab>") 'shr-next-link)
+              ;; (local-set-key (kbd "<backtab>") 'shr-previous-link)))
 
-  (setq mu4e-update-interval 120)
-  (setq mu4e-headers-auto-update t)
-  (setq mu4e-compose-signature-auto-include nil)
+  ;; (setq mu4e-update-interval 120)
+  ;; (setq mu4e-headers-auto-update t)
+  ;; (setq mu4e-compose-signature-auto-include nil)
 
-  (setq mu4e-view-show-images t)
-  (when (fboundp 'imagemagick-register-types)
-    (imagemagick-register-types))
+  ;; (setq mu4e-view-show-images t)
+  ;; (when (fboundp 'imagemagick-register-types)
+    ;; (imagemagick-register-types))
 
                                           ; taken from mu4e page to define bookmarks
-  (add-to-list 'mu4e-bookmarks
-               '("size:5M..500M"       "Big messages"     ?b))
+  ;; (add-to-list 'mu4e-bookmarks
+               ;; '("size:5M..500M"       "Big messages"     ?b))
 
                                           ; mu4e requires to specify drafts, sent, and trash dirs
                                           ; a smarter configuration allows to select directories according to the account (see mu4e page)
-  (setq mu4e-drafts-folder "/gmail/drafts")
-  (setq mu4e-sent-folder "/gmail/sent")
-  (setq mu4e-trash-folder "/gmail/trash")
+  ;; (setq mu4e-drafts-folder "/gmail/drafts")
+  ;; (setq mu4e-sent-folder "/gmail/sent")
+  ;; (setq mu4e-trash-folder "/gmail/trash")
 
-  (bind-key "C-c m" 'mu4e)
+  ;; (bind-key "C-c m" 'mu4e)
 #+END_SRC
   
 * Slack
@@ -270,23 +270,18 @@
   (use-package evil
     :ensure t
     :init
-    (setq evil-want-integration nil)
-
+    (setq evil-want-keybinding nil)
     :config
-    (use-package evil-surround
-      :ensure t
-      :config
-      (global-evil-surround-mode))
-
-    (use-package evil-indent-textobject
-      :ensure t)
 
     (evil-mode 1))
 
-  (use-package evil-ediff
-    :after evil
+  (use-package evil-indent-textobject
+    :ensure t)
+
+  (use-package evil-surround
     :ensure t
-    )
+    :config
+    (global-evil-surround-mode 1))
 
   (use-package evil-org
     :ensure t
@@ -299,10 +294,10 @@
     (require 'evil-org-agenda)
     (evil-org-agenda-set-keys))
 
-  (use-package evil-mu4e
-    :after evil
-    :ensure t
-    )
+  ;; (use-package evil-mu4e
+    ;; :after evil
+    ;; :ensure t
+    ;; )
 
   (use-package evil-collection
     :after evil
@@ -340,11 +335,8 @@
     :config
     )
 
-  (use-package magithub
-    :after magit
-    :ensure t
-    ;; :config (magithub-feature-autoinject t)
-    )
+  (use-package forge
+    :after magit)
 
   (use-package git-gutter
     :ensure t
@@ -399,7 +391,7 @@ Ivy/Counsel/Swiper
     (global-set-key (kbd "M-x") 'counsel-M-x)
     (global-set-key (kbd "M-y") 'counsel-yank-pop)
     (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-    (global-set-key (kbd "C-c p") 'counsel-yank-pop)
+    ;; (global-set-key (kbd "C-c p") 'counsel-yank-pop)
     )
 
 
@@ -417,7 +409,7 @@ Ivy/Counsel/Swiper
 
   (use-package ivy-rich
     :config
-    (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer))
+    (ivy-rich-mode 1))
 #+END_SRC
 
 * Project Management
@@ -427,6 +419,7 @@ Ivy/Counsel/Swiper
     :config
     (projectile-global-mode)
     (setq projectile-completion-system 'ivy)
+    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
     (global-set-key (kbd "C-c f") 'projectile-find-file)
 
     (defun projectile-term ()
@@ -683,6 +676,10 @@ Ivy/Counsel/Swiper
     :ensure t
     )
 
+  (use-package string-inflection
+    :ensure t
+    )
+
   (use-package dimmer
     :ensure t
     :config
@@ -728,6 +725,8 @@ Ivy/Counsel/Swiper
     :ensure t
     :config
     (global-whitespace-cleanup-mode)
+    (add-hook 'web-mode-hook
+              (lambda () (setq-local whitespace-style (delq 'trailing whitespace-style))))
     )
 
   (use-package hungry-delete
@@ -797,7 +796,7 @@ Ivy/Counsel/Swiper
     (setq avy-background t)
     (setq avy-keys '(
                      ?t ?n ?s ?e ?r ?i ?o ?a ?p ?l ?f ?u ?c ?, ?v ?d ?h ?y ?w ?. ?x ?' ?; ?q ?j ?g ?/ 
-                        ))
+                     ))
     :bind
     ("M-s" . avy-goto-word-1))
 #+END_SRC
@@ -1061,6 +1060,9 @@ Ivy/Counsel/Swiper
     :ensure t
     :config
 
+    (global-set-key (kbd "<s-t>") nil)
+    (global-set-key (kbd "<s-n>") nil)
+
     (general-override-mode)
 
     (general-define-key
@@ -1104,8 +1106,8 @@ Ivy/Counsel/Swiper
      "," 'evil-repeat-find-char-reverse
      "(" 'git-gutter:previous-hunk
      ")" 'git-gutter:next-hunk
-     "[" 'flycheck-previous-error
-     "]" 'flycheck-next-error
+     ;; "[" 'flycheck-previous-error
+     ;; "]" 'flycheck-next-error
      "#" 'evilnc-comment-or-uncomment-lines
      ;; "&" 'er/expand-region
      "s" 'avy-goto-word-1
@@ -1136,6 +1138,7 @@ Ivy/Counsel/Swiper
      "s" 'counsel-rg
      "l" 'avy-goto-line
      "g" nil
+     "u" 'string-inflection-all-cycle
      "gl" 'magit-log-buffer-file
      "gb" 'magit-blame
      "gp" 'magit-browse-pull-request
