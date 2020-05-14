@@ -137,6 +137,29 @@ alias pu="phpunit"
 alias pud="phpunit --group default"
 alias puf="phpunit --stop-on-failure"
 
+novadevtools() {
+cd ./vendor/laravel/nova
+mv webpack.mix.js.dist webpack.mix.js
+npm i
+npm run dev
+rm -rf node_modules
+cd -
+php artisan nova:publish
+}
+
+novaprod() {
+cd ./vendor/laravel/nova
+mv webpack.mix.js.dist webpack.mix.js
+npm i
+npm run production
+rm -rf node_modules
+cd -
+php artisan nova:publish
+}
+
+alias nova-dev="novadevtools"
+alias nova-prod="novaprod"
+
 alias sql="mysql.server start"
 alias sqlu="mysql -uroot -proot -h 127.0.0.1"
 alias tdbr="mysql -uroot -proot -h 127.0.0.1 -e 'drop database test; create database test;'"
@@ -159,6 +182,7 @@ alias hot="npm run hot"
 
 alias rms="php artisan migrate:refresh --seed"
 alias pa="php artisan"
+alias pcs="./vendor/bin/phpcs app"
 alias cdo="composer dump-autoload"
 
 alias qc="quasar build && cd cordova && cordova run ios"
