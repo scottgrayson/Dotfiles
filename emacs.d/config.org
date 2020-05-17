@@ -3,79 +3,122 @@
   ;; env file should have the format
   ;; (setenv "SECRET_KEY" "secret-val")
   ;; (require 'env)
-  (load "~/.emacs.d/env.el")
+  ;; (load "~/.emacs.d/env.el")
+#+END_SRC
+* Vim
+#+BEGIN_SRC emacs-lisp
+  (use-package evil
+    :ensure t
+    :init
+    (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+    (setq evil-want-keybinding nil)
+    :config
+    (evil-mode 1))
+
+  (use-package evil-collection
+    :after evil
+    :ensure t
+    :config
+    (evil-collection-init)
+    )
+
+  (use-package evil-indent-textobject
+    :ensure t)
+
+  (use-package evil-surround
+    :ensure t
+    :config
+    (global-evil-surround-mode 1))
+
+  (use-package evil-org
+    :ensure t
+    :after org
+    :config
+    (add-hook 'org-mode-hook 'evil-org-mode)
+    (add-hook 'evil-org-mode-hook
+              (lambda ()
+                (evil-org-set-key-theme)))
+    (require 'evil-org-agenda)
+    (evil-org-agenda-set-keys))
+
+  ;; (use-package evil-mu4e
+    ;; :after evil
+    ;; :ensure t
+    ;; )
+
 #+END_SRC
 * Terminal
 #+BEGIN_SRC emacs-lisp
   ;; (global-set-key (kbd "<s-return>") 'eshell)
 
-  (global-set-key (kbd "<s-return>") 'term)
-  (global-set-key (kbd "<s-M-return>") 'ansi-term)
+  ;; (global-set-key (kbd "<s-return>") 'term)
+  ;; (global-set-key (kbd "<s-M-return>") 'ansi-term)
 
-  (use-package exec-path-from-shell
-    :ensure t
-    )
+  ;; (use-package exec-path-from-shell
+  ;;   :ensure t
+  ;;   )
 
-  ;; (defun my-shell-kill-pending-command ()
+  ;; (defun
+  ;; my-shell-kill-pending-command ()
   ;;   (interactive)
   ;;   (eshell-bol)
   ;;   (kill-line)
   ;;   (evil-insert 1))
 
-  (defun my-shell-completion ()
-    (setq pcomplete-ignore-case t))
+  ;; (defun my-shell-completion ()
+  ;;   (setq pcomplete-ignore-case t))
 
-  (defun my-evil-shell ()
-    (evil-define-key 'insert eshell-mode-map
-      (kbd "C-p") 'eshell-previous-matching-input-from-input
-      (kbd "C-n") 'eshell-nexlst-matching-input-from-input))
+  ;; (defun my-evil-shell ()
+  ;;   (evil-define-key 'insert eshell-mode-map
+  ;;     (kbd "C-p") 'eshell-previous-matching-input-from-input
+  ;;     (kbd "C-n") 'eshell-nexlst-matching-input-from-input))
 
   ;; (add-hook 'eshell-mode-hook 'my-evil-shell)
-  (add-hook 'eshell-mode-hook 'my-shell-completion)
+  ;; (add-hook 'eshell-mode-hook 'my-shell-completion)
 
-  (add-hook 'eshell-mode-hook
-            (lambda ()
+  ;; (add-hook 'eshell-mode-hook
+  ;;           (lambda ()
 
-              (my-evil-shell)
-              (my-shell-completion)
+  ;;             (my-evil-shell)
+  ;;             (my-shell-completion)
 
-              (setq eshell-prompt-function
-                    (lambda nil
-                      (concat
-                       (eshell/pwd)
-                       "\n")))))
+  ;;             (setq eshell-prompt-function
+  ;;                   (lambda nil
+  ;;                     (concat
+  ;;                      (eshell/pwd)
+  ;;                      "\n")))))
 
-  (defun move-point-to-writeable-last-line ()
-    "Move the point to a non-read-only part of the last line.
-        If point is not on the last line, move point to the maximum position
-        in the buffer.  Otherwise if the point is in read-only text, move the
-        point forward out of the read-only sections."
-    (interactive)
-    (let* ((curline (line-number-at-pos))
-           (endline (line-number-at-pos (point-max))))
-      (if (= curline endline)
-          (if (not (eobp))
-              (let (
+  ;; (defun move-point-to-writeable-last-line ()
+    ;; "Move the point to a non-read-only part of the last line.
+    ;;     If point is not on the last line, move point to the maximum position
+    ;;     in the buffer.  Otherwise if the point is in read-only text, move the
+    ;;     point forward out of the read-only sections."
+    ;; (interactive)
+    ;; (let* ((curline (line-number-at-pos))
+    ;;        (endline (line-number-at-pos (point-max))))
+    ;;   (if (= curline endline)
+    ;;       (if (not (eobp))
+    ;;           (let (
                     ;; Get text-properties at the current location
-                    (plist (text-properties-at (point)))
+                    ;; (plist (text-properties-at (point)))
                     ;; Record next change in text-properties
-                    (next-change
-                     (or (next-property-change (point) (current-buffer))
-                         (point-max))))
+                    ;; (next-change
+                    ;;  (or (next-property-change (point) (current-buffer))
+                    ;;      (point-max))))
                 ;; If current text is read-only, go to where that property changes
-                (if (plist-get plist 'read-only)
-                    (goto-char next-change))))
-        (goto-char (point-max)))))
+        ;;         (if (plist-get plist 'read-only)
+        ;;             (goto-char next-change))))
+        ;; (goto-char (point-max)))))
 
-  (defun move-point-on-insert-to-writeable-last-line ()
-    "Only edit the current command in insert mode."
-    (add-hook 'evil-insert-state-entry-hook
-              'move-point-to-writeable-last-line
-              nil
-              t))
+  ;; (defun move-point-on-insert-to-writeable-last-line ()
+    ;; "Only edit the current command in insert mode."
+    ;; (add-hook 'evil-insert-state-entry-hook
+    ;;           'move-point-to-writeable-last-line
+    ;;           nil
+    ;;           t))
 
-  (add-hook 'eshell-mode-hook
-            'move-point-on-insert-to-writeable-last-line)
+  ;; (add-hook 'eshell-mode-hook
+  ;;           'move-point-on-insert-to-writeable-last-line)
 
   ;; (defun my-terminal-insert ()
   ;;   (interactive)
@@ -132,26 +175,26 @@
 #+END_SRC
 ** Org Calendar
 #+BEGIN_SRC emacs-lisp
-  (setq package-check-signature nil)
+  ;; (setq package-check-signature nil)
 
-  (use-package org-gcal
-    :ensure t
-    :config
-    (setq org-gcal-client-id (getenv "GCAL_ID")
-          org-gcal-client-secret (getenv "GCAL_SECRET")
-          org-gcal-file-alist '(("dscottgrayson@gmail.com" .  "~/org/gcal.org"))))
+  ;; (use-package org-gcal
+  ;;   :ensure t
+  ;;   :config
+  ;;   (setq org-gcal-client-id (getenv "GCAL_ID")
+  ;;         org-gcal-client-secret (getenv "GCAL_SECRET")
+  ;;         org-gcal-file-alist '(("dscottgrayson@gmail.com" .  "~/org/gcal.org"))))
 
-  (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
-  (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
+  ;; (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
+  ;; (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
 
-  (setq org-agenda-files (list "~/org/gcal.org"))
+  ;; (setq org-agenda-files (list "~/org/gcal.org"))
 
-  (global-set-key "\C-ca" 'org-agenda)
+  ;; (global-set-key "\C-ca" 'org-agenda)
 
-  (use-package calfw
-    :ensure t
-    :config
-    (require 'calfw-org))
+  ;; (use-package calfw
+  ;;   :ensure t
+  ;;   :config
+  ;;   (require 'calfw-org))
 
 #+END_SRC
   
@@ -265,49 +308,6 @@
   ;;   (setq alert-default-style 'notifier))
 #+END_SRC
   
-* Vim
-#+BEGIN_SRC emacs-lisp
-  (use-package evil
-    :ensure t
-    :init
-    (setq evil-want-keybinding nil)
-    :config
-
-    (evil-mode 1))
-
-  (use-package evil-indent-textobject
-    :ensure t)
-
-  (use-package evil-surround
-    :ensure t
-    :config
-    (global-evil-surround-mode 1))
-
-  (use-package evil-org
-    :ensure t
-    :after org
-    :config
-    (add-hook 'org-mode-hook 'evil-org-mode)
-    (add-hook 'evil-org-mode-hook
-              (lambda ()
-                (evil-org-set-key-theme)))
-    (require 'evil-org-agenda)
-    (evil-org-agenda-set-keys))
-
-  ;; (use-package evil-mu4e
-    ;; :after evil
-    ;; :ensure t
-    ;; )
-
-  (use-package evil-collection
-    :after evil
-    :ensure t
-    :config
-    (evil-collection-init)
-    )
-
-
-#+END_SRC
 * Git
 #+BEGIN_SRC emacs-lisp
   (use-package magit
@@ -336,6 +336,7 @@
     )
 
   (use-package forge
+    :ensure t
     :after magit)
 
   (use-package git-gutter
@@ -407,9 +408,9 @@ Ivy/Counsel/Swiper
   (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done)
   (define-key ivy-minibuffer-map (kbd "C-f") 'eh-ivy-open-current-typed-path)
 
-  (use-package ivy-rich
-    :config
-    (ivy-rich-mode 1))
+  ;; (use-package ivy-rich
+  ;;   :config
+  ;;   (ivy-rich-mode 1))
 #+END_SRC
 
 * Project Management
@@ -770,12 +771,13 @@ Ivy/Counsel/Swiper
   ;;   :ensure t
   ;;   )
 
-  (use-package rainbow-mode
-    :ensure t
-    :init
-    (rainbow-mode 1))
+  ;; (use-package rainbow-mode
+  ;;   :ensure t
+  ;;   :init
+  ;;   (rainbow-mode 1))
 
-  ;; (use-package linum-relative
+  ;; (use
+  ;; -package linum-relative
   ;;   :ensure t
   ;;   :config
   ;;   (setq linum-relative-current-symbol "")
@@ -885,8 +887,8 @@ Ivy/Counsel/Swiper
   (use-package phpunit
     :ensure t
     :config
-    (setq phpunit-stop-on-error t)
-    (setq phpunit-stop-on-failure t)
+    ;; (setq phpunit-stop-on-error t)
+    ;; (setq phpunit-stop-on-failure t)
     (define-key php-mode-map (kbd "M-t t") 'phpunit-current-test)
     (define-key php-mode-map (kbd "M-t c") 'phpunit-current-class)
     (define-key php-mode-map (kbd "M-t p") 'phpunit-current-project)
@@ -914,15 +916,15 @@ Ivy/Counsel/Swiper
   (use-package js2-mode
     :ensure t
     :config
-    (setq js2-basic-offset 2)
+    (setq js2-basic-offset 4)
     )
 
   (use-package web-mode
     :ensure t
     :config
-    (setq web-mode-markup-indent-offset 2)
-    (setq web-mode-css-indent-offset 2)
-    (setq web-mode-code-indent-offset 2)
+    (setq web-mode-markup-indent-offset 4)
+    (setq web-mode-css-indent-offset 4)
+    (setq web-mode-code-indent-offset 4)
     (setq web-mode-script-padding 0)
     (setq web-mode-style-padding 0)
     (setq web-mode-comment-style 2)
@@ -940,6 +942,7 @@ Ivy/Counsel/Swiper
 
 * Misc vars
 #+BEGIN_SRC emacs-lisp
+  (setq gc-cons-threshold 100000000)
   (setq pcomplete-ignore-case t)
 
   (setq frame-title-format
@@ -1121,7 +1124,7 @@ Ivy/Counsel/Swiper
      "o" 'ace-link
      "b" 'ivy-switch-buffer
      "k" 'which-key-show-top-level
-     "f" 'counsel-git
+     "f" 'counsel-projectile-find-file
      "F" 'counsel-file-jump
      "." 'ivy-resume
      "r" 'vr/replace
