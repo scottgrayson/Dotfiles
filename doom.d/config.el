@@ -211,7 +211,7 @@
  :keymaps '(override)
  "o" 'ace-link
  "b" 'ivy-switch-buffer
- "k" 'which-key-show-top-level
+ "k" 'counsel-yank-pop
  "f" 'counsel-projectile-find-file
  "F" 'counsel-file-jump
  "." 'ivy-resume
