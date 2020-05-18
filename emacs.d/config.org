@@ -3,7 +3,49 @@
   ;; env file should have the format
   ;; (setenv "SECRET_KEY" "secret-val")
   ;; (require 'env)
-  (load "~/.emacs.d/env.el")
+  ;; (load "~/.emacs.d/env.el")
+#+END_SRC
+* Vim
+#+BEGIN_SRC emacs-lisp
+  (use-package evil
+    :ensure t
+    :init
+    (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+    (setq evil-want-keybinding nil)
+    :config
+    (evil-mode 1))
+
+  (use-package evil-collection
+    :after evil
+    :ensure t
+    :config
+    (evil-collection-init)
+    )
+
+  (use-package evil-indent-textobject
+    :ensure t)
+
+  (use-package evil-surround
+    :ensure t
+    :config
+    (global-evil-surround-mode 1))
+
+  (use-package evil-org
+    :ensure t
+    :after org
+    :config
+    (add-hook 'org-mode-hook 'evil-org-mode)
+    (add-hook 'evil-org-mode-hook
+              (lambda ()
+                (evil-org-set-key-theme)))
+    (require 'evil-org-agenda)
+    (evil-org-agenda-set-keys))
+
+  ;; (use-package evil-mu4e
+    ;; :after evil
+    ;; :ensure t
+    ;; )
+
 #+END_SRC
 * Vim
 #+BEGIN_SRC emacs-lisp
@@ -408,9 +450,9 @@ Ivy/Counsel/Swiper
   (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done)
   (define-key ivy-minibuffer-map (kbd "C-f") 'eh-ivy-open-current-typed-path)
 
-  (use-package ivy-rich
-    :config
-    (ivy-rich-mode 1))
+  ;; (use-package ivy-rich
+  ;;   :config
+  ;;   (ivy-rich-mode 1))
 #+END_SRC
 
 * Project Management

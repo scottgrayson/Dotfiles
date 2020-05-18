@@ -1,0 +1,70 @@
+###################################################
+# Emacs keys
+###################################################
+
+# if emacs or terminal need to be ignored
+# https://github.com/koekeishiya/skhd/issues/62
+
+# Motion char
+ctrl - n : skhd -k "down"
+ctrl - p : skhd -k "up"
+# forward is already in osx
+# back is already in osx
+# add shift to select
+
+# Motion word
+alt - f : skhd -k "alt - right"
+alt - b : skhd -k "alt - left"
+shift + alt - f : skhd -k "shift + alt - right"
+shift + alt - b : skhd -k "shift + alt - left"
+
+# forward delete
+alt - d : skhd -k "alt - delete"
+ctrl - d : skhd -k "delete"
+
+# Top and bottom of text
+alt + shift - 0x2B : skhd -k "cmd - up"
+alt + shift - 0x2F : skhd -k "cmd - down"
+
+# Already in osx
+# C-a C-e for beginning end of line (add shift to select)
+# M-bksp for backward delete word
+# C-k for forward delete line
+# s-bksp for backward delete line (not an emacs combination)
+
+###################################################
+# Yabai
+###################################################
+
+# focus window
+hyper - h : yabai -m window --focus west
+hyper - j : yabai -m window --focus south
+hyper - k : yabai -m window --focus north
+hyper - l : yabai -m window --focus east
+
+# swap managed window
+meh - h : yabai -m window --swap west
+meh - j : yabai -m window --swap south
+meh - k : yabai -m window --swap north
+meh - l : yabai -m window --swap east
+
+# fast focus desktop
+hyper - 1 : yabai -m space --focus 1
+hyper - 2 : yabai -m space --focus 2
+
+# send window to desktop and follow focus
+meh - 1 : yabai -m window --space 1; yabai -m space --focus 1
+meh - 2 : yabai -m window --space 2; yabai -m space --focus 2
+
+# toggle window zoom TODO change to monocle when it is implemented
+hyper - f : yabai -m window --toggle zoom-fullscreen
+
+# Balance out all windows both horizontally and vertically
+#   to occupy the same space
+hyper - a : yabai -m space --balance
+
+# Rotate the window tree clock-wise (options: 90, 180, 270 degree)
+hyper - r : yabai -m space --rotate 180
+
+# restart yabai
+hyper - q : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
