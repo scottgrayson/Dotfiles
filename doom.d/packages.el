@@ -57,9 +57,5 @@
 ;; (package! mermaid)
 ;; (package! restclient)
 
-(package! php-mode)
-(package! phpunit)
 (package! ac-php)
 (package! company-php)
-(package! js2-mode)
-(package! web-mode)

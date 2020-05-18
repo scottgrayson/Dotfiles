@@ -3,11 +3,16 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
+;; doom dashboard png
+;; (setq +doom-dashboard-banner-dir "/Users/scottgrayson/.doom.d/doom-dashboard/banners/")
+(setq +doom-dashboard-banner-dir "/Users/scottgrayson/Downloads/")
+(setq +doom-dashboard-banner-file "emacs.svg")
+;;
 ;; never open new workspace
 (setq +workspaces-on-switch-project-behavior nil)
 ;; split window thresholds
-  (setq split-height-threshold nil)
-  (setq split-width-threshold 100)
+(setq split-height-threshold nil)
+(setq split-width-threshold 100)
 
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
@@ -79,12 +84,6 @@
                    ))
   )
 
-(use-package php-mode
-  :config
-  (setq c-basic-offset 4)
-  (add-hook 'php-mode-hook 'php-enable-psr2-coding-style)
-  )
-
 (use-package phpunit
   :config
   ;; (setq phpunit-stop-on-error t)
@@ -104,11 +103,6 @@
              ;; (ac-php-core-eldoc-setup) ;; enable eldoc
              (make-local-variable 'company-backends)
              (add-to-list 'company-backends 'company-ac-php-backend)))
-
-(use-package js2-mode
-  :config
-  (setq js2-basic-offset 4)
-  )
 
 (use-package web-mode
   :config
