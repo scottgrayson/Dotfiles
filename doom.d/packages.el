@@ -59,3 +59,5 @@
 
 (package! ac-php)
 (package! company-php)
+
+(package! plan9-theme)

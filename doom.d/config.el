@@ -35,11 +35,20 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one-light)
+;; (setq doom-theme 'doom-one-light)
+;; (setq doom-theme 'doom-city-lights)
+;; (setq doom-theme 'doom-gruvbox)
+;; (setq doom-theme 'doom-nord-light)
+;; (setq doom-theme 'doom-nord)
+;; (setq doom-theme 'doom-nova)
+;; (setq doom-theme 'doom-opera)
+;; (setq doom-theme 'doom-solarized-dark)
+;; (setq doom-theme 'doom-solarized-light)
+;; (setq doom-theme 'doom-spacegrey)
+;; (setq doom-theme 'doom-wilmersdorf)
 ;; (package! doom-themes :ignore t)
-;; (package! plan9-theme)
-;; (require 'plan9-theme)
-;; (load-theme 'plan9 t)
+(require 'plan9-theme)
+(load-theme 'plan9 t)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -72,6 +81,11 @@
   (ace-link-setup-default)
 )
 
+(use-package undo-tree
+  :config
+  (global-undo-tree-mode 1)
+)
+
 (use-package writeroom-mode
   :config
   (setq writeroom-maximize-window t)
@@ -85,8 +99,9 @@
 
 (use-package dimmer
   :config
-  (setq dimmer-fraction 0.01)
-  (setq dimmer-adjustment-mode ':background)
+  (setq dimmer-fraction 0.4)
+  (setq dimmer-watch-frame-focus-events nil)
+  (setq dimmer-adjustment-mode ':foreground)
   (dimmer-mode)
   )
 
@@ -242,6 +257,7 @@
  "g" nil
  "gl" 'magit-log-buffer-file
  "gb" 'magit-blame
+ "gs" 'magit-status
  "gp" 'magit-browse-pull-request
  "gf" 'browse-at-remote
  "y" nil
@@ -249,8 +265,12 @@
  "yc" 'aya-create
  "yo" 'aya-create-one-line
  "yn" 'yas-new-snippet
- "z" 'writeroom-mode
+ "z" 'undo-tree-visualize
  "o" 'writeroom-mode
+ "c" 'org-capture
+ "n" nil
+ ;; "n t" 'visit todo
+ ;; "n p" 'visit todo for project
  )
 
 (general-define-key

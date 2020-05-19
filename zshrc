@@ -125,6 +125,36 @@ alias gpr="hub pull-request"
 alias gbr="hub browse"
 alias gbroom="git branch --merged | egrep -v '(^\*|master|dev)' | xargs git branch -d"
 
+alias sql="mysql.server start"
+alias sqlu="mysql -uroot -proot -h 127.0.0.1"
+alias tdbr="mysql -uroot -proot -h 127.0.0.1 -e 'drop database test; create database test;'"
+
+alias chrome="open -a 'Google Chrome'"
+alias vlc="open -a 'VLC'"
+
+alias sp="spotify"
+alias spf="spotify status >> ~/spotify.favorites && spotify share url >> ~/spotify.favorites"
+
+alias sz="source ~/.zshrc"
+alias zrc="nvim ~/.zshrc"
+alias vrc="nvim ~/.vimrc"
+alias hrc="nvim ~/.hyper.js"
+alias kb="nvim ~/.config/karabiner/karabiner.json"
+
+alias lint="npm run lint"
+alias dev="npm run dev"
+alias hot="npm run hot"
+
+
+#############
+# PHP tools #
+#############
+
+alias mrs="php artisan migrate:refresh --seed"
+alias pa="php artisan"
+alias pcs="./vendor/bin/phpcs app"
+alias cda="composer dump-autoload"
+
 original_phpunit=$(which phpunit)
 
 phpunit() {
@@ -160,30 +190,6 @@ php artisan nova:publish
 alias nova-dev="novadevtools"
 alias nova-prod="novaprod"
 
-alias sql="mysql.server start"
-alias sqlu="mysql -uroot -proot -h 127.0.0.1"
-alias tdbr="mysql -uroot -proot -h 127.0.0.1 -e 'drop database test; create database test;'"
-
-alias chrome="open -a 'Google Chrome'"
-alias vlc="open -a 'VLC'"
-
-alias sp="spotify"
-alias spf="spotify status >> ~/spotify.favorites && spotify share url >> ~/spotify.favorites"
-
-alias sz="source ~/.zshrc"
-alias zrc="nvim ~/.zshrc"
-alias vrc="nvim ~/.vimrc"
-alias hrc="nvim ~/.hyper.js"
-alias kb="nvim ~/.config/karabiner/karabiner.json"
-
-alias lint="npm run lint"
-alias dev="npm run dev"
-alias hot="npm run hot"
-
-alias rms="php artisan migrate:refresh --seed"
-alias pa="php artisan"
-alias pcs="./vendor/bin/phpcs app"
-alias cdo="composer dump-autoload"
 
 alias qc="quasar build && cd cordova && cordova run ios"
 
