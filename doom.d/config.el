@@ -5,7 +5,7 @@
 
 ;; doom dashboard png
 ;; (setq +doom-dashboard-banner-dir "/Users/scottgrayson/.doom.d/doom-dashboard/banners/")
-(setq +doom-dashboard-banner-dir "/Users/scottgrayson/Downloads/")
+(setq +doom-dashboard-banner-dir "/Users/scottgrayson/Code/dotfiles/doom.d/banners/")
 (setq +doom-dashboard-banner-file "emacs.svg")
 ;;
 ;; never open new workspace
@@ -35,12 +35,11 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-solarized-light)
+(setq doom-theme 'doom-one-light)
 ;; (package! doom-themes :ignore t)
 ;; (package! plan9-theme)
 ;; (require 'plan9-theme)
 ;; (load-theme 'plan9 t)
-
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -48,7 +47,7 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
@@ -68,9 +67,26 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
+(use-package ace-link
+  :config
+  (ace-link-setup-default)
+)
+
+(use-package writeroom-mode
+  :config
+  (setq writeroom-maximize-window t)
+  (setq writeroom-restore-window-config t)
+)
+
+(use-package ace-window
+  :config
+  (setq aw-keys '(?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9))
+)
+
 (use-package dimmer
   :config
-  (setq dimmer-fraction 0.2)
+  (setq dimmer-fraction 0.01)
+  (setq dimmer-adjustment-mode ':background)
   (dimmer-mode)
   )
 
@@ -88,12 +104,12 @@
   :config
   ;; (setq phpunit-stop-on-error t)
   ;; (setq phpunit-stop-on-failure t)
-  (define-key php-mode-map (kbd "M-t t") 'phpunit-current-test)
-  (define-key php-mode-map (kbd "M-t c") 'phpunit-current-class)
-  (define-key php-mode-map (kbd "M-t p") 'phpunit-current-project)
-  (define-key php-mode-map (kbd "M-t M-t") 'phpunit-current-test)
-  (define-key php-mode-map (kbd "M-t M-c") 'phpunit-current-class)
-  (define-key php-mode-map (kbd "M-t M-p") 'phpunit-current-project)
+  (define-key +php-laravel-mode-map (kbd "M-t t") 'phpunit-current-test)
+  (define-key +php-laravel-mode-map (kbd "M-t c") 'phpunit-current-class)
+  (define-key +php-laravel-mode-map (kbd "M-t p") 'phpunit-current-project)
+  (define-key +php-laravel-mode-map (kbd "M-t M-t") 'phpunit-current-test)
+  (define-key +php-laravel-mode-map (kbd "M-t M-c") 'phpunit-current-class)
+  (define-key +php-laravel-mode-map (kbd "M-t M-p") 'phpunit-current-project)
   )
 
 (add-hook 'php-mode-hook
@@ -203,7 +219,7 @@
  :prefix my-leader1
  :states '(normal motion)
  :keymaps '(override)
- "o" 'ace-link
+ "v" 'ace-link
  "b" 'ivy-switch-buffer
  "k" 'counsel-yank-pop
  "f" 'counsel-projectile-find-file
@@ -233,6 +249,8 @@
  "yc" 'aya-create
  "yo" 'aya-create-one-line
  "yn" 'yas-new-snippet
+ "z" 'writeroom-mode
+ "o" 'writeroom-mode
  )
 
 (general-define-key

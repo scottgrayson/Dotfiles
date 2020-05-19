@@ -50,7 +50,7 @@
 
 (package! dimmer)
 
-(package! ace-window)
+(package! ace-link)
 
 ;; (package! sqlup-mode)
 ;; (package! sqlup-indent)
