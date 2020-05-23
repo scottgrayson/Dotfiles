@@ -76,26 +76,31 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
+(use-package js2-mode
+  :config
+  (setq js2-basic-offset 4)
+  )
+
 (use-package ace-link
   :config
   (ace-link-setup-default)
-)
+  )
 
 (use-package undo-tree
   :config
   (global-undo-tree-mode 1)
-)
+  )
 
 (use-package writeroom-mode
   :config
   (setq writeroom-maximize-window t)
   (setq writeroom-restore-window-config t)
-)
+  )
 
 (use-package ace-window
   :config
   (setq aw-keys '(?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9))
-)
+  )
 
 (use-package dimmer
   :config
@@ -234,43 +239,69 @@
  :prefix my-leader1
  :states '(normal motion)
  :keymaps '(override)
- "v" 'ace-link
- "b" 'ivy-switch-buffer
- "k" 'counsel-yank-pop
- "f" 'counsel-projectile-find-file
- "F" 'counsel-file-jump
- "." 'ivy-resume
- "r" 'anzu-query-replace
- ;; "\\" 'evil-sp-override
- "R" 'anzu-query-replace-at-cursor
- "w" 'save-buffer
- "p" 'switch-to-previous-buffer
- "t" 'ac-php-find-symbol-at-point
+ "!" nil
+ "#" nil
+ "$" nil
+ "%" nil
+ "&" nil
+ "'" nil
  "(" 'ac-php-location-stack-back
  ")" 'ac-php-location-stack-forward
+ "*" nil
+ "," nil
+ "." 'ivy-resume
+ "/" nil
+ ";" nil
+ "=" nil
+ "@" nil
+ "F" 'counsel-file-jump
+ "R" 'anzu-query-replace-at-cursor
+ "RET" nil
+ "SPC" nil
  "[" 'dumb-jump-back
+ "\\" nil
  "]" 'dumb-jump-go
- "i" 'indent-and-untabify
- "s" 'counsel-rg
- "l" 'avy-goto-line
- "u" 'string-inflection-all-cycle
- "g" nil
- "gl" 'magit-log-buffer-file
- "gb" 'magit-blame
- "gs" 'magit-status
- "gp" 'magit-browse-pull-request
- "gf" 'browse-at-remote
- "y" nil
- "ye" 'aya-expand
- "yc" 'aya-create
- "yo" 'aya-create-one-line
- "yn" 'yas-new-snippet
- "z" 'undo-tree-visualize
- "o" 'writeroom-mode
+ "^" nil
+ "`" nil
+ "a" nil
+ "b" 'ivy-switch-buffer
  "c" 'org-capture
+ "d" 'deft
+ "e" nil
+ "f" 'counsel-projectile-find-file
+ "g" nil
+ "gg" 'magit-status
+ "gb" 'magit-blame
+ "gf" 'browse-at-remote
+ "gl" 'magit-log-buffer-file
+ "gp" 'magit-browse-pull-request
+ "gs" 'magit-status
+ "h" nil
+ "i" 'indent-and-untabify
+ "k" 'counsel-yank-pop
+ "l" 'avy-goto-line
+ "m" 'avy-goto-line
  "n" nil
- ;; "n t" 'visit todo
+ "o" 'writeroom-mode
+ "p" 'switch-to-previous-buffer
+ "q" nil
+ "r" 'anzu-query-replace
+ "s" 'counsel-rg
+ "t" 'ac-php-find-symbol-at-point
+ "u" 'string-inflection-all-cycle
+ "v" 'ace-link
+ "w" 'save-buffer
+ "x" nil
+ "y" nil
+ "yc" 'aya-create
+ "ye" 'aya-expand
+ "yn" 'yas-new-snippet
+ "yo" 'aya-create-one-line
+ "z" 'undo-tree-visualize
+ "{" nil
+ "}" nil
  ;; "n p" 'visit todo for project
+ ;; "n t" 'visit todo
  )
 
 (general-define-key
@@ -285,6 +316,7 @@
   )
 
 (map! "C-c g" 'magit-status)
+(map! "M-g" 'magit-status)
 (map! "M-w" 'ace-window)
 
 (general-define-key

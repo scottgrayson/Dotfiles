@@ -54,7 +54,6 @@
 
 ;; (package! sqlup-mode)
 ;; (package! sqlup-indent)
-;; (package! mermaid)
 ;; (package! restclient)
 
 (package! ac-php)

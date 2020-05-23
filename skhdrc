@@ -58,6 +58,7 @@ meh - 2 : yabai -m window --space 2; yabai -m space --focus 2
 
 # toggle window zoom TODO change to monocle when it is implemented
 hyper - f : yabai -m window --toggle zoom-fullscreen
+hyper - s : yabai -m window --toggle zoom-fullscreen
 
 # Balance out all windows both horizontally and vertically
 #   to occupy the same space
