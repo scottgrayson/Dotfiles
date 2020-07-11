@@ -2,6 +2,9 @@
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
+(add-hook! org-mode
+  :config
+  (setq evil-auto-indent nil))
 
 ;; doom dashboard png
 ;; (setq +doom-dashboard-banner-dir "/Users/scottgrayson/.doom.d/doom-dashboard/banners/")
@@ -44,11 +47,11 @@
 ;; (setq doom-theme 'doom-opera)
 ;; (setq doom-theme 'doom-solarized-dark)
 ;; (setq doom-theme 'doom-solarized-light)
-;; (setq doom-theme 'doom-spacegrey)
+(setq doom-theme 'doom-spacegrey)
 ;; (setq doom-theme 'doom-wilmersdorf)
 ;; (package! doom-themes :ignore t)
-(require 'plan9-theme)
-(load-theme 'plan9 t)
+;; (require 'plan9-theme)
+;; (load-theme 'plan9 t)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -75,6 +78,85 @@
 ;;
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
+
+(use-package ivy
+  :config
+  ;; use enter on folder to go into folder
+  (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done))
+
+(use-package company
+  :config
+  (setq company-dabbrev-downcase nil)
+  (setq company-dabbrev-ignore-prefix nil)
+  (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 2)
+  :init
+  (add-hook 'after-init-hook 'global-company-mode)
+  )
+
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd "C-f") #'company-complete-common)
+  (define-key company-active-map (kbd "TAB") #'company-complete-common)
+  (define-key company-active-map (kbd "C-u") #'company-previous-page)
+  (define-key company-active-map (kbd "C-d") #'company-next-page)
+  (define-key company-active-map (kbd "C-n") #'company-select-next)
+  (define-key company-active-map (kbd "C-p") #'company-select-previous))
+
+
+
+;; (use-package ejira
+;;   :init
+;;   (setq jiralib2-url              (getenv "JIRA_URL")
+;;         jiralib2-auth             'basic
+;;         jiralib2-user-login-name  (getenv "JIRA_USER")
+;;         jiralib2-token            (getenv "JIRA_TOKEN")
+
+;;         ejira-org-directory       "~/jira"
+;;         ejira-projects            '("Portal (Global)")
+
+;;         ejira-priorities-alist    '(("Highest" . ?A)
+;;                                     ("High"    . ?B)
+;;                                     ("Medium"  . ?C)
+;;                                     ("Low"     . ?D)
+;;                                     ("Lowest"  . ?E))
+;;         ejira-todo-states-alist   '(("To Do"       . 1)
+;;                                     ("In Progress" . 2)
+;;                                     ("Done"        . 3)))
+;;   :config
+;;   ;; Tries to auto-set custom fields by looking into /editmeta
+;;   ;; of an issue and an epic.
+;;   (add-hook 'jiralib2-post-login-hook #'ejira-guess-epic-sprint-fields)
+
+;;   ;; They can also be set manually if autoconfigure is not used.
+;;   ;; (setq ejira-sprint-field       'customfield_10001
+;;   ;;       ejira-epic-field         'customfield_10002
+;;   ;;       ejira-epic-summary-field 'customfield_10004)
+
+;;   (require 'ejira-agenda)
+
+;;   ;; Make the issues visisble in your agenda by adding `ejira-org-directory'
+;;   ;; into your `org-agenda-files'.
+;;   (add-to-list 'org-agenda-files ejira-org-directory)
+
+;;   ;; Add an agenda view to browse the issues that
+;;   (org-add-agenda-custom-command
+;;    '("j" "My JIRA issues"
+;;      ((ejira-jql "resolution = unresolved and assignee = currentUser()"
+;;                  ((org-agenda-overriding-header "Assigned to me")))))))
+
+;; (use-package org-jira
+;;   :config
+;;   (setq jiralib-url "https://gfm-it.atlassian.net")
+;;   )
+
+;; (use-package lsp-mode
+;;   :commands lsp
+;;   )
+
+;; (use-package company-lsp
+;; :config
+;; (push 'company-lsp company-backends)
+;; )
 
 (use-package js2-mode
   :config
@@ -104,7 +186,7 @@
 
 (use-package dimmer
   :config
-  (setq dimmer-fraction 0.4)
+  (setq dimmer-fraction 0.3)
   (setq dimmer-watch-frame-focus-events nil)
   (setq dimmer-adjustment-mode ':foreground)
   (dimmer-mode)
@@ -120,6 +202,31 @@
                    ))
   )
 
+(use-package php-mode
+  :config
+  (setq php-mode-lineup-cascaded-calls nil)
+  )
+
+;; (after! js2-mode
+;;   (set-company-backend! 'js2-mode 'company-tide 'company-yasnippet))
+
+(after! php-mode
+  (set-company-backend! 'php-mode 'company-phpactor 'company-dabbrev-code 'company-capf 'company-files))
+
+(add-hook 'php-mode-hook
+          '(lambda ()
+             ;; Enable company-mode
+             (company-mode t)
+             (require 'company-php)
+
+             ;; Enable ElDoc support (optional)
+             (ac-php-core-eldoc-setup)
+
+             (set (make-local-variable 'company-backends)
+                  '((company-ac-php-backend company-dabbrev-code)
+                    company-capf company-files))
+             ))
+
 (use-package phpunit
   :config
   ;; (setq phpunit-stop-on-error t)
@@ -132,13 +239,10 @@
   (define-key +php-laravel-mode-map (kbd "M-t M-p") 'phpunit-current-project)
   )
 
-(add-hook 'php-mode-hook
-          '(lambda ()
-             ;; (require 'company-php)
-             ;; (company-mode t)
-             ;; (ac-php-core-eldoc-setup) ;; enable eldoc
-             (make-local-variable 'company-backends)
-             (add-to-list 'company-backends 'company-ac-php-backend)))
+(use-package dotenv-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.env\\..*\\'" . dotenv-mode))
+  )
 
 (use-package web-mode
   :config
@@ -151,7 +255,7 @@
   (setq-default indent-tabs-mode nil)
   (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
   (add-to-list 'auto-mode-alist '("\\.blade\\.php\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
+  ;; (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
   (setq web-mode-engines-alist
         '(
           ("php"  . "\\.phtml\\'")
@@ -207,6 +311,7 @@
  ;; "DEL" 'hungry-delete-backward
  "M-e" 'emmet-expand-line
  "C-e" 'yas-expand
+ "TAB" '+company/complete
  )
 
 (general-define-key
@@ -245,8 +350,8 @@
  "%" nil
  "&" nil
  "'" nil
- "(" 'ac-php-location-stack-back
- ")" 'ac-php-location-stack-forward
+ ;; "(" 'ac-php-location-stack-back
+ ;; ")" 'ac-php-location-stack-forward
  "*" nil
  "," nil
  "." 'ivy-resume
@@ -278,6 +383,8 @@
  "gs" 'magit-status
  "h" nil
  "i" 'indent-and-untabify
+ "j" 'multi-line-single-line
+ "J" 'multi-line
  "k" 'counsel-yank-pop
  "l" 'avy-goto-line
  "m" 'avy-goto-line
@@ -287,7 +394,7 @@
  "q" nil
  "r" 'anzu-query-replace
  "s" 'counsel-rg
- "t" 'ac-php-find-symbol-at-point
+ "t" 'phpactor-goto-definition
  "u" 'string-inflection-all-cycle
  "v" 'ace-link
  "w" 'save-buffer

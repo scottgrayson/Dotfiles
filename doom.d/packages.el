@@ -58,5 +58,18 @@
 
 (package! ac-php)
 (package! company-php)
+(package! phpactor)
+(package! vue-mode)
+;; (package! company-lsp)
 
-(package! plan9-theme)
+;; (package! plan9-theme)
+
+(package! forge)
+(package! magithub)
+
+(package! dotenv-mode)
+
+(package! multi-line)
+
+;; (package! ejira)
+;; (package! org-jira)

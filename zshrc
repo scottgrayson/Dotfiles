@@ -59,11 +59,12 @@ export PATH="$PATH:/usr/local/opt/ncurses/bin:$PATH"
 export ANDROID_HOME=~/Library/Android/sdk
 export PATH=${PATH}:${ANDROID_HOME}/tools
 export PATH=${PATH}:${ANDROID_HOME}/platform-tools
-export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+
 
 if [[ -n ${INSIDE_EMACS} ]]; then
 # This shell runs inside an Emacs *shell*/*term* buffer.
 plugins=(
+artisan
 git
 colored-man-pages
 history-substring-search
@@ -78,6 +79,7 @@ vi-mode
 colored-man-pages
 history-substring-search
 )
+fi
 
 # source ~/.iterm2_shell_integration.`basename $SHELL`
 #
@@ -86,8 +88,6 @@ if [[ -n $SSH_CONNECTION ]]; then
 export EDITOR='vim'
 else
 export EDITOR='nvim'
-fi
-
 fi
 
 source $ZSH/oh-my-zsh.sh
@@ -127,7 +127,7 @@ alias gbroom="git branch --merged | egrep -v '(^\*|master|dev)' | xargs git bran
 
 alias sql="mysql.server start"
 alias sqlu="mysql -uroot -proot -h 127.0.0.1"
-alias tdbr="mysql -uroot -proot -h 127.0.0.1 -e 'drop database test; create database test;'"
+
 
 alias chrome="open -a 'Google Chrome'"
 alias vlc="open -a 'VLC'"
@@ -150,7 +150,24 @@ alias hot="npm run hot"
 # PHP tools #
 #############
 
-alias mrs="php artisan migrate:refresh --seed"
+dropcreate() {
+if [ "$1" != "" ]
+then
+mysql -uroot -proot -h 127.0.0.1 -e "drop database $1; create database $1;"
+else
+dir=${PWD##*/}
+echo "dropped and re-created $dir"
+db="$(echo $dir | tr '[:upper:]' '[:lower:]')"
+mysql -uroot -proot -h 127.0.0.1 -e "drop database if exists $db; create database $db;"
+fi
+}
+
+alias ib="composer install; dropcreate; php artisan migrate:refresh --seed"
+alias mrs="dropcreate; php artisan migrate:refresh --seed"
+
+alias tdbr="dropcreate test"
+alias dbr="dropcreate"
+
 alias pa="php artisan"
 alias pcs="./vendor/bin/phpcs app"
 alias cda="composer dump-autoload"
@@ -256,3 +273,4 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export PATH="/usr/local/opt/avr-gcc@7/bin:$PATH"
 export PATH="/usr/local/opt/avr-gcc@6/bin:$PATH"
+export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"

@@ -69,3 +69,6 @@ hyper - r : yabai -m space --rotate 180
 
 # restart yabai
 hyper - q : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
+
+# remove padding
+hyper - o : yabai -m space --toggle padding; yabai -m space --toggle gap
