@@ -168,6 +168,7 @@ alias mrs="dropcreate; php artisan migrate:refresh --seed"
 alias tdbr="dropcreate test"
 alias dbr="dropcreate"
 
+alias pstan="./vendor/bin/phpstan analyse"
 alias pa="php artisan"
 alias pcs="./vendor/bin/phpcs app"
 alias cda="composer dump-autoload"
