@@ -3,8 +3,8 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 (add-hook! org-mode
-  :config
-  (setq evil-auto-indent nil))
+           :config
+           (setq evil-auto-indent nil))
 
 ;; doom dashboard png
 ;; (setq +doom-dashboard-banner-dir "/Users/scottgrayson/.doom.d/doom-dashboard/banners/")
@@ -16,6 +16,8 @@
 ;; split window thresholds
 (setq split-height-threshold nil)
 (setq split-width-threshold 100)
+
+(setq json-reformat:indent-width 2)
 
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
@@ -289,6 +291,11 @@
 (general-override-mode)
 
 (general-define-key
+ :keymaps '(ivy-occur-mode-map)
+ "RET" 'ivy-occur-press-and-switch
+ )
+
+(general-define-key
  :keymaps '(evil-window-map)
  "q" 'evil-window-delete
  "s" 'evil-window-vsplit
@@ -425,6 +432,9 @@
 (map! "C-c g" 'magit-status)
 (map! "M-g" 'magit-status)
 (map! "M-w" 'ace-window)
+(map! :map magit-mode-map
+      :n "y u" 'forge-copy-url-at-point-as-kill
+      )
 
 (general-define-key
  :keymaps '(override)

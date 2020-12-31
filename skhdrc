@@ -58,11 +58,15 @@ meh - 2 : yabai -m window --space 2; yabai -m space --focus 2
 
 # toggle window zoom TODO change to monocle when it is implemented
 hyper - f : yabai -m window --toggle zoom-fullscreen
-hyper - s : yabai -m window --toggle zoom-fullscreen
+hyper - s : yabai -m space --layout stack
+hyper - a : yabai -m space --layout bsp
+# focus the next stacked window if possible; otherwise focus the next window or go back to the first window
+hyper - n : yabai -m window --focus stack.next || yabai -m window --focus stack.first
+hyper - p : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
 
 # Balance out all windows both horizontally and vertically
 #   to occupy the same space
-hyper - a : yabai -m space --balance
+hyper - b : yabai -m space --balance
 
 # Rotate the window tree clock-wise (options: 90, 180, 270 degree)
 hyper - r : yabai -m space --rotate 180
