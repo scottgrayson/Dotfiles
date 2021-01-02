@@ -71,5 +71,7 @@
 
 (package! multi-line)
 
+(package! undo-tree)
+
 ;; (package! ejira)
 ;; (package! org-jira)

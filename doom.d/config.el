@@ -81,12 +81,14 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
-(use-package ivy
+(use-package! ivy
+  :defer
   :config
   ;; use enter on folder to go into folder
   (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done))
 
-(use-package company
+(use-package! company
+  :defer
   :config
   (setq company-dabbrev-downcase nil)
   (setq company-dabbrev-ignore-prefix nil)
@@ -106,7 +108,8 @@
 
 
 
-;; (use-package ejira
+;; (use-package! ejira
+;; :defer
 ;;   :init
 ;;   (setq jiralib2-url              (getenv "JIRA_URL")
 ;;         jiralib2-auth             'basic
@@ -146,47 +149,56 @@
 ;;      ((ejira-jql "resolution = unresolved and assignee = currentUser()"
 ;;                  ((org-agenda-overriding-header "Assigned to me")))))))
 
-;; (use-package org-jira
+;; (use-package! org-jira
+;; :defer
 ;;   :config
 ;;   (setq jiralib-url "https://gfm-it.atlassian.net")
 ;;   )
 
-;; (use-package lsp-mode
+;; (use-package! lsp-mode
+;; :defer
 ;;   :commands lsp
 ;;   )
 
-;; (use-package company-lsp
+;; (use-package! company-lsp
+;; :defer
 ;; :config
 ;; (push 'company-lsp company-backends)
 ;; )
 
-(use-package js2-mode
+(use-package! js2-mode
+  :defer
   :config
   (setq js2-basic-offset 4)
   )
 
-(use-package ace-link
+(use-package! ace-link
+  :defer
   :config
   (ace-link-setup-default)
   )
 
-(use-package undo-tree
+(use-package! undo-tree
+  :defer
   :config
   (global-undo-tree-mode 1)
   )
 
-(use-package writeroom-mode
+(use-package! writeroom-mode
+  :defer
   :config
   (setq writeroom-maximize-window t)
   (setq writeroom-restore-window-config t)
   )
 
-(use-package ace-window
+(use-package! ace-window
+  :defer
   :config
   (setq aw-keys '(?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9))
   )
 
-(use-package dimmer
+(use-package! dimmer
+  :defer
   :config
   (setq dimmer-fraction 0.3)
   (setq dimmer-watch-frame-focus-events nil)
@@ -194,7 +206,8 @@
   (dimmer-mode)
   )
 
-(use-package avy
+(use-package! avy
+  :defer
   :config
   (setq avy-case-fold-search nil)
   (setq avy-background t)
@@ -204,7 +217,8 @@
                    ))
   )
 
-(use-package php-mode
+(use-package! php-mode
+  :defer
   :config
   (setq php-mode-lineup-cascaded-calls nil)
   )
@@ -229,7 +243,8 @@
                     company-capf company-files))
              ))
 
-(use-package phpunit
+(use-package! phpunit
+  :defer
   :config
   ;; (setq phpunit-stop-on-error t)
   ;; (setq phpunit-stop-on-failure t)
@@ -241,12 +256,14 @@
   (define-key +php-laravel-mode-map (kbd "M-t M-p") 'phpunit-current-project)
   )
 
-(use-package dotenv-mode
-  :config
-  (add-to-list 'auto-mode-alist '("\\.env\\..*\\'" . dotenv-mode))
-  )
+;; (use-package! dotenv-mode
+;; :defer
+;;   :config
+;;   (add-to-list 'auto-mode-alist '("\\.env\\..*\\'" . dotenv-mode))
+;;   )
 
-(use-package web-mode
+(use-package! web-mode
+  :defer
   :config
   (setq web-mode-markup-indent-offset 4)
   (setq web-mode-css-indent-offset 4)
@@ -283,7 +300,18 @@
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
-
+;; (defun my-open-calendar ()
+;;   (interactive)
+;;   (cfw:open-calendar-buffer
+;;    :contents-sources
+;;    (list
+;;     (cfw:org-create-source "Green")  ; org-agenda source
+;;     ;; (cfw:org-create-file-source "cal" "/path/to/cal.org" "Cyan")  ; other org source
+;;     ;; (cfw:howm-create-source "Blue")  ; howm source
+;;     ;; (cfw:cal-create-source "Orange") ; diary source
+;;     ;; (cfw:ical-create-source "Moon" "~/moon.ics" "Gray")  ; ICS source1
+;;     (cfw:ical-create-source "gcal" "https://..../basic.ics" "IndianRed") ; google calendar ICS
+;;     )))
 
 ;; Keybinds
 ;;TODO use doom's map! instead of using general directly

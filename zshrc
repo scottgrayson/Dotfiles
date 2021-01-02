@@ -54,6 +54,7 @@ export ZSH=$HOME/.oh-my-zsh
 export PATH="$PATH:/usr/local/opt/php@7.1/bin:/usr/local/opt/php@7.1/sbin"
 export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin"
 export PATH="$PATH:~/.composer/vendor/bin"
+export PATH="$PATH:~/.emacs.d/bin"
 export PATH="$PATH:/Users/Scott/Code/spark-installer"
 export PATH="$PATH:/usr/local/opt/ncurses/bin:$PATH"
 export ANDROID_HOME=~/Library/Android/sdk
