@@ -51,18 +51,19 @@ export ZSH=$HOME/.oh-my-zsh
 # Add wisely, as too many plugins slow down shell startup.
 # User configuration
 
-export PATH="$PATH:/usr/local/opt/php@7.1/bin:/usr/local/opt/php@7.1/sbin"
 export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin"
 export PATH="$PATH:~/.composer/vendor/bin"
 export PATH="$PATH:~/.emacs.d/bin"
-# export PATH="$PATH:/Applications/Emacs.app/Contents/MacOS"
-export PATH="$PATH:/Users/Scott/Code/spark-installer"
-export PATH="$PATH:/usr/local/opt/ncurses/bin:$PATH"
-export ANDROID_HOME=~/Library/Android/sdk
-export PATH=${PATH}:${ANDROID_HOME}/tools
-export PATH=${PATH}:${ANDROID_HOME}/platform-tools
-
-export EMACS="/Applications/Emacs.app/Contents/MacOS/Emacs"
+export PATH="$PATH:/Applications/Emacs.app/Contents/MacOS"
+#export PATH="$PATH:/usr/local/opt/ncurses/bin:$PATH"
+#export ANDROID_HOME=~/Library/Android/sdk
+#export PATH=${PATH}:${ANDROID_HOME}/tools
+#export PATH=${PATH}:${ANDROID_HOME}/platform-tools
+#export PATH="/usr/local/opt/avr-gcc@7/bin:$PATH"
+#export PATH="/usr/local/opt/avr-gcc@6/bin:$PATH"
+#export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+#export PATH="/usr/local/opt/php@7.4/bin:$PATH"
+#export PATH="/usr/local/opt/php@7.4/sbin:$PATH"
 
 if [[ -n ${INSIDE_EMACS} ]]; then
 # This shell runs inside an Emacs *shell*/*term* buffer.
@@ -276,8 +277,3 @@ ${PWD/#$HOME/~} ${vcs_info_msg_0_}
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export PATH="/usr/local/opt/avr-gcc@7/bin:$PATH"
-export PATH="/usr/local/opt/avr-gcc@6/bin:$PATH"
-export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
-export PATH="/usr/local/opt/php@7.4/bin:$PATH"
-export PATH="/usr/local/opt/php@7.4/sbin:$PATH"

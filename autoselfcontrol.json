@@ -1,0 +1,65 @@
+{
+    "username": "scottgrayson",
+    "selfcontrol-path": "/Applications/SelfControl.app",
+    "host-blacklist": [
+        "maps.googleapis.com",
+        "youtube.com",
+        "vimeo.com",
+        "instagram.com",
+        "8a.nu",
+        "amazon.com",
+        "twitter.com",
+        "reddit.com"
+    ],
+    "block-schedules":[
+        {
+            "weekday": 1,
+            "start-hour": 23,
+            "start-minute": 0,
+            "end-hour": 15,
+            "end-minute": 0
+        },
+        {
+            "weekday": 2,
+            "start-hour": 23,
+            "start-minute": 0,
+            "end-hour": 15,
+            "end-minute": 0
+        },
+        {
+            "weekday": 3,
+            "start-hour": 23,
+            "start-minute": 0,
+            "end-hour": 15,
+            "end-minute": 0
+        },
+        {
+            "weekday": 4,
+            "start-hour": 23,
+            "start-minute": 0,
+            "end-hour": 15,
+            "end-minute": 0
+        },
+        {
+            "weekday": 5,
+            "start-hour": 23,
+            "start-minute": 0,
+            "end-hour": 15,
+            "end-minute": 0
+        },
+        {
+            "weekday": 6,
+            "start-hour": 23,
+            "start-minute": 0,
+            "end-hour": 15,
+            "end-minute": 0
+        },
+        {
+            "weekday": 7,
+            "start-hour": 23,
+            "start-minute": 0,
+            "end-hour": 15,
+            "end-minute": 0
+        }
+    ]
+}

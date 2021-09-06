@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: phpstan ignore next line
-# key: pstan
-# --
-// @phpstan-ignore-next-line
