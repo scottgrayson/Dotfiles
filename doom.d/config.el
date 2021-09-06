@@ -73,6 +73,12 @@
 ;; (after! counsel
 ;;   (setq counsel-rg-base-command "rg -M 240 --with-filename --no-heading --line-number --color never %s || true"))
 
+(use-package! evil-matchit
+  :defer
+  :config
+  ;; use enter on folder to go into folder
+  (global-evil-matchit-mode 1))
+
 (use-package! ivy
   :defer
   :config
@@ -362,6 +368,7 @@
  "[" 'flycheck-previous-error
  "]" 'flycheck-next-error
  "#" 'evilnc-comment-or-uncomment-lines
+ "%" 'evilmi-jump-items
  ;; "&" 'er/expand-region
  "s" 'avy-goto-word-1
  "S" 'avy-goto-char)

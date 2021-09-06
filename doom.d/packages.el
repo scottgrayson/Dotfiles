@@ -77,3 +77,5 @@
 ;; (package! org-jira)
 
 (package! neon-mode)
+
+(package! evil-matchit)
