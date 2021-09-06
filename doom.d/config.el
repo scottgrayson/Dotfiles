@@ -19,7 +19,6 @@
 
 (setq json-reformat:indent-width 2)
 
-
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "Scott Grayson"
@@ -81,30 +80,34 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
+;; Will only work on macos/linux
+;; (after! counsel
+;;   (setq counsel-rg-base-command "rg -M 240 --with-filename --no-heading --line-number --color never %s || true"))
+
 (use-package! ivy
   :defer
   :config
   ;; use enter on folder to go into folder
   (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done))
-
+;;
 (use-package! company
   :defer
   :config
-  (setq company-dabbrev-downcase nil)
-  (setq company-dabbrev-ignore-prefix nil)
+  ;; (setq company-dabbrev-downcase nil)
+  ;; (setq company-dabbrev-ignore-prefix nil)
   (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 2)
-  :init
-  (add-hook 'after-init-hook 'global-company-mode)
+  ;; (setq company-minimum-prefix-length 2)
+  ;; :init
+  ;; (add-hook 'after-init-hook 'global-company-mode)
   )
 
-(with-eval-after-load 'company
-  (define-key company-active-map (kbd "C-f") #'company-complete-common)
-  (define-key company-active-map (kbd "TAB") #'company-complete-common)
-  (define-key company-active-map (kbd "C-u") #'company-previous-page)
-  (define-key company-active-map (kbd "C-d") #'company-next-page)
-  (define-key company-active-map (kbd "C-n") #'company-select-next)
-  (define-key company-active-map (kbd "C-p") #'company-select-previous))
+;; (with-eval-after-load 'company
+;;   (define-key company-active-map (kbd "C-f") #'company-complete-common)
+;;   (define-key company-active-map (kbd "TAB") #'company-complete-common)
+;;   (define-key company-active-map (kbd "C-u") #'company-previous-page)
+;;   (define-key company-active-map (kbd "C-d") #'company-next-page)
+;;   (define-key company-active-map (kbd "C-n") #'company-select-next)
+;;   (define-key company-active-map (kbd "C-p") #'company-select-previous))
 
 
 
@@ -197,6 +200,12 @@
   (setq aw-keys '(?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9))
   )
 
+(use-package! lsp-mode
+  :defer
+  :config
+  (setq lsp-enable-file-watchers nil)
+  )
+
 (use-package! dimmer
   :defer
   :config
@@ -217,31 +226,31 @@
                    ))
   )
 
-(use-package! php-mode
-  :defer
-  :config
-  (setq php-mode-lineup-cascaded-calls nil)
-  )
+;; (use-package! php-mode
+;;   :defer
+;;   :config
+;;   (setq php-mode-lineup-cascaded-calls nil)
+;;   )
 
 ;; (after! js2-mode
 ;;   (set-company-backend! 'js2-mode 'company-tide 'company-yasnippet))
 
-(after! php-mode
-  (set-company-backend! 'php-mode 'company-phpactor 'company-dabbrev-code 'company-capf 'company-files))
+;; (after! php-mode
+;;   (set-company-backend! 'php-mode 'company-phpactor 'company-dabbrev-code 'company-capf 'company-files))
 
-(add-hook 'php-mode-hook
-          '(lambda ()
-             ;; Enable company-mode
-             (company-mode t)
-             (require 'company-php)
+;; (add-hook 'php-mode-hook
+;;           '(lambda ()
+;;              ;; Enable company-mode
+;;              (company-mode t)
+;;              (require 'company-php)
 
-             ;; Enable ElDoc support (optional)
-             (ac-php-core-eldoc-setup)
+;;              ;; Enable ElDoc support (optional)
+;;              (ac-php-core-eldoc-setup)
 
-             (set (make-local-variable 'company-backends)
-                  '((company-ac-php-backend company-dabbrev-code)
-                    company-capf company-files))
-             ))
+;;              (set (make-local-variable 'company-backends)
+;;                   '((company-ac-php-backend company-dabbrev-code)
+;;                     company-capf company-files))
+;;              ))
 
 (use-package! phpunit
   :defer
@@ -274,7 +283,7 @@
   (setq-default indent-tabs-mode nil)
   (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
   (add-to-list 'auto-mode-alist '("\\.blade\\.php\\'" . web-mode))
-  ;; (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
   (setq web-mode-engines-alist
         '(
           ("php"  . "\\.phtml\\'")
@@ -398,9 +407,9 @@
  "R" 'anzu-query-replace-at-cursor
  "RET" nil
  "SPC" nil
- "[" 'dumb-jump-back
+ "[" nil
  "\\" nil
- "]" 'dumb-jump-go
+ "]" nil
  "^" nil
  "`" nil
  "a" nil
@@ -429,7 +438,7 @@
  "q" nil
  "r" 'anzu-query-replace
  "s" 'counsel-rg
- "t" 'phpactor-goto-definition
+ "t" '+lookup/definition
  "u" 'string-inflection-all-cycle
  "v" 'ace-link
  "w" 'save-buffer
@@ -446,10 +455,10 @@
  ;; "n t" 'visit todo
  )
 
-(general-define-key
- :keymaps 'company-active-map
- :states 'normal
- "SPC" 'ignore)
+;; (general-define-key
+;;  :keymaps 'company-active-map
+;;  :states 'normal
+;;  "SPC" 'ignore)
 
 (evil-define-minor-mode-key 'normal 'org-src-mode
   (kbd "C-c r") 'nil
@@ -462,6 +471,8 @@
 (map! "M-w" 'ace-window)
 (map! :map magit-mode-map
       :n "y u" 'forge-copy-url-at-point-as-kill
+      ;; TODO not overriding the 'override map
+      :n "RET" 'magit-visit-thing
       )
 
 (general-define-key

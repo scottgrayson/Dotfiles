@@ -55,12 +55,14 @@ export PATH="$PATH:/usr/local/opt/php@7.1/bin:/usr/local/opt/php@7.1/sbin"
 export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin"
 export PATH="$PATH:~/.composer/vendor/bin"
 export PATH="$PATH:~/.emacs.d/bin"
+# export PATH="$PATH:/Applications/Emacs.app/Contents/MacOS"
 export PATH="$PATH:/Users/Scott/Code/spark-installer"
 export PATH="$PATH:/usr/local/opt/ncurses/bin:$PATH"
 export ANDROID_HOME=~/Library/Android/sdk
 export PATH=${PATH}:${ANDROID_HOME}/tools
 export PATH=${PATH}:${ANDROID_HOME}/platform-tools
 
+export EMACS="/Applications/Emacs.app/Contents/MacOS/Emacs"
 
 if [[ -n ${INSIDE_EMACS} ]]; then
 # This shell runs inside an Emacs *shell*/*term* buffer.
@@ -88,7 +90,8 @@ fi
 if [[ -n $SSH_CONNECTION ]]; then
 export EDITOR='vim'
 else
-export EDITOR='nvim'
+export EDITOR='vim'
+# export EDITOR='nvim'
 fi
 
 source $ZSH/oh-my-zsh.sh
@@ -127,7 +130,7 @@ alias gbr="hub browse"
 alias gbroom="git branch --merged | egrep -v '(^\*|master|dev)' | xargs git branch -d"
 
 alias sql="mysql.server start"
-alias sqlu="mysql -uroot -proot -h 127.0.0.1"
+alias sqlu="mysql -uroot"
 
 
 alias chrome="open -a 'Google Chrome'"
@@ -154,12 +157,12 @@ alias hot="npm run hot"
 dropcreate() {
 if [ "$1" != "" ]
 then
-mysql -uroot -proot -h 127.0.0.1 -e "drop database $1; create database $1;"
+mysql -uroot -e "drop database $1; create database $1;"
 else
 dir=${PWD##*/}
 echo "dropped and re-created $dir"
 db="$(echo $dir | tr '[:upper:]' '[:lower:]')"
-mysql -uroot -proot -h 127.0.0.1 -e "drop database if exists $db; create database $db;"
+mysql -uroot -e "drop database if exists $db; create database $db;"
 fi
 }
 
@@ -276,3 +279,5 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="/usr/local/opt/avr-gcc@7/bin:$PATH"
 export PATH="/usr/local/opt/avr-gcc@6/bin:$PATH"
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+export PATH="/usr/local/opt/php@7.4/bin:$PATH"
+export PATH="/usr/local/opt/php@7.4/sbin:$PATH"
