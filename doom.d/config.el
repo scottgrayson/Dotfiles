@@ -104,8 +104,6 @@
 ;;   (define-key company-active-map (kbd "C-n") #'company-select-next)
 ;;   (define-key company-active-map (kbd "C-p") #'company-select-previous))
 
-
-
 ;; (use-package! ejira
 ;; :defer
 ;;   :init
@@ -380,7 +378,8 @@
  )
 
 (setq my-leader1 "SPC")
-(general-define-key
+(
+ general-define-key
  :prefix my-leader1
  :states '(normal motion)
  :keymaps '(override)
@@ -408,6 +407,7 @@
  "]" nil
  "^" nil
  "`" nil
+ "~" 'string-inflection-all-cycle
  "a" nil
  "b" 'ivy-switch-buffer
  "c" 'org-capture
@@ -435,7 +435,6 @@
  "r" 'anzu-query-replace
  "s" 'counsel-rg
  "t" '+lookup/definition
- "u" 'string-inflection-all-cycle
  "v" 'ace-link
  "w" 'save-buffer
  "x" nil
@@ -444,7 +443,8 @@
  "ye" 'aya-expand
  "yn" 'yas-new-snippet
  "yo" 'aya-create-one-line
- "z" 'undo-tree-visualize
+ ;; TODO zstd erring with this package
+ ;; "z" 'undo-tree-visualize
  "{" nil
  "}" nil
  ;; "n p" 'visit todo for project
