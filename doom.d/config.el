@@ -36,7 +36,7 @@
 ;; font string. You generally only need these two:
 
 (setq doom-font (font-spec :family "Iosevka" :size 16 :weight 'regular))
-       ;; doom-variable-pitch-font (font-spec :family "sans" :size 20))
+;; doom-variable-pitch-font (font-spec :family "sans" :size 20))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -248,15 +248,8 @@
 (use-package! phpunit
   :defer
   :config
-  ;; (setq phpunit-stop-on-error t)
-  ;; (setq phpunit-stop-on-failure t)
-  (define-key +php-laravel-mode-map (kbd "M-t t") 'phpunit-current-test)
-  (define-key +php-laravel-mode-map (kbd "M-t c") 'phpunit-current-class)
-  (define-key +php-laravel-mode-map (kbd "M-t p") 'phpunit-current-project)
-  (define-key +php-laravel-mode-map (kbd "M-t M-t") 'phpunit-current-test)
-  (define-key +php-laravel-mode-map (kbd "M-t M-c") 'phpunit-current-class)
-  (define-key +php-laravel-mode-map (kbd "M-t M-p") 'phpunit-current-project)
-  )
+  (setq phpunit-stop-on-error t)
+  (setq phpunit-stop-on-failure t))
 
 ;; (use-package! dotenv-mode
 ;; :defer
@@ -317,6 +310,8 @@
 
 ;; Keybinds
 ;;TODO use doom's map! instead of using general directly
+;;
+;;
 
 (general-override-mode)
 
@@ -470,6 +465,14 @@
       ;; TODO not overriding the 'override map
       :n "RET" 'magit-visit-thing
       )
+
+(map! :map php-mode-map
+      :n "M-t t" 'phpunit-current-test
+      :n "M-t c" 'phpunit-current-class
+      :n "M-t p" 'phpunit-current-project
+      :n "M-t M-t" 'phpunit-current-test
+      :n "M-t M-c" 'phpunit-current-class
+      :n "M-t M-p" 'phpunit-current-project)
 
 (general-define-key
  :keymaps '(override)

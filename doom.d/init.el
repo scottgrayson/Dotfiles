@@ -20,8 +20,8 @@
 
 ;; env file should have the format
 ;; (setenv "SECRET_KEY" "secret-val")
-(require 'env)
-(load "~/.emacs.d/env.el")
+;; (require 'env)
+;; (load "~/.emacs.d/env.el")
 
 (doom! :input
        ;;chinese
