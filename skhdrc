@@ -33,46 +33,46 @@ alt + shift - 0x2F : skhd -k "cmd - down"
 # s-bksp for backward delete line (not an emacs combination)
 
 ###################################################
-# Yabai
+# Yabai (replaced with amethyst)
 ###################################################
 
 # focus window
-hyper - h : yabai -m window --focus west
-hyper - j : yabai -m window --focus south
-hyper - k : yabai -m window --focus north
-hyper - l : yabai -m window --focus east
+# hyper - h : yabai -m window --focus west
+# hyper - j : yabai -m window --focus south
+# hyper - k : yabai -m window --focus north
+# hyper - l : yabai -m window --focus east
 
 # swap managed window
-meh - h : yabai -m window --swap west
-meh - j : yabai -m window --swap south
-meh - k : yabai -m window --swap north
-meh - l : yabai -m window --swap east
+# meh - h : yabai -m window --swap west
+# meh - j : yabai -m window --swap south
+# meh - k : yabai -m window --swap north
+# meh - l : yabai -m window --swap east
 
 # fast focus desktop
-hyper - 1 : yabai -m space --focus 1
-hyper - 2 : yabai -m space --focus 2
+# hyper - 1 : yabai -m space --focus 1
+# hyper - 2 : yabai -m space --focus 2
 
 # send window to desktop and follow focus
-meh - 1 : yabai -m window --space 1; yabai -m space --focus 1
-meh - 2 : yabai -m window --space 2; yabai -m space --focus 2
+# meh - 1 : yabai -m window --space 1; yabai -m space --focus 1
+# meh - 2 : yabai -m window --space 2; yabai -m space --focus 2
 
 # toggle window zoom TODO change to monocle when it is implemented
-hyper - f : yabai -m window --toggle zoom-fullscreen
-hyper - s : yabai -m space --layout stack
-hyper - a : yabai -m space --layout bsp
+# hyper - f : yabai -m window --toggle zoom-fullscreen
+# hyper - s : yabai -m space --layout stack
+# hyper - a : yabai -m space --layout bsp
 # focus the next stacked window if possible; otherwise focus the next window or go back to the first window
-hyper - n : yabai -m window --focus stack.next || yabai -m window --focus stack.first
-hyper - p : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
+# hyper - n : yabai -m window --focus stack.next || yabai -m window --focus stack.first
+# hyper - p : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
 
 # Balance out all windows both horizontally and vertically
 #   to occupy the same space
-hyper - b : yabai -m space --balance
+# hyper - b : yabai -m space --balance
 
 # Rotate the window tree clock-wise (options: 90, 180, 270 degree)
-hyper - r : yabai -m space --rotate 180
+# hyper - r : yabai -m space --rotate 180
 
 # restart yabai
-hyper - q : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
+# hyper - q : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
 
 # remove padding
-hyper - o : yabai -m space --toggle padding; yabai -m space --toggle gap
+# hyper - o : yabai -m space --toggle padding; yabai -m space --toggle gap
