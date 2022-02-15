@@ -2,7 +2,7 @@
     "username": "scottgrayson",
     "selfcontrol-path": "/Applications/SelfControl.app",
     "host-blacklist": [
-        "#maps.googleapis.com",
+        "maps.googleapis.com",
         "youtube.com",
         "vimeo.com",
         "instagram.com",
