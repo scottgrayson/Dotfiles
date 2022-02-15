@@ -55,15 +55,17 @@ export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin"
 export PATH="$PATH:~/.composer/vendor/bin"
 export PATH="$PATH:~/.emacs.d/bin"
 export PATH="$PATH:/Applications/Emacs.app/Contents/MacOS"
-#export PATH="$PATH:/usr/local/opt/ncurses/bin:$PATH"
-#export ANDROID_HOME=~/Library/Android/sdk
-#export PATH=${PATH}:${ANDROID_HOME}/tools
-#export PATH=${PATH}:${ANDROID_HOME}/platform-tools
-#export PATH="/usr/local/opt/avr-gcc@7/bin:$PATH"
-#export PATH="/usr/local/opt/avr-gcc@6/bin:$PATH"
-#export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
-#export PATH="/usr/local/opt/php@7.4/bin:$PATH"
-#export PATH="/usr/local/opt/php@7.4/sbin:$PATH"
+
+##################################################
+# Android Development Path Variables
+##################################################
+export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk
+# avdmanager, sdkmanager
+export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin
+# adb, logcat
+export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+# emulator
+export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
 
 if [[ -n ${INSIDE_EMACS} ]]; then
 # This shell runs inside an Emacs *shell*/*term* buffer.

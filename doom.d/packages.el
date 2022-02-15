@@ -67,7 +67,7 @@
 
 ;; (package! plan9-theme)
 
-(package! magithub)
+;; (package! magithub)
 
 (package! dotenv-mode)
 

@@ -21,8 +21,10 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
-(setq user-full-name "John Doe"
-      user-mail-address "john@doe.com")
+(setq user-full-name "Scott Grayson"
+      user-mail-address "dscottgrayson@gmail.com")
+
+(setq auth-sources '("~/.authinfo"))
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -41,7 +43,20 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-spacegrey)
+;; (setq doom-theme 'doom-spacegrey)
+
+(defun y/auto-update-theme ()
+  "depending on time use different theme"
+  (let* ((hour (nth 2 (decode-time (current-time))))
+         (theme (cond ((<= hour 17)   'doom-solarized-light)
+                      (t               'doom-solarized-dark-high-contrast))))
+    (when (not (equal doom-theme theme))
+      (setq doom-theme theme)
+      (load-theme doom-theme t))
+    ;; run that function again next hour
+    (run-at-time (format "%02d:%02d" (+ hour 1) 0) nil 'y/auto-update-theme)))
+
+(y/auto-update-theme)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -260,9 +275,9 @@
 (use-package! web-mode
   :defer
   :config
-  (setq web-mode-markup-indent-offset 4)
-  (setq web-mode-css-indent-offset 4)
-  (setq web-mode-code-indent-offset 4)
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
   (setq web-mode-script-padding 0)
   (setq web-mode-style-padding 0)
   (setq web-mode-comment-style 2)
