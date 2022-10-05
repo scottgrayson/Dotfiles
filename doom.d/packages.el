@@ -60,6 +60,7 @@
 ;; (package! restclient)
 
 (package! ac-php)
+(package! flycheck-phpstan)
 ;; (package! company-php)
 ;; (package! phpactor)
 ;; (package! vue-mode)
@@ -79,3 +80,5 @@
 (package! neon-mode)
 
 (package! evil-matchit)
+
+(package! geben)

@@ -43,7 +43,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-;; (setq doom-theme 'doom-spacegrey)
+(setq doom-theme 'doom-solarized-dark-high-contrast)
 
 (defun y/auto-update-theme ()
   "depending on time use different theme"
@@ -56,7 +56,8 @@
     ;; run that function again next hour
     (run-at-time (format "%02d:%02d" (+ hour 1) 0) nil 'y/auto-update-theme)))
 
-(y/auto-update-theme)
+;; uncomment for auto theme
+;; (y/auto-update-theme)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -65,7 +66,6 @@
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
-
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -292,6 +292,13 @@
           ))
   )
 
+;; TODO (not working) add php stan flycheck checker
+;; (use-package! flycheck
+;;   :ensure t
+;;   :config
+;;   (add-to-list 'flycheck-checkers 'flycheck-phpstan)
+;;   )
+
 ;; custom functions
 
 (defun indent-buffer ()
@@ -478,6 +485,7 @@
 (map! :map magit-mode-map
       :n "y u" 'forge-copy-url-at-point-as-kill
       ;; TODO not overriding the 'override map
+      :n "s" 'magit-stage
       :n "RET" 'magit-visit-thing
       )
 
@@ -492,3 +500,4 @@
 (general-define-key
  :keymaps '(override)
  "C-c p" 'projectile-command-map)
+

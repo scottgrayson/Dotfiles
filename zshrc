@@ -55,6 +55,7 @@ export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin"
 export PATH="$PATH:~/.composer/vendor/bin"
 export PATH="$PATH:~/.emacs.d/bin"
 export PATH="$PATH:/Applications/Emacs.app/Contents/MacOS"
+export PATH="$PATH:/usr/local/opt/sqlite/bin"
 
 ##################################################
 # Android Development Path Variables
@@ -280,3 +281,5 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/Contents/Home
