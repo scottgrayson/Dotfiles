@@ -177,6 +177,7 @@ alias tdbr="dropcreate test"
 alias dbr="dropcreate"
 
 alias pstan="./vendor/bin/phpstan analyse"
+alias pest="./vendor/bin/pest"
 alias pa="php artisan"
 alias pcs="./vendor/bin/phpcs app"
 alias cda="composer dump-autoload"
@@ -283,3 +284,5 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/Contents/Home
+
+exec #(brew --prefix)/opt/emacs-mac/Emacs.app/Contents/MacOS/Emacs.sh "$@"

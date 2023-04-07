@@ -43,7 +43,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-solarized-dark-high-contrast)
+(setq doom-theme 'doom-one-light)
 
 (defun y/auto-update-theme ()
   "depending on time use different theme"
@@ -94,11 +94,11 @@
   ;; use enter on folder to go into folder
   (global-evil-matchit-mode 1))
 
-(use-package! ivy
-  :defer
-  :config
-  ;; use enter on folder to go into folder
-  (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done))
+;; (use-package! ivy
+;;   :defer
+;;   :config
+;; use enter on folder to go into folder
+;; (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done))
 ;;
 (use-package! company
   :defer
@@ -212,6 +212,7 @@
   :defer
   :config
   (setq lsp-enable-file-watchers nil)
+  (setq lsp-auto-guess-root t)
   )
 
 (use-package! dimmer
@@ -338,9 +339,32 @@
 (general-override-mode)
 
 (general-define-key
- :keymaps '(ivy-occur-mode-map)
- "RET" 'ivy-occur-press-and-switch
+ :keymaps '(Info-mode-map)
+ "m" 'Info-menu
+ "n" 'Info-scroll-up
+ "p" 'Info-scroll-down
  )
+
+(general-define-key
+ :keymaps '(vertico-map)
+ "C-o" 'embark-collect
+ "RET" 'vertico-directory-enter
+ )
+
+;; (defun embark-collect-focus-new-window ()
+;;   (interactive)
+;;   (embark-act)
+;;   (find-file-other-window ))
+
+(general-define-key
+ :keymaps '(embark-collect-mode-map)
+ "RET" 'embark-collect-focus-new-window
+ )
+
+;; (general-define-key
+;;  :keymaps '(ivy-occur-mode-map)
+;;  "RET" 'ivy-occur-press-and-switch
+;;  )
 
 (general-define-key
  :keymaps '(evil-window-map)
@@ -375,8 +399,13 @@
 
 (general-define-key
  :states '(normal visual)
+ :keymaps '(override magit-status-mode-map)
+ "s" 'magit-stage)
+
+(general-define-key
+ :states '(normal visual)
  :keymaps '(override)
- "RET" 'evil-nohl
+ ;; "RET" 'evil-nohl
  ;; "," 'evil-repeat-find-char-reverse
  "(" 'git-gutter:previous-hunk
  ")" 'git-gutter:next-hunk
@@ -410,12 +439,13 @@
  ;; ")" 'ac-php-location-stack-forward
  "*" nil
  "," nil
- "." 'ivy-resume
+ "." 'vertico-repeat
  "/" nil
  ";" nil
  "=" nil
  "@" nil
- "F" 'counsel-file-jump
+ "B" 'switch-to-buffer
+ "F" nil
  "R" 'anzu-query-replace-at-cursor
  "RET" nil
  "SPC" nil
@@ -426,11 +456,11 @@
  "`" nil
  "~" 'string-inflection-all-cycle
  "a" nil
- "b" 'ivy-switch-buffer
+ "b" 'projectile-switch-to-buffer
  "c" 'org-capture
  "d" 'deft
  "e" nil
- "f" 'counsel-projectile-find-file
+ "f" 'projectile-find-file
  "g" nil
  "gg" 'magit-status
  "gb" 'magit-blame
@@ -442,15 +472,15 @@
  "i" 'indent-and-untabify
  "j" 'multi-line-single-line
  "J" 'multi-line
- "k" 'counsel-yank-pop
  "l" 'avy-goto-line
+ "k" '+default/yank-pop
  "m" 'avy-goto-line
  "n" nil
  "o" 'writeroom-mode
  "p" 'switch-to-previous-buffer
  "q" nil
  "r" 'anzu-query-replace
- "s" 'counsel-rg
+ "s" '+default/search-project
  "t" '+lookup/definition
  "v" 'ace-link
  "w" 'save-buffer
@@ -485,7 +515,6 @@
 (map! :map magit-mode-map
       :n "y u" 'forge-copy-url-at-point-as-kill
       ;; TODO not overriding the 'override map
-      :n "s" 'magit-stage
       :n "RET" 'magit-visit-thing
       )
 
@@ -497,7 +526,10 @@
       :n "M-t M-c" 'phpunit-current-class
       :n "M-t M-p" 'phpunit-current-project)
 
+(setq phpunit-default-program "./vendor/bin/pest")
+;; (setq-local phpunit-arg '("exec" "-it" "container" "phpunit")
+;; or (setq-local phpunit-arg "exec -it container phpunit")
+
 (general-define-key
  :keymaps '(override)
  "C-c p" 'projectile-command-map)
-
