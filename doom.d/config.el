@@ -2,22 +2,13 @@
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
-(add-hook! org-mode
-           :config
-           (setq evil-auto-indent nil))
 
-;; doom dashboard png
-;; (setq +doom-dashboard-banner-dir "/Users/scottgrayson/.doom.d/doom-dashboard/banners/")
-(setq +doom-dashboard-banner-dir "/Users/scottgrayson/Code/dotfiles/doom.d/banners/")
-(setq +doom-dashboard-banner-file "emacs.svg")
-;;
 ;; never open new workspace
 (setq +workspaces-on-switch-project-behavior nil)
+
 ;; split window thresholds
 (setq split-height-threshold nil)
 (setq split-width-threshold 100)
-
-(setq json-reformat:indent-width 2)
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
@@ -38,7 +29,6 @@
 ;; font string. You generally only need these two:
 
 (setq doom-font (font-spec :family "Iosevka" :size 16 :weight 'regular))
-;; doom-variable-pitch-font (font-spec :family "sans" :size 20))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -84,115 +74,16 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-;; Will only work on macos/linux
-;; (after! counsel
-;;   (setq counsel-rg-base-command "rg -M 240 --with-filename --no-heading --line-number --color never %s || true"))
-
-(use-package! evil-matchit
-  :defer
-  :config
-  ;; use enter on folder to go into folder
-  (global-evil-matchit-mode 1))
-
-;; (use-package! ivy
-;;   :defer
-;;   :config
-;; use enter on folder to go into folder
-;; (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done))
-;;
 (use-package! company
   :defer
   :config
-  ;; (setq company-dabbrev-downcase nil)
-  ;; (setq company-dabbrev-ignore-prefix nil)
   (setq company-idle-delay 0)
-  ;; (setq company-minimum-prefix-length 2)
-  ;; :init
-  ;; (add-hook 'after-init-hook 'global-company-mode)
-  )
-
-;; (with-eval-after-load 'company
-;;   (define-key company-active-map (kbd "C-f") #'company-complete-common)
-;;   (define-key company-active-map (kbd "TAB") #'company-complete-common)
-;;   (define-key company-active-map (kbd "C-u") #'company-previous-page)
-;;   (define-key company-active-map (kbd "C-d") #'company-next-page)
-;;   (define-key company-active-map (kbd "C-n") #'company-select-next)
-;;   (define-key company-active-map (kbd "C-p") #'company-select-previous))
-
-;; (use-package! ejira
-;; :defer
-;;   :init
-;;   (setq jiralib2-url              (getenv "JIRA_URL")
-;;         jiralib2-auth             'basic
-;;         jiralib2-user-login-name  (getenv "JIRA_USER")
-;;         jiralib2-token            (getenv "JIRA_TOKEN")
-
-;;         ejira-org-directory       "~/jira"
-;;         ejira-projects            '("Portal (Global)")
-
-;;         ejira-priorities-alist    '(("Highest" . ?A)
-;;                                     ("High"    . ?B)
-;;                                     ("Medium"  . ?C)
-;;                                     ("Low"     . ?D)
-;;                                     ("Lowest"  . ?E))
-;;         ejira-todo-states-alist   '(("To Do"       . 1)
-;;                                     ("In Progress" . 2)
-;;                                     ("Done"        . 3)))
-;;   :config
-;;   ;; Tries to auto-set custom fields by looking into /editmeta
-;;   ;; of an issue and an epic.
-;;   (add-hook 'jiralib2-post-login-hook #'ejira-guess-epic-sprint-fields)
-
-;;   ;; They can also be set manually if autoconfigure is not used.
-;;   ;; (setq ejira-sprint-field       'customfield_10001
-;;   ;;       ejira-epic-field         'customfield_10002
-;;   ;;       ejira-epic-summary-field 'customfield_10004)
-
-;;   (require 'ejira-agenda)
-
-;;   ;; Make the issues visisble in your agenda by adding `ejira-org-directory'
-;;   ;; into your `org-agenda-files'.
-;;   (add-to-list 'org-agenda-files ejira-org-directory)
-
-;;   ;; Add an agenda view to browse the issues that
-;;   (org-add-agenda-custom-command
-;;    '("j" "My JIRA issues"
-;;      ((ejira-jql "resolution = unresolved and assignee = currentUser()"
-;;                  ((org-agenda-overriding-header "Assigned to me")))))))
-
-;; (use-package! org-jira
-;; :defer
-;;   :config
-;;   (setq jiralib-url "https://gfm-it.atlassian.net")
-;;   )
-
-;; (use-package! lsp-mode
-;; :defer
-;;   :commands lsp
-;;   )
-
-;; (use-package! company-lsp
-;; :defer
-;; :config
-;; (push 'company-lsp company-backends)
-;; )
-
-(use-package! js2-mode
-  :defer
-  :config
-  (setq js2-basic-offset 4)
   )
 
 (use-package! ace-link
   :defer
   :config
   (ace-link-setup-default)
-  )
-
-(use-package! undo-tree
-  :defer
-  :config
-  (global-undo-tree-mode 1)
   )
 
 (use-package! writeroom-mode
@@ -235,82 +126,11 @@
                    ))
   )
 
-;; (use-package! php-mode
-;;   :defer
-;;   :config
-;;   (setq php-mode-lineup-cascaded-calls nil)
-;;   )
-
-;; (after! js2-mode
-;;   (set-company-backend! 'js2-mode 'company-tide 'company-yasnippet))
-
-;; (after! php-mode
-;;   (set-company-backend! 'php-mode 'company-phpactor 'company-dabbrev-code 'company-capf 'company-files))
-
-;; (add-hook 'php-mode-hook
-;;           '(lambda ()
-;;              ;; Enable company-mode
-;;              (company-mode t)
-;;              (require 'company-php)
-
-;;              ;; Enable ElDoc support (optional)
-;;              (ac-php-core-eldoc-setup)
-
-;;              (set (make-local-variable 'company-backends)
-;;                   '((company-ac-php-backend company-dabbrev-code)
-;;                     company-capf company-files))
-;;              ))
-
 (use-package! phpunit
   :defer
   :config
   (setq phpunit-stop-on-error t)
   (setq phpunit-stop-on-failure t))
-
-;; (use-package! dotenv-mode
-;; :defer
-;;   :config
-;;   (add-to-list 'auto-mode-alist '("\\.env\\..*\\'" . dotenv-mode))
-;;   )
-
-(use-package! web-mode
-  :defer
-  :config
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-css-indent-offset 2)
-  (setq web-mode-code-indent-offset 2)
-  (setq web-mode-script-padding 0)
-  (setq web-mode-style-padding 0)
-  (setq web-mode-comment-style 2)
-  (setq-default indent-tabs-mode nil)
-  (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
-  (add-to-list 'auto-mode-alist '("\\.blade\\.php\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
-  (setq web-mode-engines-alist
-        '(
-          ("php"  . "\\.phtml\\'")
-          ("blade"  . "\\.blade\\.")
-          ))
-  )
-
-;; TODO (not working) add php stan flycheck checker
-;; (use-package! flycheck
-;;   :ensure t
-;;   :config
-;;   (add-to-list 'flycheck-checkers 'flycheck-phpstan)
-;;   )
-
-;; custom functions
-
-(defun indent-buffer ()
-  "Indent the currently visited buffer."
-  (interactive)
-  (indent-region (point-min) (point-max)))
-
-(defun indent-and-untabify ()
-  (interactive)
-  (untabify (point-min) (point-max))
-  (indent-buffer))
 
 (defun switch-to-previous-buffer ()
   "Switch to previously open buffer.
@@ -318,95 +138,17 @@
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
-;; (defun my-open-calendar ()
-;;   (interactive)
-;;   (cfw:open-calendar-buffer
-;;    :contents-sources
-;;    (list
-;;     (cfw:org-create-source "Green")  ; org-agenda source
-;;     ;; (cfw:org-create-file-source "cal" "/path/to/cal.org" "Cyan")  ; other org source
-;;     ;; (cfw:howm-create-source "Blue")  ; howm source
-;;     ;; (cfw:cal-create-source "Orange") ; diary source
-;;     ;; (cfw:ical-create-source "Moon" "~/moon.ics" "Gray")  ; ICS source1
-;;     (cfw:ical-create-source "gcal" "https://..../basic.ics" "IndianRed") ; google calendar ICS
-;;     )))
-
 ;; Keybinds
 ;;TODO use doom's map! instead of using general directly
-;;
-;;
 
 (general-override-mode)
-
-(general-define-key
- :keymaps '(Info-mode-map)
- "m" 'Info-menu
- "n" 'Info-scroll-up
- "p" 'Info-scroll-down
- )
-
-(general-define-key
- :keymaps '(vertico-map)
- "C-o" 'embark-collect
- "RET" 'vertico-directory-enter
- )
-
-;; (defun embark-collect-focus-new-window ()
-;;   (interactive)
-;;   (embark-act)
-;;   (find-file-other-window ))
-
-(general-define-key
- :keymaps '(embark-collect-mode-map)
- "RET" 'embark-collect-focus-new-window
- )
-
-;; (general-define-key
-;;  :keymaps '(ivy-occur-mode-map)
-;;  "RET" 'ivy-occur-press-and-switch
-;;  )
-
-(general-define-key
- :keymaps '(evil-window-map)
- "q" 'evil-window-delete
- "s" 'evil-window-vsplit
- "S" 'evil-window-split
- "c" 'ace-swap-window
- "x" 'evil-window-delete
- "n" 'evil-window-next
- "u" 'winner-undo
- "r" 'winner-redo
- "a" 'balance-windows
- "o" 'delete-other-windows
- "SPC" 'ace-window)
-
-(defun evil-nohl ()
-  (interactive)
-  (evil-ex-nohighlight))
-
-(general-define-key
- :keymaps 'insert
- ;; "DEL" 'hungry-delete-backward
- "M-e" 'emmet-expand-line
- "C-e" 'yas-expand
- "TAB" '+company/complete
- )
-
-(general-define-key
- :keymaps 'help-map
- "y" 'yas-describe-tables
- )
-
-(general-define-key
- :states '(normal visual)
- :keymaps '(override magit-status-mode-map)
- "s" 'magit-stage)
 
 (general-define-key
  :states '(normal visual)
  :keymaps '(override)
  ;; "RET" 'evil-nohl
  ;; "," 'evil-repeat-find-char-reverse
+ "SPC" nil
  "(" 'git-gutter:previous-hunk
  ")" 'git-gutter:next-hunk
  "[" 'flycheck-previous-error
@@ -417,15 +159,8 @@
  "s" 'avy-goto-word-1
  "S" 'avy-goto-char)
 
-(general-define-key
- :states '(normal visual)
- :keymaps '(override)
- "SPC" nil
- )
-
 (setq my-leader1 "SPC")
-(
- general-define-key
+(general-define-key
  :prefix my-leader1
  :states '(normal motion)
  :keymaps '(override)
@@ -469,7 +204,7 @@
  "gp" 'magit-browse-pull-request
  "gs" 'magit-status
  "h" nil
- "i" 'indent-and-untabify
+ "i" '+format/buffer
  "j" 'multi-line-single-line
  "J" 'multi-line
  "l" 'avy-goto-line
@@ -497,6 +232,58 @@
  ;; "n p" 'visit todo for project
  ;; "n t" 'visit todo
  )
+
+(general-define-key
+ :keymaps '(evil-window-map)
+ "q" 'evil-window-delete
+ "s" 'evil-window-vsplit
+ "S" 'evil-window-split
+ "c" 'ace-swap-window
+ "x" 'evil-window-delete
+ "n" 'evil-window-next
+ "u" 'winner-undo
+ "r" 'winner-redo
+ "a" 'balance-windows
+ "o" 'delete-other-windows
+ "SPC" 'ace-window)
+
+(general-define-key
+ :keymaps '(insert company-active-map)
+ ;; "DEL" 'hungry-delete-backward
+ "M-e" 'emmet-expand-line
+ "C-e" 'yas-expand
+ "TAB" 'copilot-accept-completion
+ "<tab>" 'copilot-accept-completion
+ "C-TAB" 'copilot-next-completion
+ "C-<tab>" 'copilot-next-completion
+ )
+
+(general-define-key
+ :keymaps '(Info-mode-map)
+ "m" 'Info-menu
+ "n" 'Info-scroll-up
+ "p" 'Info-scroll-down
+ )
+
+(general-define-key
+ :keymaps '(vertico-map)
+ "C-o" 'embark-collect
+ "RET" 'vertico-directory-enter
+ )
+
+(general-define-key
+ :keymaps '(embark-collect-mode-map)
+ )
+
+(general-define-key
+ :keymaps 'help-map
+ "y" 'yas-describe-tables
+ )
+
+(general-define-key
+ :states '(normal visual)
+ :keymaps '(override magit-status-mode-map)
+ "s" 'magit-stage)
 
 ;; (general-define-key
 ;;  :keymaps 'company-active-map
@@ -533,3 +320,7 @@
 (general-define-key
  :keymaps '(override)
  "C-c p" 'projectile-command-map)
+
+;; accept completion from copilot and fallback to company
+(use-package! copilot
+  :hook (prog-mode . copilot-mode))

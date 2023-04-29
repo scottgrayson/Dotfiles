@@ -82,3 +82,8 @@
 (package! evil-matchit)
 
 (package! geben)
+
+(package! copilot
+  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
+
+(package! prettier)
