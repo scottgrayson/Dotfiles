@@ -247,15 +247,24 @@
  "o" 'delete-other-windows
  "SPC" 'ace-window)
 
+(defun rk/copilot-tab ()
+  "Tab command that will complet with copilot if a completion is
+available. Otherwise will try company, yasnippet or normal
+tab-indent."
+  (interactive)
+  (or (copilot-accept-completion)
+      (company-yasnippet-or-completion)
+      (indent-for-tab-command)))
+
+(define-key global-map (kbd "<tab>") #'rk/copilot-tab)
+
 (general-define-key
- :keymaps '(insert company-active-map)
+ :keymaps '(insert company-active-map override)
  ;; "DEL" 'hungry-delete-backward
  "M-e" 'emmet-expand-line
  "C-e" 'yas-expand
- "TAB" 'copilot-accept-completion
- "<tab>" 'copilot-accept-completion
- "C-TAB" 'copilot-next-completion
- "C-<tab>" 'copilot-next-completion
+ "TAB" 'rk/copilot-tab
+ "<tab>" 'rk/copilot-tab
  )
 
 (general-define-key
@@ -282,13 +291,8 @@
 
 (general-define-key
  :states '(normal visual)
- :keymaps '(override magit-status-mode-map)
+ :keymaps '(magit-status-mode-map)
  "s" 'magit-stage)
-
-;; (general-define-key
-;;  :keymaps 'company-active-map
-;;  :states 'normal
-;;  "SPC" 'ignore)
 
 (evil-define-minor-mode-key 'normal 'org-src-mode
   (kbd "C-c r") 'nil
@@ -321,6 +325,5 @@
  :keymaps '(override)
  "C-c p" 'projectile-command-map)
 
-;; accept completion from copilot and fallback to company
 (use-package! copilot
   :hook (prog-mode . copilot-mode))
