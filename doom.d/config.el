@@ -129,8 +129,11 @@
 (use-package! phpunit
   :defer
   :config
-  (setq phpunit-stop-on-error t)
-  (setq phpunit-stop-on-failure t))
+  (setq phpunit-default-program "./vendor/bin/pest")
+  (setq phpunit-args '("--colors=never"))
+  ;; (setq phpunit-stop-on-error t)
+  ;; (setq phpunit-stop-on-failure t)
+  )
 
 (defun switch-to-previous-buffer ()
   "Switch to previously open buffer.
@@ -317,9 +320,6 @@ tab-indent."
       :n "M-t M-c" 'phpunit-current-class
       :n "M-t M-p" 'phpunit-current-project)
 
-(setq phpunit-default-program "./vendor/bin/pest")
-;; (setq-local phpunit-arg '("exec" "-it" "container" "phpunit")
-;; or (setq-local phpunit-arg "exec -it container phpunit")
 
 (general-define-key
  :keymaps '(override)
