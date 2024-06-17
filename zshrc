@@ -284,6 +284,7 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/Contents/Home
+export PATH="/Users/scottgrayson/.cargo/bin:$PATH"
 
 exec #(brew --prefix)/opt/emacs-mac/Emacs.app/Contents/MacOS/Emacs.sh "$@"
 
@@ -309,3 +310,11 @@ end run' $CMD $LAST_EXIT_CODE
 }
 
 export PS1='$(notifyme)'$PS1
+
+
+# Herd injected PHP 8.3 configuration.
+export HERD_PHP_83_INI_SCAN_DIR="/Users/scottgrayson/Library/Application Support/Herd/config/php/83/"
+
+
+# Herd injected PHP binary.
+export PATH="/Users/scottgrayson/Library/Application Support/Herd/bin/":$PATH

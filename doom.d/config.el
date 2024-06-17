@@ -102,6 +102,7 @@
 (use-package! lsp-mode
   :defer
   :config
+  (setq lsp-restart 'auto-restart)
   (setq lsp-enable-file-watchers nil)
   (setq lsp-auto-guess-root t)
   )
@@ -266,8 +267,8 @@ tab-indent."
  ;; "DEL" 'hungry-delete-backward
  "M-e" 'emmet-expand-line
  "C-e" 'yas-expand
- "TAB" 'rk/copilot-tab
- "<tab>" 'rk/copilot-tab
+ "M-TAB" 'rk/copilot-tab
+ "M-<tab>" 'rk/copilot-tab
  )
 
 (general-define-key
@@ -295,7 +296,7 @@ tab-indent."
 (general-define-key
  :states '(normal visual)
  :keymaps '(magit-status-mode-map)
- "s" 'magit-stage)
+ ", g s" 'magit-stage)
 
 (evil-define-minor-mode-key 'normal 'org-src-mode
   (kbd "C-c r") 'nil
@@ -306,10 +307,12 @@ tab-indent."
 (map! "C-c g" 'magit-status)
 (map! "M-g" 'magit-status)
 (map! "M-w" 'ace-window)
+
 (map! :map magit-mode-map
       :n "y u" 'forge-copy-url-at-point-as-kill
       ;; TODO not overriding the 'override map
       :n "RET" 'magit-visit-thing
+      :n "SPC g S" 'magit-stage
       )
 
 (map! :map php-mode-map
@@ -326,4 +329,5 @@ tab-indent."
  "C-c p" 'projectile-command-map)
 
 (use-package! copilot
+  :config (setq copilot-node-executable "/Users/scottgrayson/.nvm/versions/node/v22.1.0/bin/node")
   :hook (prog-mode . copilot-mode))
