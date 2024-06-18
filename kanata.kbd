@@ -52,17 +52,35 @@
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
   bspc @a   @s   @d   @f   g    h    @j   @k   @l   @;   '    ret
   lsft z    x    c    v    b    n    m    ,    .    /    esc
-  fn lctl lalt lmet           spc            rmet ralt
+  fn lctl lalt @num           spc            @sym ralt
 )
 
 (deflayer nomods
   caps brdn  brup  _    _    _    _   prev  pp  next  mute  vold  volu
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc tab  q    w    e    r    t    y    u    i    o    p    [    ]    \ bspc a    s    d    f   g    h     j    k    l    ;   '    ret lsft z    x    c    v    b    n    m    ,    .    /    esc
+  fn lctl lalt @num           spc            @sym ralt
+)
+
+(deflayer sym
+  caps brdn  brup  _    _    _    _   prev  pp  next  mute  vold  volu
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
-  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
-  bspc a    s    d    f   g    h     j    k    l    ;   '    ret
-  lsft z    x    c    v    b    n    m    ,    .    /    esc
+  tab  S-1    S-2    S-[    S-]   S-7    y    u    i    o    p    [    ]    \
+  bspc S-3    S-4    S-9  S-0   S-8    h     j    k    l    ;   '    ret
+  lsft S-5    S-6    [    ]   grv    n    m    ,    .    /    esc
   fn lctl lalt lmet           spc            rmet ralt
 )
+
+(deflayer num
+  caps brdn  brup  _    _    _    _   prev  pp  next  mute  vold  volu
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    0    1    2    3    \    [    ]    \
+  bspc a    s    d    f   g     -    4    5    6    +   '    ret
+  lsft z    x    c    v    b    S--    7    8    9    /    esc
+  fn lctl lalt lmet           spc            rmet ralt
+)
+
+(defalias num (layer-while-held num))
+(defalias sym (layer-while-held sym))
 
 (deffakekeys
   to-base (layer-switch base)
