@@ -6,12 +6,15 @@
 ;; - pressing another key on the same half of the keyboard
 ;;   as the home row mod will activate an early tap action
 
-(defcfg
-  process-unmapped-keys yes
-)
 (defsrc
-  caps a   s   d   f   j   k   l   ;
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  fn lctl lalt lmet           spc            rmet ralt
 )
+
 (defvar
   ;; Note: consider using different time values for your different fingers.
   ;; For example, your pinkies might be slower to release keys and index
@@ -32,16 +35,39 @@
     n m , . /
   )
 )
+
+;; esc to caps
+;; right shift to esc
+;; caps lock to backspace
+;; left shift to hyper for window switch
+;; do not change function keys
+;; number layers with left cmd
+;; symbol layer with right cmd
+;; TODO unmapped keys: entire num row from grv to delete
+;; TODO unmapped keys: f3 to f6
+;; TODO unmapped keys: bottom row fn lctl lalt ralt
 (deflayer base
-  bspc @a  @s  @d  @f  @j  @k  @l  @;
+  caps brdn  brup  _    _    _    _   prev  pp  next  mute  vold  volu
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  bspc @a   @s   @d   @f   g    h    @j   @k   @l   @;   '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    esc
+  fn lctl lalt lmet           spc            rmet ralt
 )
 
 (deflayer nomods
-  bspc a   s   d   f   j   k   l   ;
+  caps brdn  brup  _    _    _    _   prev  pp  next  mute  vold  volu
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  bspc a    s    d    f   g    h     j    k    l    ;   '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    esc
+  fn lctl lalt lmet           spc            rmet ralt
 )
+
 (deffakekeys
   to-base (layer-switch base)
 )
+
 (defalias
   tap (multi
     (layer-switch nomods)
@@ -56,16 +82,4 @@
   k (tap-hold-release-keys $tap-time $hold-time (multi k @tap) lalt $right-hand-keys)
   l (tap-hold-release-keys $tap-time $hold-time (multi l @tap) rctl $right-hand-keys)
   ; (tap-hold-release-keys $tap-time-pinky $hold-time-pinky (multi ; @tap) rsft $right-hand-keys)
-
-
-;; righ shift to esc
-
-;; left shift to hyper for window switch
-
-;; do not change function keys
-
-;; number layers with left cmd
-
-;; number layers with right cmd
-
 )
