@@ -134,7 +134,7 @@ alias gbr="hub browse"
 alias gbroom="git branch --merged | egrep -v '(^\*|master|dev)' | xargs git branch -d"
 
 alias sql="mysql.server start"
-alias sqlu="mysql -uroot"
+alias sqlu="mysql -h 127.0.0.1"
 
 
 alias chrome="open -a 'Google Chrome'"
@@ -161,12 +161,12 @@ alias hot="npm run hot"
 dropcreate() {
 if [ "$1" != "" ]
 then
-mysql -uroot -e "drop database $1; create database $1;"
+mysql -h 127.0.0.1 -e "drop database $1; create database $1;"
 else
 dir=${PWD##*/}
 echo "dropped and re-created $dir"
 db="$(echo $dir | tr '[:upper:]' '[:lower:]')"
-mysql -uroot -e "drop database if exists $db; create database $db;"
+mysql -h 127.0.0.1 -e "drop database if exists $db; create database $db;"
 fi
 }
 
@@ -318,3 +318,7 @@ export HERD_PHP_83_INI_SCAN_DIR="/Users/scottgrayson/Library/Application Support
 
 # Herd injected PHP binary.
 export PATH="/Users/scottgrayson/Library/Application Support/Herd/bin/":$PATH
+
+
+# Herd injected PHP 8.2 configuration.
+export HERD_PHP_82_INI_SCAN_DIR="/Users/scottgrayson/Library/Application Support/Herd/config/php/82/"

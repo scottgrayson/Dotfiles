@@ -12,7 +12,7 @@
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
   caps a    s    d    f    g    h    j    k    l    ;    '    ret
   lsft z    x    c    v    b    n    m    ,    .    /    rsft
-  fn lctl lalt lmet           spc            rmet ralt
+  fn lctl lmet lalt           spc            ralt
 )
 
 (defvar
@@ -53,7 +53,7 @@
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
   bspc @a   @s   @d   @f   g    h    @j   @k   @l   @;   '    ret
   lsft z    x    c    v    b    n    m    ,    .    /    esc
-  fn lctl lalt @num           spc            @sym ralt
+  fn lctl lalt @num           spc            @sym
 )
 
 (deflayer nomods
@@ -62,7 +62,7 @@
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
   bspc a    s    d    f   g    h     j    k    l    ;   '    ret
   lsft z    x    c    v    b    n    m    ,    .    /    esc
-  fn lctl lalt @num           spc            @sym ralt
+  fn lctl lalt @num           spc            @sym
 )
 
 (deflayer sym
@@ -71,7 +71,7 @@
   tab  S-1    S-2    S-[    S-]   S-7    y    u    i    o    p    [    ]    \
   bspc S-3    S-4    S-9  S-0   S-8    h     rmet    ralt    rctl    rsft   '    ret
   lsft S-5    S-6    [    ]   grv    n    m    ,    .    /    esc
-  fn lctl lalt lmet           spc            rmet ralt
+  fn lctl lalt lmet           spc            rmet
 )
 
 (deflayer num
@@ -80,7 +80,7 @@
   tab  q    w    e    r    t    0    1    2    3    \    [    ]    \
   bspc lsft    lctl    lalt    lmet   g     -    4    5    6    =   '    ret
   lsft z    x    c    v    b    S--    7    8    9    /    esc
-  fn lctl lalt lmet           spc            rmet ralt
+  fn lctl lalt lmet           spc            rmet
 )
 
 (defalias num (layer-while-held num))
