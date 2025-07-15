@@ -13,10 +13,12 @@ defaults.tcp_port = 5829
 
 
 [presets.'Default Preset']
+kanata_config = '~/.config/kanata/mac.kbd'
+autorun = true
+
+[presets.'Lenovo']
 # kanata_executable = 'kanata'
 kanata_config = '~/.config/kanata/kanata.kbd'
-autorun = true
 
 [presets.'Miryoku']
 kanata_config = '~/.config/kanata/miryoku.kbd'
-# autorun = true

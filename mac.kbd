@@ -1,0 +1,111 @@
+;; Home row mods QWERTY example with more complexity.
+;; Some of the changes from the basic example:
+;; - when a home row mod activates tap, the home row mods are disabled
+;;   while continuing to type rapidly
+;; - tap-hold-release helps make the hold action more responsive
+;; - pressing another key on the same half of the keyboard
+;;   as the home row mod will activate an early tap action
+
+(defsrc
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  fn lctl lmet lalt           spc            rmet
+)
+
+(defvar
+  ;; Note: consider using different time values for your different fingers.
+  ;; For example, your pinkies might be slower to release keys and index
+  ;; fingers faster.
+  tap-time 200
+  tap-time-pinky 200
+
+  hold-time 150
+  hold-time-pinky 150
+
+  left-hand-keys (
+    q w e r t
+    a s d f g
+    z x c v b
+  )
+  right-hand-keys (
+    y u i o p
+    h j k l ;
+    n m , . /
+  )
+)
+
+;; esc to caps
+;; right shift to esc
+;; caps lock to backspace
+;; left shift to hyper for window switch
+;; do not change function keys
+;; number layers with left cmd
+;; symbol layer with right cmd
+;; TODO unmapped keys: entire num row from grv to delete
+;; TODO unmapped keys: f3 to f6
+;; TODO unmapped keys: bottom row fn lctl lmet lalt ralt
+(deflayer base
+  caps brdn  brup  _    _    _    _   prev  pp  next  mute  vold  volu
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  bspc @a   @s   @d   @f   g    h    @j   @k   @l   @;   '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    esc
+  fn lctl lalt @num           spc            rmet
+)
+
+(deflayer nomods
+  caps brdn  brup  _    _    _    _   prev  pp  next  mute  vold  volu
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  bspc a    s    d    f   g    h     j    k    l    ;   '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    esc
+  fn lctl lalt @num           spc            rmet
+)
+
+(deflayer sym
+  caps brdn  brup  _    _    _    _   prev  pp  next  mute  vold  volu
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  S-1    S-2    S-[    S-]   S-7    y    u    i    o    p    [    ]    \
+  bspc S-3    S-4    S-9  S-0   S-8    h     ralt    rmet    rctl    rsft   '    ret
+  lsft S-5    S-6    [    ]   grv    n    m    ,    .    /    esc
+  fn lctl lalt lmet           spc            ralt
+)
+
+(deflayer num
+  caps brdn  brup  _    _    _    _   prev  pp  next  mute  vold  volu
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    0    1    2    3    \    [    ]    \
+  bspc lsft    lctl    lmet    lalt   g     -    4    5    6    =   '    ret
+  lsft z    x    c    v    b    S--    7    8    9    /    esc
+  fn lctl lalt lmet            spc            rmet
+)
+
+(defalias num (layer-while-held num))
+(defalias sym (layer-while-held sym))
+
+(deffakekeys
+  to-base (layer-switch base)
+)
+
+(defalias
+  tap (multi
+    (layer-switch nomods)
+    (on-idle-fakekey to-base tap 20)
+  )
+
+ ;; w (tap-hold-release-keys $tap-time-pinky $hold-time-pinky (multi w @tap) @lmeh $left-hand-keys)
+ ;; e (tap-hold-release-keys $tap-time-pinky $hold-time-pinky (multi e @tap) @lhyper $left-hand-keys)
+ ;; i (tap-hold-release-keys $tap-time-pinky $hold-time-pinky (multi i @tap) @rhyper $left-hand-keys)
+ ;; o (tap-hold-release-keys $tap-time-pinky $hold-time-pinky (multi o @tap) @rmeh $left-hand-keys)
+  a (tap-hold-release-keys $tap-time-pinky $hold-time-pinky (multi a @tap) lsft $left-hand-keys)
+  s (tap-hold-release-keys $tap-time $hold-time (multi s @tap) lctl $left-hand-keys)
+  d (tap-hold-release-keys $tap-time $hold-time (multi d @tap) lalt $left-hand-keys)
+  f (tap-hold-release-keys $tap-time $hold-time (multi f @tap) lmet $left-hand-keys)
+  j (tap-hold-release-keys $tap-time $hold-time (multi j @tap) rmet $right-hand-keys)
+  k (tap-hold-release-keys $tap-time $hold-time (multi k @tap) lalt $right-hand-keys)
+  l (tap-hold-release-keys $tap-time $hold-time (multi l @tap) rctl $right-hand-keys)
+  ; (tap-hold-release-keys $tap-time-pinky $hold-time-pinky (multi ; @tap) rsft $right-hand-keys)
+) 
