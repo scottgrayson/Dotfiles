@@ -52,6 +52,7 @@ export ZSH=$HOME/.oh-my-zsh
 # User configuration
 
 export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin"
+export PATH="$HOME/bin:$PATH"
 export PATH="$PATH:~/.composer/vendor/bin"
 export PATH="$PATH:~/.emacs.d/bin"
 export PATH="$PATH:/Applications/Emacs.app/Contents/MacOS"
@@ -126,6 +127,7 @@ alias v="nvim"
 alias rmsw="rm ~/.vim/swaps/*"
 
 alias cl="clear"
+alias cc="claude --dangerously-skip-permissions"
 
 #alias git="hub"
 
@@ -150,7 +152,6 @@ alias hrc="nvim ~/.hyper.js"
 alias kb="nvim ~/.config/karabiner/karabiner.json"
 
 alias lint="npm run lint"
-alias dev="npm run dev"
 alias hot="npm run hot"
 
 
@@ -175,6 +176,7 @@ alias mrs="dropcreate; php artisan migrate:refresh --seed"
 
 alias tdbr="dropcreate test"
 alias dbr="dropcreate"
+alias loadbackup="$HOME/Code/Dotfiles/laravel-load-backup.sh"
 
 alias pstan="./vendor/bin/phpstan analyse"
 alias pest="./vendor/bin/pest"
@@ -309,7 +311,7 @@ function notifyme {
 end run' $CMD $LAST_EXIT_CODE
 }
 
-export PS1='$(notifyme)'$PS1
+# export PS1='$(notifyme)'$PS1   # DISABLED 2026-06-19: fired a notification after EVERY command (incl. every Claude Code Bash call + every cd). notifyme() above is kept but unused.
 
 
 # Herd injected PHP 8.3 configuration.
@@ -324,3 +326,28 @@ export PATH="/Users/scottgrayson/Library/Application Support/Herd/bin/":$PATH
 export HERD_PHP_82_INI_SCAN_DIR="/Users/scottgrayson/Library/Application Support/Herd/config/php/82/"
 
 . "$HOME/.local/bin/env"
+
+
+# Herd injected PHP 8.4 configuration.
+export HERD_PHP_84_INI_SCAN_DIR="/Users/scottgrayson/Library/Application Support/Herd/config/php/84/"
+
+# OpenClaw Completion
+source "/Users/scottgrayson/.openclaw/completions/openclaw.zsh"
+
+# bun completions
+[ -s "/Users/scottgrayson/.bun/_bun" ] && source "/Users/scottgrayson/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# cmux-auto-claude
+source "/Users/scottgrayson/Code/ai-config/cmux/zshrc-hook.sh"
+
+# devenv-aliases
+source "/Users/scottgrayson/Code/ai-config/shell/aliases.sh"
+export PATH=$PATH:$HOME/.maestro/bin
+
+
+# Herd injected PHP 8.5 configuration.
+export HERD_PHP_85_INI_SCAN_DIR="/Users/scottgrayson/Library/Application Support/Herd/config/php/85/"

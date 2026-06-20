@@ -12,7 +12,7 @@
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
   caps a    s    d    f    g    h    j    k    l    ;    '    ret
   lsft z    x    c    v    b    n    m    ,    .    /    rsft
-  fn lctl lmet lalt           spc            rmet
+  fn lctl lalt lmet           spc            rmet
 )
 
 (defvar
@@ -53,7 +53,7 @@
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
   bspc @a   @s   @d   @f   g    h    @j   @k   @l   @;   '    ret
   lsft z    x    c    v    b    n    m    ,    .    /    esc
-  fn lctl lalt @num           spc            rmet
+  fn lctl lalt @num           spc            @sym
 )
 
 (deflayer nomods
@@ -62,7 +62,7 @@
   tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
   bspc a    s    d    f   g    h     j    k    l    ;   '    ret
   lsft z    x    c    v    b    n    m    ,    .    /    esc
-  fn lctl lalt @num           spc            rmet
+  fn lctl lalt @num           spc            @sym
 )
 
 (deflayer sym
@@ -71,7 +71,7 @@
   tab  S-1    S-2    S-[    S-]   S-7    y    u    i    o    p    [    ]    \
   bspc S-3    S-4    S-9  S-0   S-8    h     ralt    rmet    rctl    rsft   '    ret
   lsft S-5    S-6    [    ]   grv    n    m    ,    .    /    esc
-  fn lctl lalt lmet           spc            ralt
+  fn lctl lalt lmet           spc            rmet
 )
 
 (deflayer num

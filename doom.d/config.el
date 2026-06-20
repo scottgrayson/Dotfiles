@@ -3,8 +3,8 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
-;; never open new workspace
-(setq +workspaces-on-switch-project-behavior nil)
+;; Doom workspaces disabled in init.el; hide tab bar (agent-shell-workspace uses it internally)
+(setq tab-bar-show nil)
 
 ;; split window thresholds
 (setq split-height-threshold nil)
@@ -30,10 +30,8 @@
 
 (setq doom-font (font-spec :family "Iosevka" :size 16 :weight 'regular))
 
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one-light)
+;; materialized-theme — used by xenodium (agent-shell creator) for readability
+(setq doom-theme 'doom-material)
 
 (defun y/auto-update-theme ()
   "depending on time use different theme"
@@ -136,120 +134,79 @@
   ;; (setq phpunit-stop-on-failure t)
   )
 
+;; Localleader stays at SPC m (Doom default). Comma used for custom commands below.
+
 (defun switch-to-previous-buffer ()
   "Switch to previously open buffer.
           Repeated invocations toggle between the two most recently open buffers."
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
-;; Keybinds
-;;TODO use doom's map! instead of using general directly
+;; ── Normal mode bindings ──
+(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
+(remove-hook 'doom-first-input-hook #'evil-snipe-override-mode)
+(map! :nv "s" #'avy-goto-word-1
+      :nv "S" #'avy-goto-char
+      :nv "(" #'diff-hl-previous-hunk
+      :nv ")" #'diff-hl-next-hunk
+      :nv "[" #'flycheck-previous-error
+      :nv "]" #'flycheck-next-error
+      :nv "#" #'evilnc-comment-or-uncomment-lines
+      :nv "%" #'evilmi-jump-items
+      :n  "RET" #'evil-ex-nohighlight)
 
-(general-override-mode)
+;; ── Comma prefix: custom commands (normal/visual mode) ──
+;; SPC is left as pure Doom defaults. Comma is the custom quick-access layer.
+(define-prefix-command 'my-comma-map)
+(map! :nv "," #'my-comma-map)
+(map! :map my-comma-map
+      "."  #'vertico-repeat
+      "B"  #'switch-to-buffer
+      "R"  #'anzu-query-replace-at-cursor
+      "~"  #'string-inflection-all-cycle
+      "b"  #'projectile-switch-to-buffer
+      "c"  #'org-capture
+      "d"  #'+default/find-in-notes
+      "f"  #'projectile-find-file
+      "i"  #'+format/buffer
+      "j"  #'multi-line-single-line
+      "J"  #'multi-line
+      "l"  #'avy-goto-line
+      "k"  #'+default/yank-pop
+      "o"  #'doom/window-maximize-buffer
+      "r"  #'anzu-query-replace
+      "s"  #'+default/search-project
+      "t"  #'+lookup/definition
+      "v"  #'ace-link
+      "w"  #'save-buffer
+      (:prefix ("g" . "git")
+       "g" #'magit-status
+       "b" #'magit-blame
+       "f" #'browse-at-remote
+       "l" #'magit-log-buffer-file
+       "s" #'magit-status)
+      (:prefix ("y" . "yasnippet")
+       "c" #'aya-create
+       "e" #'aya-expand
+       "n" #'yas-new-snippet
+       "o" #'aya-create-one-line))
 
-(general-define-key
- :states '(normal visual)
- :keymaps '(override)
- ;; "RET" 'evil-nohl
- ;; "," 'evil-repeat-find-char-reverse
- "SPC" nil
- "(" 'git-gutter:previous-hunk
- ")" 'git-gutter:next-hunk
- "[" 'flycheck-previous-error
- "]" 'flycheck-next-error
- "#" 'evilnc-comment-or-uncomment-lines
- "%" 'evilmi-jump-items
- ;; "&" 'er/expand-region
- "s" 'avy-goto-word-1
- "S" 'avy-goto-char)
+;; ── Agent prefix (,a) — shares keymap with C-a ──
+;; my-agent-map defined in ai-config.el; wired to comma-map after load! below
 
-(setq my-leader1 "SPC")
-(general-define-key
- :prefix my-leader1
- :states '(normal motion)
- :keymaps '(override)
- "!" nil
- "#" nil
- "$" nil
- "%" nil
- "&" nil
- "'" nil
- ;; "(" 'ac-php-location-stack-back
- ;; ")" 'ac-php-location-stack-forward
- "*" nil
- "," nil
- "." 'vertico-repeat
- "/" nil
- ";" nil
- "=" nil
- "@" nil
- "B" 'switch-to-buffer
- "F" nil
- "R" 'anzu-query-replace-at-cursor
- "RET" nil
- "SPC" nil
- "[" nil
- "\\" nil
- "]" nil
- "^" nil
- "`" nil
- "~" 'string-inflection-all-cycle
- "a" nil
- "b" 'projectile-switch-to-buffer
- "c" 'org-capture
- "d" 'deft
- "e" nil
- "f" 'projectile-find-file
- "g" nil
- "gg" 'magit-status
- "gb" 'magit-blame
- "gf" 'browse-at-remote
- "gl" 'magit-log-buffer-file
- "gp" 'magit-browse-pull-request
- "gs" 'magit-status
- "h" nil
- "i" '+format/buffer
- "j" 'multi-line-single-line
- "J" 'multi-line
- "l" 'avy-goto-line
- "k" '+default/yank-pop
- "m" 'avy-goto-line
- "n" nil
- "o" 'writeroom-mode
- "p" 'switch-to-previous-buffer
- "q" nil
- "r" 'anzu-query-replace
- "s" '+default/search-project
- "t" '+lookup/definition
- "v" 'ace-link
- "w" 'save-buffer
- "x" nil
- "y" nil
- "yc" 'aya-create
- "ye" 'aya-expand
- "yn" 'yas-new-snippet
- "yo" 'aya-create-one-line
- ;; TODO zstd erring with this package
- ;; "z" 'undo-tree-visualize
- "{" nil
- "}" nil
- ;; "n p" 'visit todo for project
- ;; "n t" 'visit todo
- )
-
-(general-define-key
- :keymaps '(evil-window-map)
- "q" 'evil-window-delete
- "s" 'evil-window-vsplit
- "S" 'evil-window-split
- "c" 'ace-swap-window
- "x" 'evil-window-delete
- "n" 'evil-window-next
- "u" 'winner-undo
- "r" 'winner-redo
- "a" 'balance-windows
- "o" 'delete-other-windows
- "SPC" 'ace-window)
+;; ── Window bindings (SPC w prefix — augments Doom's +window) ──
+(map! :map evil-window-map
+      "q" #'evil-window-delete
+      "s" #'evil-window-vsplit
+      "S" #'evil-window-split
+      "c" #'ace-swap-window
+      "x" #'evil-window-delete
+      "n" #'evil-window-next
+      "u" #'winner-undo
+      "r" #'winner-redo
+      "a" #'balance-windows
+      "o" #'delete-other-windows
+      "SPC" #'ace-window)
 
 (defun rk/copilot-tab ()
   "Tab command that will complet with copilot if a completion is
@@ -257,7 +214,7 @@ available. Otherwise will try company, yasnippet or normal
 tab-indent."
   (interactive)
   (or (copilot-accept-completion)
-      (company-yasnippet-or-completion)
+      (company-complete)
       (indent-for-tab-command)))
 
 (define-key global-map (kbd "<tab>") #'rk/copilot-tab)
@@ -309,7 +266,7 @@ tab-indent."
 (map! "M-w" 'ace-window)
 
 (map! :map magit-mode-map
-      :n "y u" 'forge-copy-url-at-point-as-kill
+      :n "y u" 'browse-at-remote-kill
       ;; TODO not overriding the 'override map
       :n "RET" 'magit-visit-thing
       :n "SPC g S" 'magit-stage
@@ -331,3 +288,43 @@ tab-indent."
 (use-package! copilot
   :config (setq copilot-node-executable "/Users/scottgrayson/.nvm/versions/node/v22.1.0/bin/node")
   :hook (prog-mode . copilot-mode))
+
+;; Ensure nvm/homebrew paths are available (needed for claude-agent-acp)
+(add-to-list 'exec-path (expand-file-name "~/.nvm/versions/node/v23.11.0/bin"))
+(setenv "PATH" (concat (expand-file-name "~/.nvm/versions/node/v23.11.0/bin") ":" (getenv "PATH")))
+
+;; Agent Shell — Claude Code via ACP
+;; Wrap in condition-case so a missing package doesn't block ai-config loading
+(condition-case err
+    (progn
+      (require 'acp)
+      (require 'agent-shell)
+
+      ;; Open agent-shell as a regular buffer, not a Doom popup
+      (set-popup-rule! "^\\*agent-shell\\*" :ignore t)
+
+      ;; Strip ^M (CRLF) from agent-shell output
+      (add-hook 'agent-shell-mode-hook
+                (lambda ()
+                  (add-hook 'comint-preoutput-filter-functions
+                            (lambda (output)
+                              (replace-regexp-in-string "\r" "" output))
+                            nil t)))
+
+      ;; Disable text completion in agent-shell
+      (add-hook 'agent-shell-mode-hook
+                (lambda ()
+                  (company-mode -1))))
+  (error (message "⚠ agent-shell setup failed: %s" err)))
+
+;; Agent shell ecosystem + Claude chat (managed by ai-config)
+(message ">>> About to load ai-config")
+(condition-case err
+    (progn
+      (load! "ai-config")
+      ;; Wire ,a prefix to shared agent keymap (defined in ai-config.el)
+      (when (boundp 'my-agent-map)
+        (define-key my-comma-map (kbd "a") my-agent-map))
+      (message ">>> ai-config loaded OK, my/startup-agent-workspace=%s"
+               (fboundp 'my/startup-agent-workspace)))
+  (error (message ">>> ai-config load FAILED: %s" err)))

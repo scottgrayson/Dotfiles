@@ -87,3 +87,6 @@
 
 (package! copilot
   :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
+
+;; Agent Shell ecosystem (managed by ai-config)
+(load! "ai-packages")
